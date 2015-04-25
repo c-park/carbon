@@ -62,5 +62,5 @@ Thanks!
 
 1. Go to /r/subreddit/about/stylesheet (replace `subreddit` with the name of your sub)
 2. Paste the CSS from the `carbon_sub.css` file into the stylesheet field
-3. Upload the images from the `/img/` folder (don't rename them)
+3. Upload the images from the `img/` folder (don't rename them)
 4. Hit save!
