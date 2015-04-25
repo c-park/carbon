@@ -16,7 +16,7 @@ The theme is still **in development**. The following are on the to-do list:
 
 #### Feedback
 
-If you notice any bugs, have any questions, or want to provide feedback/suggestions, please feel free to [leave a comment in this thread](http://www.reddit.com/r/carbon/comments/33g9qc/carbon_v10_bugs_and_feedback_thread/) or [submit a post to the /r/Carbon](http://www.reddit.com/r/carbon/submit?selftext=true). I really appreciate any feedback!
+If you notice any bugs, have any questions, or want to provide feedback/suggestions, please feel free to [leave a comment in this thread](http://www.reddit.com/r/carbon/comments/33g9qc/carbon_v10_bugs_and_feedback_thread/) or [submit a post to /r/Carbon](http://www.reddit.com/r/carbon/submit?selftext=true). I really appreciate any feedback!
 
 Thanks!
 
