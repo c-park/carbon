@@ -37,7 +37,7 @@ Thanks!
     * `snoo.png` - header image uploaded to subreddit/about/edit page
 * `psd/` - .PSD image files
 
-**NB:** Due to the 100kb limit on reddit stylesheets, the reddit themes version of Carbon must be minfied.
+**NB:** Due to the 100kb limit on reddit stylesheets, the reddit themes version of Carbon is minfied - see `carbon_rt.css` for an un-minifed copy that is fully commented.
 
 ## Installation 
 
@@ -58,7 +58,7 @@ Thanks!
 
 <b>NB:</b> If the <b>allow subreddits to show me custom themes</b> option on your [preferences page](http://reddit.com/prefs) is <b>ON</b> the Carbon theme will apply to your front page, your profile/messages pages, and any <b>unstyled</b> subreddits. To have the Carbon theme apply to <b>all</b> subreddits you'll need to switch <b>OFF</b> the <b>allow subreddits to show me custom themes</b> option. Note that you can still allow specific subreddits to show their custom styles by selecting the <b>show this subreddit's theme</b> option in the sidebar of those subreddits.
 
-#### On your personal subreddit - _COMING SOON_
+#### On your personal subreddit - _coming soon_
 
 1. Go to /r/subreddit/about/stylesheet (replace `subreddit` with the name of your sub)
 2. Paste the CSS from the `carbon_sub.css` file into the stylesheet field
