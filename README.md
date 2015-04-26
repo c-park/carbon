@@ -5,7 +5,7 @@ Carbon is a custom, free-to-use theme for [reddit.com](http://reddit.com). You c
 
 ## About
 
-Carbon is a "dark" theme, similar to [RES](https://github.com/honestbleeps/Reddit-Enhancement-Suite) nightmode, and is an option in the new [reddit themes](http://www.reddit.com/r/goldbenefits/comments/33ei8y/introducing_reddit_themes_change_the_appearance/) feature. The theme can also be used to style personal subreddits. See the [installation](#installation) details below for more information.
+Carbon is a "dark" theme, similar to [RES](https://github.com/honestbleeps/Reddit-Enhancement-Suite) nightmode, and is an option in the new [reddit themes](http://www.reddit.com/r/goldbenefits/comments/33ei8y/introducing_reddit_themes_change_the_appearance/) feature. The theme can also be used to style personal subreddits (coming soon). See the [installation](#installation) details below for more information.
 
 The theme is still **in development**. The following are on the to-do list:
 
