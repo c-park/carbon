@@ -37,7 +37,7 @@ Thanks!
     * `snoo.png` - header image uploaded to subreddit/about/edit page
 * `psd/` - .PSD image files
 
-**NB:** Due to the 100kb limit on reddit stylesheets, the reddit themes version of Carbon is minfied - see `carbon_rt.css` for an un-minifed copy that is fully commented.
+**NB:** Due to the 100kb limit on reddit stylesheets, the reddit themes version of Carbon is minfied - see `carbon_rt.css` for an un-minifed copy that is extensively commented.
 
 ## Installation 
 
