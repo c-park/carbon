@@ -29,13 +29,13 @@ Thanks!
 * `README.md` - info
 * `changelog.txt` – self-explanatory
 * `css/` – CSS code
-    * `carbon_rt.css` - CSS for the **reddit themes** version of Carbon
     * `carbon_rt_min.css` - CSS (minified) for the **reddit themes** version of Carbon
-    * `carbon_sub.css` - CSS for **individual subreddit** version of Carbon
+    * `carbon_rt.css` - CSS (un-minified + comments) for the **reddit themes** version of Carbon
+    * `carbon_sub.css` - CSS for **individual subreddit** version of Carbon - _coming soon_
 * `img/` - images
     * `spritesheet.png` - main image file
     * `snoo.png` - header image uploaded to subreddit/about/edit page
-* `psd/` - .PSD image files
+* `psd/` - photoshop image files
 
 **NB:** Due to the 100kb limit on reddit stylesheets, the reddit themes version of Carbon is minfied - see `carbon_rt.css` for an un-minifed copy that is extensively commented.
 
