@@ -1,0 +1,6524 @@
+/*------------------------------------------------------------------
+
+-- "Carbon" Stylesheet
+
+Version:	    1.1
+Created by:  	/u/ggitaliano
+Last change:	05/02/08 [fixed Float bug]
+GitHub:       https://github.com/ggitaliano/carbon	
+
+v3: added saturation to color scheme
+	
+Info:
+	Carbon is a custom, free-to-use "dark" theme for reddit.com
+	You can see a live preview of the theme at /r/Carbon
+	Feel free to message me with any questions or feedback
+
+-------------------------------------------------------------------*/
+
+
+/*------------------------------------------------------------------
+
+-- Table of Contents
+
+1. Global styles
+	
+2. Header / #header
+	2.1  Subreddit List / #sr-header-area
+	2.2  Sub Header / #header-bottom-left
+	  2.2.1  Snoo / #header-img
+	  2.2.2  Title / .pagename
+	  2.2.3  Navigation / .tabmenu
+	2.3  User Menu / #header-bottom-right
+		2.3.1  Beta / .beta-link
+
+3. Sidebar / .side, .spacer
+	3.1  Search / #search, #searchexpando
+	3.2  Submit / .submit
+	3.3  Titlebox / .titlebox
+		3.3.1  Title / h1
+		3.3.2  Subscribe / .subscribe-button, .subscribers, .users-online
+		3.3.3  Toggle / .leavemoderator, .   , .sr_style_toggle
+		3.3.4  Flair / .flairtoggle, .tagline
+		3.3.5  Markdown / .md
+		3.3.6  Meta / .bottom
+		3.3.7  Gold / .gold-expiration-info, .server-seconds, .gift-gold, .gold-link
+	3.4  Tools / .sidecontentbox, .account-activity-box
+		3.4.1  Trophies / .trophy-area
+		3.4.2  Gold / .goldvertisement
+	3.5  Link Meta / .linkinfo
+	3.6  Login Form / .login-form-side
+		
+4. Content / .content
+	4.1  Navigation / .menuarea, .nextprev
+  4.2  Sitetable / .sitetable
+  4.3  Links / .link
+  	4.3.1  Voting / .rank, .midcol
+  	4.3.2  Thumbnails / .thumbnail
+  	4.3.3  Title / .title, .domain
+  	4.3.4  Tagline / .tagline
+  	  4.3.4.1  User / .userattrs
+  	4.4.4  Options / .buttons
+  		4.4.4.1  Share / .post-sharing
+  		4.4.4.2  Mod / .big-mod-buttons
+  	4.4.5  Expando / .expando-button
+  	4.4.6  Markdown / .md
+  4.4  Comments / .commentarea, .comment
+  4.5  Trending / .trending-subreddits
+  4.6  Advertising / .organic-listing, .promoted
+  
+5.  Footer / .footer
+  	
+6.  Submit Page / .submit-page
+
+7.  Search Page / .search-page
+
+8.  Wiki Page / .wiki-page
+
+9.  Related Page / .related-page, .other-discussions-page
+
+10.  Messages Page / .messages-page
+
+11.  Profile Page / .profile-page
+
+12.  Multi Page / .multi-page
+
+13.  Explore Page / .explore-page
+
+14.  Subreddits Page / .subreddits-page
+
+15.  Miscellaneous 
+
+15.  Multi Toolbar / .listing-chooser
+	
+16.  RES / .res
+
+17.  RES Nightmode / .res-nightmode
+
+18.  Reddit Toolbox / .toolbox
+	
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+
+-- Color Codes
+
+Background:	#ffffff (white)
+Content:	#1e1e1e (light black)
+Header h1:	#9caa3b (green)
+Header h2:	#ee4117 (red)
+Footer:		#b5cede (dark black)
+
+a (standard):	#0040b6 (dark blue)
+a (visited):	#5999de (light blue)
+a (active):	#cc0000 (pink)
+
+-------------------------------------------------------------------*/
+
+
+/*------------------------------------------------------------------
+-- 1. GLOBAL STYLES
+-------------------------------------------------------------------*/
+
+/* Body */
+body {
+	background:#1a1a1b;
+	color:#dddde1;
+}
+
+/* Links */
+/* need to override links in markdown, visited link color in markdown, add transition ease in effect for hover color */
+a, 
+.md a,
+.res.res-nightmode .tagline a,
+.comment .usertext .md p > a:visited,
+h2 a:visited,
+.shortlink input {
+	color:#3498db;
+	-webkit-transition:color 0.15s ease-in-out;
+	-moz-transition:color 0.15s ease-in-out;
+	-o-transition:color 0.15s ease-in-out;
+	transition:color 0.15s ease-in-out;
+}
+/* Stop links underlining on hover */
+a:hover {
+	text-decoration:none!important;
+}
+
+	/* MARKDOWN ------ */
+  /* Have to override the default markdown color */
+	.md {
+		color:#dddee1;
+	}
+
+
+	/* Quotes */
+	/* Set base style for quote boxes and text in markdown and set up alternating background for sub quotes */
+	.md blockquote,
+	.md blockquote blockquote blockquote {
+		padding:5px;
+		margin-left:0;
+		background:#28282d;
+		border:1px solid #3a3a3e;
+		border-left-width:3px;
+		/*font-style:italic;*/
+		color:#bbbbbe;
+	}
+	/* Alternate quote background for sub quote */
+	.md blockquote blockquote {
+		background:#26262b;
+	}
+	/* Set top/bottom margin for quote in sidebar */
+	.titlebox .md > blockquote {
+		margin:1em 0;
+	}
+	/* Style quotes at bottom of gold message */
+	.message.gold-auto blockquote {
+		margin-bottom:2px;
+		background:#2b2b2b;
+		border:1px solid #333;
+		color:#bbb;
+	}
+
+
+	/* Code */
+	/* Style markdown `code` and     pre(formatted) text */ 
+	.md code, 
+	.md pre {
+		background:#2b2b30;
+		border-color:#3c3c42;
+		border-radius:0;
+		color:#ccccd1;
+	}
+	/* Override background color in post body and permalink comments */
+	.link .usertext .md pre,
+	.link .usertext .md * > code,
+	.usertext.border div.md pre,
+	.usertext.border div.md * > code {
+		background:#2b2b30;
+	}
+	/* Override background color in new comments */
+	.new-comment div.md pre,
+	.new-comment div.md * > code {
+		background:#28282d;
+	}
+
+	/* [Deleted] message body */
+	.usertext.grayed .usertext-body {
+		padding:0;
+		background:transparent;
+	}
+	/* [Deleted] message text */
+	.usertext.grayed .usertext-body .md,
+	.md del {
+		color:#888891;
+	}
+
+	/* Tables */
+	/* Set margin and smaller font size in markdown */
+	.md table {
+		margin:1em 0;
+		font-size:12px;
+	}
+	/* In sidebar set smaller table font size and set width to take up 100% */
+	.titlebox .md table {
+		font-size:11px;
+		width:100%;
+	}
+	/* Header/body cell padding and border */
+	.md table th,
+	.md table td {
+		padding:5px 8px;
+		border:1px solid #2d2d33;
+		border:1px solid #303036;
+	}
+	/* Header cell background color */
+	.md table th {
+		background:#29292e;
+	}
+	/* Set alternating row color in table body */
+	.md table tbody tr:nth-of-type(odd) {
+		background:#25252a;
+	}
+	.md table tbody tr:nth-of-type(even) {
+		background:#29292e;
+	}
+	
+	/* Reduce border height and set new background */
+	.md hr {
+		height:1px;
+		background:#2d2d30;
+		border-bottom:1px solid #1d1d20;
+	}
+
+	/* Forms/input */
+	/* Set background and border color, remove box-shadow, set font and color */
+	textarea,
+	.pretty-form textarea,
+	input[type="text"],
+	input[type="url"],
+	input[type="password"],
+	input[type="number"],
+	.pretty-form input[type="text"],
+	.roundfield textarea,
+	.roundfield input[type="text"],
+	.roundfield input[type="url"],
+	.roundfield input[type="password"],
+	.roundfield input[type="number"],
+	.linefield textarea,
+	.linefield input[type="text"] {
+		background:#27272b;
+		border:1px solid #323236;
+		box-shadow:none;
+		font-family:sans-serif;
+		color:#eeeef1;
+	}
+	/* Set padding of edit post textarea */
+	.link .usertext-edit textarea {
+		padding:5px 7px;
+	}
+	/* Set padding of comment textarea (new, edit, reply) */
+	.comment .usertext-edit textarea {
+		padding:3px 5px;
+	}
+	/* Reset font on stylesheet textarea to default */
+	.stylesheet-customize-container textarea {
+		font-family:"Bitstream Vera Sans Mono",Consolas,monospace;
+	}
+	/* Removed browser default outline on active/focus so added a lighter border color */
+	textarea:hover,
+	textarea:active,
+	textarea:focus,
+	.pretty-form textarea:hover,
+	.pretty-form textarea:active,
+	.pretty-form textarea:focus,
+	input[type="text"]:hover,
+	input[type="text"]:active,
+	input[type="text"]:focus,
+	input[type="url"]:hover,
+	input[type="url"]:active,
+	input[type="url"]:focus,
+	.linefield input[type="text"]:hover {
+		border-color:#46464a;
+		outline:none;
+	}
+	
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+-------------------------------------------------------------------*/
+					
+/* Header container height and background (includes height of subreddit bar) */
+/* Set a background as the #header-bottom-left area doesn't completely cover header */
+/* Added dark border on body */
+#header {
+	height:90px;
+	background:#202023;
+	border-bottom:1px solid #101014;
+}
+
+/* Set light border below SR list */
+/* As #header-bottom-left doesn't reach #sr-header-area need to add a pseudo "light" border for the header */ 
+#header:before {
+	content:"";
+	height:1px;
+	position:absolute;
+	top:21px;
+	left:0;
+	right:0;
+	background:#28282d;
+}
+/* PS LIGHT BORDER */
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.1 SUBREDDIT LIST
+-------------------------------------------------------------------*/
+	
+/* Set height of subreddit list and edit link */
+/* Set background to body background and add dark border */
+#sr-header-area, 
+#sr-header-area #sr-more-link {
+	height:20px;
+	background:#1a1a1b;
+	border-bottom:1px solid #101014;
+	font-family:sans-serif;
+	line-height:22px;
+}
+
+/* Hide all separators (-,|) between subreddit names */
+#sr-header-area .separator {
+	visibility:hidden;
+}
+
+/* Style link color and remove "My subreddits" background image (arrow), set longer color transition */
+#sr-header-area a, 
+#sr-header-area .selected, 
+#sr-header-area .selected a {
+	background:none;
+	color:#44444a; /* TO DO: may need to increase this as low contrast */
+	-webkit-transition:color 0.3s;
+	-moz-transition:color 0.3s;
+	-o-transition:color 0.3s;
+	transition:color 0.3s;
+}
+	
+/* Lighter color when hovering over the list area */
+/* Set color of links in "My subreddits" dropdown list */
+#sr-header-area:hover a, 
+#sr-header-area:hover .selected, 
+#sr-header-area:hover .selected a, 
+#sr-header-area .drop-choices.srdrop.inuse a {
+	color:#77777f;
+}
+	
+/* Lighter color when hovering over individual links */
+#sr-header-area a:hover, 
+#sr-header-area .selected:hover, 
+#sr-header-area .selected a:hover, 
+#sr-header-area .drop-choices.srdrop.inuse a:hover {
+	color:#fff;
+}
+	
+/* As removed background image (arrow) from "My Subreddits" dropdown link can remove padding */
+#sr-header-area .selected {
+	padding-right:0;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.1 SUBREDDIT LIST
+------ 2.1.1 DROPDOWN LIST
+-------------------------------------------------------------------*/
+
+/* Style container */
+/* Instead of adding pseudo border can give background color to container (#2c2c2c) and set 1px padding */
+#sr-header-area .drop-choices.srdrop.inuse {
+	padding:1px;
+	margin:-1px 0 0;
+	background:#2a2a2f;
+	border:1px solid #101014;
+	border-top:0;
+	border-left:0;
+	box-shadow:0 0 1px rgba(16,16,20,0.5); /* TO DO: compare this to box-shadow on help bubbles etc. */
+}
+	
+/* Set background of links */
+#sr-header-area .drop-choices.srdrop.inuse a {
+	background:#222225;
+}
+	
+/* Darker background color for links on hover */
+#sr-header-area .drop-choices.srdrop.inuse a:hover {
+	background:#2a2a2f;
+}
+	
+/* Style "Edit subscriptions" link at bottom of list */
+#sr-header-area .drop-choices.srdrop.inuse .choice.bottom-option {
+	border-color:#363638;
+	color:#66666d;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.2 SUB HEADER
+-------------------------------------------------------------------*/
+
+/* Same background as header, add bottom border */
+#header-bottom-left {
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	background:#202023;
+	border-bottom:1px solid #28282d;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.2 SUB HEADER
+------ 2.2.1 SNOO
+-------------------------------------------------------------------*/
+
+/* Setting dimensions and removing margin on snoo image (custom) */
+#header-img-a #header-img {
+	width:80px;
+	height:28px;
+	margin:0;
+}
+	
+/* Giving inline-block so it responds to smaller resolutions */
+/* Aligned with tabmenu and set right margin to pagename */
+#header-img-a,
+#header-img.default-header {
+	width:80px;
+	height:28px;
+	display:inline-block;
+	margin:0 30px 0 0;
+	position:relative;
+	bottom:17px;
+	left:15px;
+	vertical-align:bottom;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.2 SUB HEADER
+------ 2.2.2 TITLE
+-------------------------------------------------------------------*/
+
+/* Giving inline-block so it responds to smaller resolutions */
+.pagename {
+	margin:0 15px 0 0;
+	display:inline-block;
+	font-family:lato,verdana,sans-serif;
+	font-size:12px;
+	font-variant:normal;
+	font-weight:normal;
+	letter-spacing:1px;
+	line-height:46px; /* line height to match tabmenu */
+	text-transform:uppercase;
+	color:#fb8500; /* sets color on submit, search, etc. pages where there is no child link */
+}
+	
+/* Set color on messages/profile page (no child link) */
+.messages-page .pagename,
+.profile-page .pagename {
+	color:#eeeef1;
+}
+	
+/* Reset left margin on pages with listing chooser */
+body.with-listing-chooser #header .pagename {
+	margin-left:0!important;
+	position:static;
+}
+	
+/* Set color of child link */
+.pagename a {
+	display:inline-block;
+	color:#eeeef1;
+}
+
+/* Link hover color */
+.pagename a:hover {
+	color:#fff;
+}
+	
+/* Add /R/ before subreddit name */
+.pagename a:before {
+	content:"/R/";
+	color:#bbbbc1;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.2 SUB HEADER
+------ 2.2.3 NAVIGATION
+-------------------------------------------------------------------*/
+
+/* Remove margin and set line height */
+#header .tabmenu {
+	margin:0;
+	line-height:46px;
+	text-align:center; /* TO DO: check if needed */
+}
+
+/* Reset left margin on pages with listing chooser */
+body.with-listing-chooser #header .tabmenu,
+body.with-listing-chooser #header .tabmenu li:first-child.selected {
+	margin-left:0;
+}
+
+/* Content menu list items and child links */
+/* Remove padding and margin and remove background */
+#header .tabmenu li,
+#header .tabmenu li a {
+	padding:0;
+	margin:0;
+	display:inline-block;
+	background:transparent;
+}
+	
+/* Style content menu links, set longer color transition and add transition for bg image */
+#header .tabmenu li a {
+	margin:0 10px;
+	font-family:lato,verdana,sans-serif;
+	font-size:12px;
+	font-weight:400;
+	letter-spacing:1px;
+	text-transform:uppercase;
+	color:#bbbbc1;
+	-webkit-transition:0.3s color, 0.2s background-position;
+	-moz-transition:0.3s color, 0.2s background-position;
+	-o-transition:0.3s color, 0.2s background-position;
+	transition:0.3s color, 0.2s background-position;
+	position:relative;
+}
+	
+/* color of content menu link on hover */
+#header .tabmenu li a:hover {
+	color:#eeeef1;
+}
+
+/* Active link */
+/* Style the active content menu link */
+/* Remove default border */
+#header .tabmenu li.selected a {
+	position:relative;
+	border:none;
+	color:#fb8500;
+}
+	
+/* Keep the same color on hover */
+#header .tabmenu li.selected a:hover {
+	color:#fb8500;
+}
+
+/* Bottom arrow */
+/* Background image on content menu links on hover and when active (pseudo) */
+#header .tabmenu li a:after,
+#header .tabmenu li.selected a:after {
+	content:"";
+	width:16px;
+	height:10px;
+	margin:0 auto;
+	position:absolute;
+	right:0;
+	bottom:-2px;
+	left:0;
+	background:url(%%spritesheet%%) no-repeat -9999px -9999px;
+}
+	
+/* Set initial position (vertical 10px and hidden) and transition for hover */
+#header .tabmenu li a:after {
+	background-position:center 10px;
+	-webkit-transition:0.2s background-position ease-in-out;
+	-moz-transition:0.2s background-position ease-in-out;
+	-o-transition:0.2s background-position ease-in-out;
+	transition:0.2s background-position ease-in-out;
+}
+	
+/* Set background-position on hover (vertical 0px and visible) */
+#header .tabmenu li a:hover:after,
+#header .tabmenu li.selected a:after {
+	background-position:center 0;
+}
+
+/* Manual adjustment on "promoted" link background position */
+#header .tabmenu li a[href$="/ads/"]:after {
+	right:4px;
+}
+
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.3 USER MENU
+-------------------------------------------------------------------*/
+
+/* Set border at top and bottom, bottom border color is darker than header-bottom-left bottom border */
+#header-bottom-right {
+	height:40px; /* TO DO: could align with tabmenu */
+	padding:0 15px 0 8px;
+	bottom:0;
+	background:#1d1d1f;
+	border-top:1px solid #28282d;
+	border-bottom:1px solid #222226;
+	border-radius:0;
+	font-family:lato,verdana,sans-serif;
+	font-size:11px;
+	font-weight:400;
+	letter-spacing:1px;
+	line-height:40px;
+	text-transform:uppercase;
+}
+	
+/* Override gold sub usermenu background */
+.gold-only #header #header-bottom-right {
+	background:#1d1d1f;
+}
+
+/* Add triangle border image to right */
+/* Matching bottom border */
+#header-bottom-right:before {
+	content:"";
+	width:21px;
+	height:40px;
+	display:block;
+	position:absolute;
+	left:-21px;
+	background:url(%%spritesheet%%) no-repeat 0 -367px;
+	border-bottom:1px solid #222226;
+}
+
+/* Add psuedo darker top border */
+#header-bottom-right:after {
+  content:"";
+  height:1px;
+  display:block;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  background:#161618;
+}
+
+/* Usermenu link and .user color - setting .user color here so text when logged out is visible */	
+#header-bottom-right a,
+.gold-only #header #header-bottom-right a,
+#header-bottom-right .user {
+	color:#bbbbc1;
+}
+
+/* Set lighter color on hover */
+#header-bottom-right a:hover,
+.gold-only #header #header-bottom-right a:hover {
+	color:#eee;
+}
+	
+/* Set font weight of preferences link to normal */
+#header-bottom-right .pref-lang {
+	font-weight:400;
+}
+	
+/* color and margin of login link */
+#header-bottom-right .user a.login-required {
+	margin-left:5px;
+	color:#fb8500;	
+}
+
+/* User karma */
+/* Set color of .user to match background so parentheses around karma are hidden */
+.loggedin #header-bottom-right .user {
+	color:#1d1d1f;
+}
+	
+/* Lighter color for karma count next to username */
+#header-bottom-right .user .userkarma {
+	border:none;
+	color:#dddde1;
+}
+
+/* Hide separators */
+#header-bottom-right .separator {
+	visibility:hidden;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.3 USER MENU
+------ 2.3.1 MAIL
+-------------------------------------------------------------------*/
+
+/* Custom mail icons */
+/* Have to override havemail icons on gold only subs */
+#header-bottom-right #mail, 
+#header-bottom-right #modmail,
+.gold-only #header #header-bottom-right #mail.havemail,
+.gold-only #header #header-bottom-right #modmail.havemail {
+	background:url(%%spritesheet%%) no-repeat -9999px -9999px;
+}
+#header-bottom-right #mail.nohavemail {
+	background-position:0 -50px;
+}
+#header-bottom-right #mail.havemail {
+	background-position:-16px -50px;
+}
+.gold-only #header #header-bottom-right #mail.havemail {
+	background-position:-32px -50px;
+}
+#header-bottom-right #modmail.nohavemail {
+	background-position:0 -30px;
+}
+#header-bottom-right #modmail.havemail {
+	background-position:-16px -30px;
+}
+.gold-only #header #header-bottom-right #modmail.havemail {
+	background-position:-32px -30px;
+}
+
+/* Fix icon positoning */
+#header-bottom-right #modmail {
+	top:-3px;
+}
+#header-bottom-right #mail {
+	top:1px;
+}
+
+/* Mail count */
+/* Remove default background, match color to icon */
+#header-bottom-right a.message-count {
+	background:transparent;
+	color:#fb8500;
+}
+/* Override message count styling on gold only subs */
+.gold-only #header #header-bottom-right .message-count,
+.gold-only #header #header-bottom-right .message-count:hover {
+	background:transparent;
+	color:#cd9930;
+}
+
+
+/*------------------------------------------------------------------
+-- 2. HEADER
+---- 2.3 USER MENU
+------ 2.3.2 BETA
+-------------------------------------------------------------------*/
+ 
+/* Custom beta icon */
+/* Remove default lab beaker background */
+#header-bottom-right .beta-link {
+	width:40px;
+	height:41px;
+	margin-left:-40px;
+	background:none;
+	overflow:visible;
+	text-indent:-9999px;
+}
+
+/* Add psuedo beta text with matching #header-bottom-right background */
+#header-bottom-right .beta-link:after {
+	content:"β";
+	width:40px;
+	height:41px;
+	display:block;
+	position:absolute;
+	top:-1px;
+	font-size:12px;
+	line-height:41px;
+	text-transform:none;
+	color:#2ecc71;
+	background:url(%%usermenu-bg-beta%%) no-repeat; /* this will cover up the original background as can't add space manually */
+	text-indent:26px;
+	border-bottom:1px solid #222226;
+}
+	
+/* Fix opacity */
+#header-bottom-right .beta-hint {
+	opacity:1;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+-------------------------------------------------------------------*/
+
+/* Set margin and remove background */
+.side {
+	margin:24px 8px 80px 0; /* set bottom margin to add space between footer */
+	position:relative;
+	background-color:transparent;
+}
+
+/* Set .spacer margin (default is 7px 0 12px 0) */
+.side .spacer {
+	margin:0 0 7px 0;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.1 SEARCH
+-------------------------------------------------------------------*/
+
+/* Set external border for search form */
+.side #search {
+	border:1px solid #101014;
+}
+
+/* Style search input area */
+#search input[type="text"] {
+	width:298px;
+	padding:7px 15px;
+	background:#202023;
+	border:1px solid #28282d;
+	font-size:12px;
+	color:#eeeef1;
+}
+
+/* Remove default browser outline on active/focus, set lighter background instead + on hover */
+#search input[type="text"]:hover,
+#search input[type="text"]:active,
+#search input[type="text"]:focus {
+	background-color:#222226;
+	outline:none;
+}
+
+/* Fix positioning of search/submit icon */
+.side #search input[type="submit"] {
+	margin-left:-28px;
+}
+
+/* Expando */
+/* Background needs to be darker than #202020 */
+#searchexpando {
+	padding:10px 15px 0;
+	margin:0;
+	background:#1f1f22;
+	border:1px solid #27272b;
+	border-top:1px solid #161618;
+	border-radius:0;
+	font-family:sans-serif;
+	font-size:11px;
+	color:#dddde1;
+}
+
+/* Add bottom padding on expando search text */
+.side #moresearchinfo {
+	padding-bottom:5px;
+	border-color:#2f2f33;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.2 SUBMIT
+-------------------------------------------------------------------*/
+
+/* Set external border and slight radius */
+/* .submit is the "submit a new link/text post" buttons */
+/* .create is the "create your own subreddit" button */
+.sidebox.submit,
+.sidebox.create {
+	border:1px solid #101014;
+	border-radius:1px;
+}
+
+/* Submit/create buttons */
+.morelink {
+	height:31px;
+	background:#39393f;
+	border:1px solid #49494f;
+	border-radius:1px;
+	line-height:31px;
+}
+
+/* Submit buttons on hover */
+.morelink:hover {
+	background:#424249;
+	border-color:#53535a;
+}
+
+/* Submit button link text */
+.morelink a {
+	font-family:lato,verdana,sans-serif;
+	font-size:12px;
+	font-weight:400;
+	letter-spacing:1px;
+	text-transform:uppercase;
+	color:#eeeef1;
+}
+
+/* Submit button link text on hover */
+.morelink:hover a {
+	color:#fff;
+}
+
+/* "submissions restricted" button */
+.disabled .morelink,
+.disabled .morelink:hover {
+	background:#29292d;
+	border-color:#343438;
+}
+
+/* Lower contrast of disabled submit button link text */
+.disabled .morelink a {
+	color:#808085;
+}
+
+/* Remove nub (blue arrow on right on submit buttons) and create/disabled spacer */
+.nub,
+.morelink + .spacer {
+	display:none;
+}
+
+
+/* Background and border animations on hover */
+/* Used for searchbar, submit buttons, snoovatar button .. */
+/* MOVE MOVE MOVE */
+#search input[type="text"],
+.morelink,
+.gold-accent.snoovatar-link,
+.gold-accent.snoovatar-link a,
+.sidecontentbox .more a,
+.sidecontentbox .expand-summary {
+	-webkit-transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
+	-moz-transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
+	-o-transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
+	transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+-------------------------------------------------------------------*/
+
+/* Main sidebar container for content after submit buttons */
+/* Set <300px width to account for borders */
+/* Position 1px from left due to pseudo border */
+.titlebox {
+	width:296px;
+	position:relative;
+	left:1px;
+	background:#202023;
+	border:1px solid #28282d;
+	font-family:sans-serif;
+	color:#dddde1;
+}
+
+/* Remove border radius on rounded titlebox */
+.rounded {
+	border-radius:0;
+}
+
+/* Remove titlebox padding on filtered multi */ 
+.titlebox.gold-accent,
+.titlebox.filtered-details {
+	padding:0;
+}
+
+
+
+/*------------------------------------------------------------------
+/* ***** 2/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.1 TITLE
+-------------------------------------------------------------------*/
+	
+/* Main sub/profile title in sidebar */
+/* Set color here too incase not link (like profile page) */
+/* Using > as can have h1 within .titlebox .md */
+.titlebox > h1 {
+	padding:10px 15px;
+	margin:0;
+	position:relative;
+	background:#212125;
+	border-bottom:1px solid #28282d;
+	font-family:sans-serif;
+	font-size:18px;
+	color:#eeeef1;
+}
+
+/* Add pseudo dark border for contrast */
+/* Only need this on own profile page as no "+Friends" element, can't specify though */
+/* //Note: Changed ".titlebox > h1" to ".titlebox h1" as shouldn't be any other h1 headers */  
+.profile-page .titlebox h1:before {
+	content:"";
+	height:1px;
+	position:absolute;
+	bottom:-2px;
+	left:0;
+	right:0;
+	background:#161618;
+}
+
+/* Sub/profile title link color */
+.titlebox > h1 a {
+	color:#eeeef1;
+}
+
+/* Make brackets in user distinction hidden by matching background color */
+/* Distinction currently for Admins [A] */
+/* //Note: Searched repository and only found one use for selector */
+.user-distinction {
+	color:#212125;
+}
+
+/* Style admin distinction next to username on profile page */
+.user-distinction .admin {
+	width:14px;
+	display:inline-block;
+	background:#e04232;
+	border-radius:1px;
+	font-size:13px;
+	text-align:center;
+	vertical-align:text-bottom;
+  color:#202023;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.2 SUBSCRIBE
+-------------------------------------------------------------------*/
+	
+/* Container */
+.titlebox .fancy-toggle-button {
+	width:296px;
+	height:30px;
+	display:block;
+	margin:0;
+	background:#1f1f22;
+	border:1px solid #161618;
+	border-left:0;
+	border-right:0;
+	border-radius:0;
+	line-height:30px;
+}
+
+/* Subscribe/unsubscribe */
+.titlebox .fancy-toggle-button .option.active {
+	display:inline-block;
+}
+.titlebox .fancy-toggle-button .option.add,
+.titlebox .fancy-toggle-button .option.remove {
+	height:30px;
+	padding:0 15px;
+	position:relative;
+	top:-1px;
+	background:#1f1f22;
+	border:none;
+	border-radius:0;
+	font-size:11px;
+	font-weight:normal;
+	line-height:30px;
+	text-transform:capitalize;
+	color:#9999a1;
+}
+
+/* Style subscribe */
+.titlebox .fancy-toggle-button .option.add {
+	font-weight:bold;
+	color:#27ae60;
+}
+
+/* Remove browser outline on focus */
+.titlebox .fancy-toggle-button .option:active,
+.titlebox .fancy-toggle-button .option:focus {
+	outline:none;
+}
+
+/* Friends */
+.profile-page .titlebox h1 + div {
+	border-bottom:1px solid #28282d;
+}
+
+/* Subscribers + users online */
+/* Position inline with subscribe button */
+.subscribers,
+.users-online {
+	height:30px;
+	padding:0 15px;
+	display:block;
+	margin-top:-31px;
+	position:absolute;
+	right:0;
+	background:#1f1f22;
+	font-size:11px;
+	line-height:30px;
+	color:#9999a1;
+}
+
+/* Hide users online count */
+.users-online,
+.users-online:before { 
+	display:none;
+	content:none;
+}
+
+/* Have users online count appear on hover */
+.subscribers:hover + .users-online,
+.users-online:hover {
+	display:block;
+}
+
+/* Online icon before users online */
+.users-online:after {
+	content:"";
+	width:7px;
+	height:7px;
+	display:block;
+	position:absolute;
+	top:11px;
+	left:3px;
+	background:#4bda4b;
+	border-radius:50%;
+	-webkit-animation:users 2s infinite;
+	-moz-animation:users 2s infinite;
+	-o-animation:users 2s infinite;
+	animation:users 2s infinite;
+}
+
+/* Icon fade in/out animation */
+@-webkit-keyframes users {
+		0% {background:#4bda4b;}
+	 50% {background:#369b36;}
+	100% {background:#4bda4b;}
+}
+@-moz-keyframes users {
+		0% {background:#4bda4b;}
+	 50% {background:#369b36;}
+	100% {background:#4bda4b;}
+}
+@-o-keyframes users {
+		0% {background:#4bda4b;}
+	 50% {background:#369b36;}
+	100% {background:#4bda4b;}
+}
+@keyframes users {
+		0% {background:#4bda4b;}
+	 50% {background:#369b36;}
+	100% {background:#4bda4b;}
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.3 TOGGLE
+-------------------------------------------------------------------*/
+	
+/* Style toggle stylesheet, moderator/contributor status */
+.titlebox .toggle.sr_style_toggle,
+.titlebox .leavemoderator,
+.titlebox .toggle.leavecontributor-button {
+	padding:8px 15px;
+	background:#202023;
+	border-top:1px solid #28282d;
+	border-bottom:1px solid #161618;
+	font-family:sans-serif;
+	color:#777781;
+}
+
+/* Adjust bottom-padding and font-size on stylesheet toggle */
+.titlebox .toggle.sr_style_toggle {
+	padding:8px 15px 10px;
+	font-size:11px;
+}
+
+/* Replace default moderator/contributor text */
+/* Set existing text to 0 font-size */
+.titlebox .leavemoderator,
+.titlebox .toggle.leavecontributor-button {
+	font-size:0; /* TO DO: check this works in IE */
+}
+
+/* Set styling for replacement pseudo text */
+.titlebox .leavemoderator:before,
+.titlebox .toggle.leavecontributor-button:before {
+	width:auto;
+	height:15px;
+	display:inline-block;
+	margin-right:6px;
+	float:none;
+	position:relative;
+	top:-1px;
+	vertical-align:middle;
+	font-size:11px;
+	line-height:17px;
+	text-indent:20px;
+	color:#777781;
+} 
+
+/* Replacement text and new icons */
+.titlebox .leavemoderator:before {
+	content:"Moderator";
+	background:url(%%spritesheet%%) no-repeat 0 -127px;
+}
+.titlebox .toggle.leavecontributor-button:before {
+	content:"Approved submitter";
+	background:url(%%spritesheet%%) no-repeat 0 -147px;
+}
+	
+/* Change/leave moderator/contributor links */
+/* Set size of all links */
+.titlebox .leavemoderator a,
+.titlebox .toggle.leavecontributor-button a {
+	font-size:11px;
+}
+
+/* Positioning of top level links (change/leave) */
+.titlebox .leavemoderator > a,
+.titlebox .toggle.leavecontributor-button > a,
+.titlebox .leavecontributor-button .togglebutton {
+	display:inline-block;
+	margin-left:5px;
+	vertical-align:middle;
+}
+
+/* Adjust sub yes/no option links for contributor */
+.titlebox .toggle.leavecontributor-button .option.active.error {
+	display:block;
+	margin:3px 0 0 20px;
+}
+.titlebox .toggle.leavecontributor-button .option.active.error a {
+	vertical-align:text-bottom;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.4 USER FLAIR
+-------------------------------------------------------------------*/
+
+/* User flair toggle area */
+.titlebox .toggle.flairtoggle {
+	padding:8px 15px;
+	margin:0;
+	position:relative;
+	background:#1f1f22;
+	border-top:1px solid #27272b;
+	font-size:11px;
+	color:#9999a1;
+}
+.titlebox .leavemoderator ~ .toggle.flairtoggle,
+.titlebox .leavecontributor-button ~ .toggle.flairtoggle,
+.titlebox .toggle.sr_style_toggle ~ .toggle.flairtoggle {
+	margin-top:-1px;
+	border-top-color:#28282d;
+}
+.titlebox .leavemoderator ~ .toggle.flairtoggle:before,
+.titlebox .leavecontributor-button ~ .toggle.flairtoggle:before,
+.titlebox .toggle.sr_style_toggle ~ .toggle.flairtoggle:before {
+  content:"";
+  height:1px;
+  display:block;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  background:#161618;
+}
+
+/* user flair tagline/preview */
+.titlebox .tagline {
+	padding:4px 15px 10px;
+	margin:0;
+	position:relative;
+	background:#1f1f22;
+	border-bottom:1px solid #161618;
+	font-size:11px;
+	color:#1f1f22;
+}
+
+/* Username and edit link */
+.titlebox .tagline a.author,
+.titlebox .tagline a.flairselectbtn {
+	font-size:11px;
+	color:#3498db;
+}
+
+/* Chosen flair */
+.titlebox .tagline > .flair {
+	background-color:#333339;
+	border-color:#333339;
+	font-size:10px;
+	color:#ccccd1;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.5 MARKDOWN
+-------------------------------------------------------------------*/
+
+/* Style markdown container */
+.titlebox div.usertext .md, /* <---- WHAT IS THIS FOR?????? not multireddit md */
+.titlebox .usertext-body .md {
+	padding:5px 15px;
+	position:relative;
+	background:#202023;
+	border-top:1px solid #28282d;
+	border-bottom:1px solid #161618;
+	font-size:12px;
+	color:#dddde1;
+}
+	
+	
+	.titlebox .usertext-body .md:after {
+		content:"";
+		height:1px;
+		display:block;
+		position:absolute;
+		bottom:0;
+		left:0;
+		right:0;
+		background:#28282d;
+	}
+	
+	/* */
+		.titlebox .usertext-body .md {
+	  	margin-bottom:-1px;
+	  }
+	  
+/* Restyle borders on /r/all titlebox markdown (as no subscribe/toggle areas) */
+.titlebox > h1 + .usertext > .md {
+	border-top:1px solid #161618;
+	border-bottom:0;
+} 
+
+/* If user flair is disabled then set top border of titlebox markdown */
+/* ??? can't see the use */
+	.titlebox > .users-online + .usertext .md {
+		border-top:1px solid #28282d;
+	} 
+	
+	
+	
+	
+	.titlebox .md h1,
+	.titlebox .md h2,
+	.titlebox .md h3,
+	.titlebox .md h4,
+	.titlebox .md h5,
+	.titlebox .md h6 {
+		margin:0.5em 0;
+		font-weight:bold;
+		color:#eee;
+	}
+	.titlebox .md h1 {
+		font-size:18px;
+	}
+	.titlebox .md h1 a {
+		color:#3498DB;
+	}
+	.titlebox .md h2 {
+		font-size:17px;
+	}
+	.titlebox .md h3 {
+		font-size:16px;
+	}
+	.titlebox .md h4 {
+		font-size:15px;
+	}
+	.titlebox .md h5 {
+		font-size:14px;
+	}
+	.titlebox .md h6 {
+		font-size:14px;
+		font-weight:normal;
+	}
+	.titlebox .md > p {
+		margin:1em 0;
+	}
+	.titlebox .md ul,
+	.titlebox .md ol {
+		margin:0.5em 0;
+		padding-left:20px;
+	}
+
+
+
+
+
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.6 PROFILE
+-------- 3.3.6.1 KARMA
+-------------------------------------------------------------------*/
+	
+/* Link/comment karma */
+.titlebox > .karma {
+	margin:8px 1px 0 15px;
+	display:inline-block;
+	color:#eeeef1;
+}
+
+/* Adjust margin on comment karma text */
+.titlebox > .comment-karma {
+	margin-top:5px;
+}
+
+/* Set margin on karma breakdown by sub link */
+.karma-breakdown {
+	margin:10px 15px;
+}
+
+/* Karma breakdown table */
+#per-sr-karma {
+	width:264px;
+	margin:10px 0 10px 16px;
+}
+#per-sr-karma tr td {
+	color:#bbbbc1;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.6 PROFILE
+-------- 3.3.6.2 SNOOVATAR
+-------------------------------------------------------------------*/
+	
+/* Style snoovatar button (same as morelink) */
+/* !important fixes for RES */
+.gold-accent.snoovatar-link {
+	margin:10px 15px;
+	border-radius:1px;
+	background:#39393f!important;
+	border:1px solid #161618!important;
+	line-height:31px;
+}
+
+/* Set lighter background on hover */
+/* !important to overwrite default above */
+.gold-accent.snoovatar-link:hover {
+	background:#424249!important;
+}
+
+/* Remove default icon */
+.gold-accent.snoovatar-link:before {
+	content:none;
+}
+
+/* Style snoovatar link within button */
+.snoovatar-link a {
+	display:block;
+	border:1px solid #49494f;
+	border-radius:1px;
+	color:#eeeef1!important;
+}
+
+/* Set lighter border on hover */
+.snoovatar-link a:hover {
+	border-color:#53535a;
+}
+
+/* Add custom snoo icon to link/button */
+.snoovatar-link a:before {
+	content:"";
+	width:20px;
+	height:20px;
+	display:inline-block;
+	margin-right:8px;
+	position:relative;
+	top:5px;
+	background:url(%%spritesheet%%) no-repeat 0 -103px;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.7 META
+-------------------------------------------------------------------*/
+
+/* Style sidebar meta info (creator/age) */
+.titlebox .bottom {
+	min-height:11px;
+	padding:8px 15px;
+	background:#1f1f22;
+	border-top:1px solid #27272b;
+	font-size:11px;
+	color:#9999a1;
+}
+
+/* Adjust margin on profile page, add relative for pseudo border */
+.profile-page .titlebox > .bottom {
+	margin-top:15px;
+	position:relative;
+}
+
+/* Remove top margin if gold expiration box */
+.titlebox .gold-expiration-info + .bottom {
+	margin-top:0;
+}
+
+/* Add darker pseudo border on profile pages */
+/* .md is always present on other pages so can add dark pseudo border to that usually */
+.profile-page .titlebox .bottom:before {
+	content:"";
+	height:1px;
+	display:block;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	background:#161618;
+}
+
+/* Remove user flair */
+.bottom .flair {
+	display:none;
+	font-size:10px;
+}
+
+/* Remove default text from age */
+.titlebox .bottom .age {
+	font-size:0;
+}
+
+/* Add custom icon next to time/age */
+.titlebox .bottom .age time {
+	padding-left:14px;
+	height:11px;
+	background:url(%%spritesheet%%) no-repeat 0 -166px;
+	font-size:11px;
+}
+
+/* Style send message link with #mail icon */
+/* Remove original image */
+.profile-page .titlebox .bottom img {
+	display:none;
+}
+
+/* Make space for icon by moving send message link */
+.profile-page .titlebox .bottom > a {
+	padding-left:19px;
+	position:relative;
+}
+
+/* Add #mail icon before send message link */
+.profile-page .titlebox .bottom > a:before {
+	content:"";
+	width:15px;
+	height:10px;
+	display:block;
+	position:absolute;
+	top:2px;
+	left:0;
+	background:url(%%spritesheet%%) no-repeat 0 -50px;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.8 GOLD
+-------------------------------------------------------------------*/
+
+/* User gold info container */
+.gold-expiration-info {
+	padding:0;
+	margin:15px 0 0;
+	background:#212125;
+	border:none;
+	border-top:1px solid #161618;
+	border-radius:0;
+}
+	
+/* Gold remaining (time) container */
+.gold-remaining {
+	padding:10px 15px 12px;
+	margin-bottom:1px;
+	border-top:1px solid #28282d;
+	color:#cd9930;
+}
+
+/* Gold remaining (time) */
+.gold-remaining .karma {
+	color:#f4b639;
+	display:block;
+	margin-bottom:3px;
+}
+
+/* Remove line breaks as can cause spacing issue */
+.gold-expiration-info > div:last-of-type br,
+.gold-remaining .karma + br {
+	display:none;
+} 
+
+/* Add margin to "view gold features/benefits" link */
+.gold-remaining a {
+	display:inline-block;
+	margin-top:8px;
+}
+
+/* Set top margin for "x gold creddits to give" link and "x gildings given out" (no creddit link) */
+.gold-creddits-remaining,
+.gold-remaining + .num-gildings {
+	margin-top:-5px;
+}
+
+/* Adjust top margin/set color for "x gildings given out" (with creddit link) */
+.num-gildings {
+	margin-top:3px;
+	color:#cd9930;
+}
+
+/* Set the padding on the last div as fallback */
+.gold-expiration-info > div:last-of-type {
+	padding-bottom:12px;
+}
+
+/* "Gifts on behalf of..." and "/u/... has helped pay for..." container */
+.server-seconds {
+	padding:0;
+	background:#212125;
+	border:none;
+	border-radius:0;
+}
+
+/* Set padding of text and (if own profile) the visibility settings */
+.server-seconds > p,
+.server-seconds-public.bottom {
+	padding:13px 15px;
+}
+
+/* Remove margin from visibility settings and prep for pseudo border for standard .bottom */
+.server-seconds-public.bottom {
+	margin-top:0;
+	position:relative;
+}
+
+/* If user has been gilded and given gold then it will show both paid for/on behalf of time */
+/* Set border of second paragraph "Gifts on behalf of..." */
+.server-seconds > p + p {
+	margin-top:1px;
+	position:relative;
+	border-top:1px solid #161618;
+}
+
+/* Add lighter pesudo border to second paragraph */
+.server-seconds > p + p:before {
+	content:"";
+	height:1px;
+	display:block;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	background:#28282d;
+}
+
+/* Color of server time */
+.server-seconds em {
+	color:#eeeef1;
+}
+
+/* Give gold link container on profile pages */
+/* NB: using .profile-page to distinguish from giftgold in /r/all sidebar */ 
+.profile-page .giftgold {
+	padding:0 15px;
+	margin:15px 0;
+}
+
+/* Adjust top padding/margin and set border if user has gold */ 
+.gold-expiration-info + .giftgold {
+	padding-top:15px;
+	margin-top:0;
+	position:relative;
+	border-top:1px solid #28282d;
+}
+
+/* Set darker sub border */
+.gold-expiration-info + .giftgold:before {
+	content:"";
+	height:1px;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	background:#161618;
+}
+
+/* Set color of give gold link (also applies to /r/all links) */
+.giftgold a {
+	color:#cd9930;
+}
+
+
+					/* CAN MOVE THIS */
+					/* Gold icon on posts/comments (not on profile page give gold link or on /r/all links) */
+					/* Set margin and color of count (e.g. x2) */
+					.gilded-icon {
+						margin-left:5px;
+						color:#cd9930;
+					}
+
+					/* Set icon - CHANGE TO SOMETHING SIMILAR TO CURRENT */
+					.gilded-icon:before {
+						margin-right:3px;
+						background:url(%%gildedalt2%%) no-repeat 0 0;
+					}
+
+
+/* Gold options (on /r/all) containers */
+.allminus-link,
+.gilded-link {
+	margin:0;
+	background:#1f1f22;
+	border:1px solid #101014;
+	border-top:none;
+	border-bottom:none;
+	font-family:sans-serif;
+}
+
+/* Add bottom border to last option container ("see gilded comments and submissions") */
+.gilded-link {
+	border-bottom:1px solid #101014;
+}
+
+/* Style gold option links */ 
+.allminus-link a,
+.gilded-link a {
+	display:block;
+	padding:6px 15px;
+	border:1px solid #27272b;
+	border-top:none;
+	border-bottom:none;
+	color:#cd9930;
+}
+
+/* Add dark border to first gold option link ("exclude your subscribed...") (the 2nd div element) */
+.allminus-link:nth-of-type(2) a {
+	padding-top:10px;
+	border-top:1px solid #161618;
+}
+
+/* Style last option link ("see gilded comments and submissions") */
+.gilded-link a { 
+	padding-bottom:10px;
+	border-bottom:1px solid #27272b;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.4 TOOLS
+-------------------------------------------------------------------*/
+
+/* Style container border and font  */
+.sidecontentbox {
+	border:1px solid #101014;
+	font-family:sans-serif;
+}
+
+/* Container titles */
+.sidecontentbox > .title {
+	padding:10px 15px;
+	background:#212125;
+	border:1px solid #28282d;
+}
+
+/* Style title text */
+.sidecontentbox > .title h1 {
+	font-size:12px;
+	font-weight:bold;
+	text-transform:lowercase;
+	color:#eeeef1;
+}
+
+/* Collapse -/+ button on moderation tools box */
+.sidecontentbox .collapse-button {
+	position:relative;
+	top:-1px;
+	background:#3c3c40;
+	border:none;
+	border-radius:1px;
+	line-height:8px;
+	color:#bbbbc1;
+}
+
+/* Style container content area */
+.sidecontentbox .content {
+	background:#202023;
+	border:1px solid #28282d;
+	border-top:1px solid #161618;
+	padding:10px 15px;
+}
+
+/* Remove background and resize links */
+.sidecontentbox .content a {
+	background-color:transparent;
+	font-size:12px;
+}
+
+/* Reduce new line-height on modded sub list */
+#side-mod-list {
+	line-height:1.4;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.4 TOOLS
+------ 3.4.1 MODERATOR
+-------------------------------------------------------------------*/
+
+/* Message the mods link */
+.sidecontentbox a.helplink {
+	margin:12px 15px 0 0;
+}
+
+/* Style "about moderation team" and "...and x more" button li containers */
+.sidecontentbox .more {
+	margin:15px 0 0;
+	display:inline-block;
+	border:1px solid #161618;
+	border-radius:1px;
+	text-align:left;
+}
+
+/* Style "about moderation team" and "...and x more" buttons */
+/* NB: the "...and x more" button is an actual button on profile pages and has .expand-summary class */
+.sidecontentbox .more a,
+.sidecontentbox .expand-summary {
+	padding:3px 6px 4px;
+	display:inline-block;
+	background:#39393f;
+	border:1px solid #49494f;
+	border-radius:1px;
+	font-size:11px;
+	color:#eeeef1;
+}
+
+/* Set lighter background/border on hover */
+.sidecontentbox .more a:hover,
+.sidecontentbox .expand-summary:hover {
+	background:#424249;
+	border-color:#53535a;
+}
+
+/* Set top margin on profile page "...and x more" button */
+.sidecontentbox .expand-summary {
+	margin-top:8px;
+}
+
+/* Set max width of usernames in moderator list to stop flairs overflowing */
+.sidecontentbox a.helplink ~ ul.content > li {
+	max-width:266px;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+/* Resize user flair in mod list */
+.sidecontentbox .flair {
+	font-size:10px;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.4 TOOLS
+------ 3.4.2 ACTIVITY
+-------------------------------------------------------------------*/
+
+/* Resize and adjust margin on recently viewed link arrows */
+.gadget .midcol {
+	width:25px;
+	margin:1px 4px 0 -3px;
+}
+
+/* Resize recently viewed comment links and "clear" link */
+.gadget a.reddit-comment-link,
+.gadget .right a {
+	font-size:11px;
+}
+
+/* Border for account activity link container */
+.account-activity-box {
+	border:1px solid #101014;
+}
+
+/* Style activity link */ 
+.account-activity-box a {
+	padding:8px 10px;
+	display:block;
+	background:#212125;
+	border:1px solid #28282d;
+	font-family:sans-serif;
+	font-size:11px;
+	color:#dddde1;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.4 TOOLS
+------ 3.4.3 TROPHIES
+-------------------------------------------------------------------*/
+
+/* Trophy name color */
+.trophy-name {
+	color:#eeeef1!important;
+}
+
+/* Trophy desc color */
+.trophy-description {
+	color:#bbbbc1;
+}
+
+/* Hide parentheses by matching background color */
+.trophy-table + p {
+	color:#202023;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.5 LINK META
+-------------------------------------------------------------------*/
+
+/* Link meta info container */
+.linkinfo {
+	padding:0;
+	margin:0 1px;
+	position:relative;
+	background:#212125;
+	border:1px solid #28282d;
+	border-radius:0;
+	font-family:sans-serif;
+}
+
+/* This link was posted on... container */
+.linkinfo .date {
+	padding:15px 0 0;
+	margin:0;
+	font-size:12px;
+	font-weight:bold;
+	text-indent:15px;
+	color:#eeeef1;
+}
+
+/* This link was posted on... normal font-weight */
+.linkinfo .date span {
+	font-weight:400;
+}
+
+/* Post score container, set color of % upvoted text */
+.linkinfo .score {
+	padding:10px 0 5px;
+	margin-left:15px;
+	font-size:11px;
+	color:#9999a1;
+}
+
+/* Style the score number */
+.linkinfo .score .number {
+	margin-right:3px;
+	vertical-align:-2px;
+	font-size:18px;
+	font-weight:normal;
+	color:#eeeef1;
+}
+
+/* Remove "points" text after score */
+.linkinfo .score .word {
+	display:none;
+}
+
+/* Shortlink container, remove "shortlink" text (using font-size) */
+.linkinfo .shortlink {
+	margin-top:10px;
+	font-size:0;
+	border-top:1px solid #28282d;
+}
+
+/* Style shortlink */
+.linkinfo .shortlink input {
+	width:266px;
+	height:32px;
+	padding:0 15px;
+	margin:0;
+	background:#202023;
+	border:none;
+	border-top:1px solid #161618;
+	font-size:11px;
+	line-height:31px;
+	color:#9999a1;
+}
+
+/* Set lighter color on hover */
+.linkinfo .shortlink input:hover {
+	color:#eeeef1;
+}
+
+
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.6 LOGIN FORM
+-------------------------------------------------------------------*/
+	
+/* Login form container */
+.login-form-side {
+	padding-top:15px;
+	margin:0 1px;
+	background:#202023;
+	border:1px solid #28282d;
+	position:relative;
+	z-index:1;
+}
+	
+/* Style username and password input forms */
+.login-form-side input[type="text"],
+.login-form-side input[type="password"] {
+	width:268px;
+	padding:5px;
+	margin:0 0 10px 15px;
+	border:1px solid #323236;
+	color:#eeeef1;
+}
+
+/* Set lighter background and border for input forms on hover/active */
+.login-form-side input[type="text"]:hover,
+.login-form-side input[type="text"]:active,
+.login-form-side input[type="text"]:focus,
+.login-form-side input[type="password"]:hover,
+.login-form-side input[type="password"]:active,
+.login-form-side input[type="password"]:focus {
+	background:#28282d;
+	border-color:#39393c;
+	outline:none;
+}
+
+/* Positioning and color of "remember me" option */
+.login-form-side #remember-me {
+	margin:0 15px 10px;
+	color:#eeeef1;
+}
+
+/* If failed login style "recover password" link */
+.login-form-side .recover-password.attention {
+	padding:0;
+	border:none;
+	border-bottom:1px solid #2c6a95;
+	border-radius:0;
+	font-weight:normal;
+}
+
+/* If failed login add "?" to "recover password" link */
+.recover-password.attention:after {
+	content:"?";
+}
+
+/* Position login button container */
+.login-form-side .submit {
+	margin:4px 15px 0 0;
+}
+
+/* Style login button */
+.login-form-side button.btn {
+	margin:0;
+	background:#39393f;
+	border:1px solid #49494f;
+	border-radius:2px;
+	color:#eeeef1;
+}
+
+/* Style "wrong password" error message */
+.login-form-side .error {
+	margin:0 15px;
+	font-family:sans-serif;
+	font-size:11px;
+	color:#e74c3c;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+-------------------------------------------------------------------*/
+
+
+			/* CONTENT CONTAINER ------ */
+
+			body > .content {
+				margin:24px 315px 80px 8px;
+			}
+			body.with-listing-chooser > .content {
+				margin-left:152px;
+				transition:margin-left 0.25s ease-in-out;
+			}
+			body.with-listing-chooser.listing-chooser-collapsed > .content {
+				margin-left:23px;
+			}
+
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.1 NAVIGATION
+-------------------------------------------------------------------*/
+
+/* Sub menu (links from..., search page, comments page etc.) container */
+.menuarea {
+	padding:10px 15px;
+	margin:0 1px;
+	background:#212125;
+	border:1px solid #28282d;
+	font-family:sans-serif;
+	font-size:11px;
+	text-transform:uppercase;
+	color:#9999a1;
+	position:relative;
+	overflow:visible;
+}
+
+/* Style dropdown list link and add custom icon */
+.dropdown.lightdrop .selected {
+	padding-left:21px;
+	padding-right:0;
+	background:url(%%menuarea-icon%%) center left no-repeat;
+	text-decoration:none;
+	color:#eeeef1;
+}
+
+/* Set pointer cursor when hovering over dropdown list link */
+.dropdown.lightdrop .selected:hover {
+	cursor:pointer;
+}
+
+			/* Style dropdown list */
+			/* TO DO: MAKE THIS STYLE CONSISTENT WITH OTHER DROPDOWNS (SRDROP ETC) */
+			.drop-choices.lightdrop {
+				min-width:80px;
+				padding:0;
+				margin:8px 0 0 -1px;
+				background:#242429;
+				border:1px solid #2c2c32;
+				box-shadow:0 0 3px rgba(16,16,18,.5);
+			}
+			.drop-choices.lightdrop:after {
+				content:"";
+				width:12px;
+				height:8px;
+				display:block;
+				position:absolute;
+				top:-8px;
+				left:5px;
+				background:url(%%spritesheet%%) no-repeat 0 -413px;
+			}
+			.drop-choices.lightdrop a {
+				padding:3px 6px;
+				font-weight:bold;
+				color:#dddde1;
+				transition:all 0.1s ease-in-out;
+			}
+			.drop-choices.lightdrop a:hover {
+				background:#2d2d35;
+				color:#eeeef1;
+			}
+
+/* Sub menu without dropdown choices (e.g. on messages page) */
+/* Hide "|" separator */
+.menuarea .separator {
+	visibility:hidden;
+}
+
+/* Set color of links and set font-weight of selected link */
+.menuarea .flat-list a {
+	font-weight:400;
+	color:#bbbbc1;
+}
+
+/* Set hover color for links */
+.menuarea .flat-list a:hover {
+	color:#eeeef1;
+}
+
+/* Set color for selected link */
+.menuarea .flat-list li.selected a,
+.menuarea .flat-list li.selected a:hover {
+	color:#fb8500;
+}
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.2 SITETABLE
+-------------------------------------------------------------------*/
+
+			.content .sitetable.linklisting, /* normal link/message listings area */ 
+			.content > .sitetable.listing, /* message/message page (messages and children) */
+			.organic-listing { /* promoted link listing */
+				border:1px solid #101014;
+			}
+			.menuarea ~ .sitetable.linklisting,
+			.infobar ~ .sitetable.linklisting,
+			.content > .sitetable.listing /* message page will follow menuarea */ {
+				border-top:0;
+			}
+			.commentarea .sitetable.linklisting { /* link listing on related page */
+				border:0;
+			}
+			.menuarea + .spacer .organic-listing { /* promoted link on top page */
+				border-top-color:#161618;
+			}
+
+
+
+			/* INFOBAR ------ */
+
+			.infobar {
+				padding:0;
+				margin:0;
+				display:block;
+				background:#252529;
+				border:1px solid #101014;
+				border-bottom:0;
+				border-radius:0;
+				font-family:sans-serif;
+			}
+			.infobar .md {
+				max-width:none;
+				padding:8px 15px;
+				border:1px solid #2b2b2b;
+				font-size:13px;
+			}
+
+			/* Gilded page */
+			.infobar.gold-accent .md {
+				color:#cd9930;
+			}
+
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+-------------------------------------------------------------------*/
+
+/* Style link containers (normal, promoted/ad) */
+.link,
+.organic-listing .link,
+.organic-listing .link.promotedlink,
+.link.promotedlink.promoted {
+	padding:9px 10px;
+	margin:0;
+	background:#202023;
+	border:1px solid #28282d;
+	border-bottom:1px solid #161618;
+}
+
+/* Need lighter bottom border on promoted/ad links */
+.organic-listing .link,
+.organic-listing .link.promotedlink {
+	border-bottom-color:#28282d;
+}
+	
+/* Add padding to stop long link titles on promoted links covering navigation */
+.organic-listing .link {
+	padding-right:60px!important;
+}
+
+/* Increase main link bottom padding on comments/related pages */
+.single-page .link {
+	padding-bottom:15px;
+}
+
+/* Style last clicked link */
+.link.last-clicked {
+	padding-top:10px;
+	margin-top:-1px;
+	position:relative;
+	background:#1f1f22;
+	border:1px solid #27272b;
+	border-bottom:1px solid #161618;
+	overflow:visible;
+}
+
+/* Add darker psuedo top border to last clicked link */
+.link.last-clicked:before {
+	content:"";
+	height:1px;
+	display:block;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	background:#161618;
+}
+			
+/* If last-clicked link is first in sitetable so reset padding and remove margin */
+#siteTable .last-clicked:first-of-type {
+	padding-top:9px;
+	margin-top:0;
+}
+
+/* If last-clicked link is first in sitetable remove pseudo border */
+#siteTable .last-clicked:first-of-type:before {
+	content:none;
+}
+
+/* Remove bottom margin from compressed links */
+.link.compressed {
+	margin-bottom:0;
+}
+
+/* Add padding to .entry in compressed links as midcol margin is reduced */
+.link.compressed .entry {
+	padding-left:10px;
+}
+
+
+			/* Borders */
+
+			#siteTable > .thing:nth-last-of-type(2) {
+				border-bottom:1px solid #28282d;
+			}
+			.comments-page .content > #siteTable .link {
+				border-bottom:1px solid #161618;
+			}
+			.menuarea ~ #siteTable > .thing:first-of-type,
+			.infobar ~ #siteTable > .thing:first-of-type,
+			.commentarea #siteTable > .link:first-of-type {
+				border-top:1px solid #161618;
+			}
+			.menuarea + .spacer .organic-listing .link {
+				border-top:0;
+			}
+			.commentarea #siteTable > .link:nth-last-of-type(2) {
+				border-bottom:0;
+			}
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.1 VOTING
+-------------------------------------------------------------------*/
+
+/* Style link rank */
+.link .rank {
+	padding:3px;
+	margin-top:10px;
+	margin-right:3px;
+	background:#1d1d1f;
+	border:1px solid #1a1a1b;
+	border-radius:1px;
+	font-size:11px;
+	font-family:sans-serif;
+	text-align:center;
+	color:#666671;
+}
+
+/* Style last clicked link rank */
+.link.last-clicked .rank {
+	background:#222226;
+	border-color:#28282d;
+}
+
+/* Adjust rank margin if compressed display */
+.link.compressed .rank {
+	margin-top:3px;
+	margin-right:5px;
+}
+		
+		
+			.organic-listing .link .rank {
+				visibility:hidden;
+			}
+			.link.promoted .rank {
+				min-width:2.2ex;
+				visibility:visible;
+			}
+			.link.stickied .rank,
+			.link.promoted .rank {
+				position:relative;
+			}
+		
+			.link.promoted .rank:after {
+				content:"AD";
+				margin-left:-1px;
+				color:#2b678f;
+			}
+			.link.stickied .rank:after {
+				content:"S";
+				margin-left:-1px;
+				color:#19927b;
+			}
+		
+			.infobar ~ .sitetable .link.promoted .rank {
+				color: #2b678f;
+			}
+			.menuarea ~ .sitetable .link.stickied .rank:after,
+			.infobar ~ .sitetable .link.promoted .rank:after {
+				content:none;
+			}
+
+
+
+			/* VOTING ------ */
+
+			.link .midcol {
+				margin:0 15px 0 5px;
+			}
+
+			/* Score */
+			.link .score {
+				font-family:sans-serif;
+				font-size:13px;
+				color:#88888e;
+			}
+			.link.compressed .score {
+				margin-right:5px;
+				font-family:verdana,arial,helvetica,sans-serif;
+				font-size:10px;
+				color:#637481;
+			}
+			.link .score.likes {
+				color:#fb8500;
+			}
+			.link .score.dislikes {
+				color:#7178e1;
+			}
+
+			/* Arrows */
+			.arrow.up,
+			.arrow.down,
+			.arrow.upmod,
+			.arrow.downmod {
+				margin:0 auto;
+				background:url(%%spritesheet%%) no-repeat;
+			}
+			.arrow.down {
+				background-position:0 -15px;
+			}
+			.arrow.downmod {
+				background-position:-15px -15px;
+			}
+			.arrow.up {
+				background-position:-30px -15px;
+			}
+			.arrow.upmod {
+				background-position:-45px -15px;
+			}
+			.arrow.up,
+			.arrow.upmod {
+				margin-bottom:-2px
+			}
+			.arrow.down,
+			.arrow.downmod {
+				margin-top:2px;
+			}
+			.link.compressed .arrow.down,
+			.link.compressed .arrow.downmod {
+				margin-top:1px;
+			}
+
+			/* Post too old to vote message */
+			.unvotable-message {
+				padding-left:0;
+				border:none;
+				font-style:italic;
+				color:#637481;
+			}
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.2 THUMBNAILS
+-------------------------------------------------------------------*/
+
+			.thumbnail {
+				margin-bottom:0;
+				margin-right:9px;
+				position:relative;
+			}
+			.self .thumbnail,
+			.thumbnail.self,
+			.thumbnail.default,
+			.thumbnail.nsfw {
+				background-image:url(%%spritesheet%%)!important;
+			}
+			.self .thumbnail {
+				background-position:center -438px;
+			}
+			.thumbnail.default {
+				background-position:center -488px;
+			}
+			.thumbnail.nsfw {
+				max-height:50px;
+				background-position:center -538px;
+			}
+			.thumbnail:before {
+				content:"";
+				display:block;
+				position:absolute;
+				top:0;
+				bottom:0;
+				left:0;
+				right:0;
+				background:rgba(30,30,35,0.2);
+			}
+			.self .thumbnail:before,
+			.thumbnail.default:before,
+			.thumbnail.nsfw:before {
+				content:none;
+			}
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.3 TITLE
+-------------------------------------------------------------------*/
+
+	.link .title,
+	.search-title {
+		margin-bottom:2px;
+		font-family:sans-serif;
+	}
+	.link.compressed .title {
+		margin:0 5px 0 0;
+	}
+	.single-page .link.compressed .title {
+		margin-bottom:2px;
+	}
+	.link a.title,
+	.single-page .link a.title:visited,
+	.single-page .link.visited a.title,
+	.gadget .reddit-link-title {
+		color:#b5c4cd;
+	}
+	.link a.title:hover,
+	.single-page .link a.title:visited:hover,
+	.single-page .link.visited a.title:hover,
+	.gadget .reddit-link-title:hover {
+		color:#ccd8de;
+	}
+	.link a.title:visited,
+	.link.visited a.title {
+		color:#808c94;
+	}
+	.link a.title:visited:hover,
+	.link.visited a.title:hover {
+		color:#97a3aa;
+	}
+	.link.stickied a.title,
+	.link.stickied a.title:visited,
+	.link.stickied.visited a.title {
+		color:#18af92;
+	}
+	.link.stickied a.title:hover,
+	.single-page .link.stickied a.title:hover {
+		color:#33c2a6;
+	}
+
+
+
+			/* POST DOMAIN ------ */
+
+			.domain,
+			.spam .domain {
+				margin-left:-5px;
+				color:#202023;
+			}
+			.last-clicked .domain {
+				color:#1f1f22;
+			}
+			.domain a,
+			.spam .domain a {
+				vertical-align:text-bottom;
+				color:#445059;
+			} 
+			.domain a:hover,
+			.title:hover ~ .domain a {
+				color:#879bb1;
+			}
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.4 TAGLINE
+-------------------------------------------------------------------*/
+
+	.tagline,
+	.sponsored-tagline,
+	.gadget small {
+		color:#637481;
+	}
+	.link.compressed .tagline {
+		margin-right:6px;
+	}
+	.link.compressed .subreddit,
+	.sponsored-tagline {
+		font-weight:normal;
+	}
+
+	/* Author/subreddit */
+	.tagline a {
+		color:#3498db;
+	}
+
+	/* Friend */
+	a.friend,
+	.tagline a.friend {
+		color:#e78c5d;
+	}
+
+	/* Submitter */
+	a.submitter,
+	.tagline a.submitter,
+	.comment.collapsed .tagline > a.submitter,
+	.comment.collapsed .tagline > a.submitter:hover {
+		color:#3498db;
+	}
+
+	/* Moderator */
+	a.moderator,
+	.tagline a.moderator,
+	.comment.collapsed .tagline > a.moderator,
+	.comment.collapsed .tagline > a.moderator:hover,
+	.tagline .stickied-tagline,
+	.message.collapsed.threaded .tagline a.moderator {
+		color:#18af92;
+	}
+
+	/* Admin */
+	a.admin,
+	.tagline a.admin,
+	.comment.collapsed .tagline > a.admin,
+	.comment.collapsed .tagline > a.admin:hover,
+	.message.collapsed.threaded .tagline a.admin {
+		color:#e04232;
+	}
+
+	/* Alumni */
+	a.alum,
+	.tagline a.alum,
+	.comment.collapsed .tagline > a.alum,
+	.comment.collapsed .tagline > a.alum:hover {
+		color:#d32a4d;
+	}
+
+	/* Font weight for admin and alumni */
+	.link .tagline a.admin,
+	.link .tagline a.alum {
+		font-weight:normal;
+	}
+	.single-page .link .tagline a.admin,
+	.single-page .link .userattrs a.admin,
+	.single-page .link .tagline a.alum,
+	.single-page .link .userattrs .alum {
+		font-weight:bold;
+	}
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.4 TAGLINE
+-------- 4.3.4.1 USER
+-------------------------------------------------------------------*/
+
+	/* Hide square brackets */
+	.tagline .userattrs {
+		color:#202023;
+	}
+	.link.last-clicked .tagline .userattrs {
+		color:#1f1f22;
+	}
+	.comment .tagline .userattrs {
+		color:#212125;
+	}
+
+	/* User type letter/icon */
+	.tagline .userattrs a,
+	.tagline .userattrs .alum,
+	.message.collapsed.threaded .tagline .userattrs a {
+		width:12px;
+		padding:0;
+		display:inline-block;
+		border:none;
+		border-radius:1px;
+		font-weight:bold;
+		text-align:center;
+		color:#101014;
+	}
+	.link .userattrs a,
+	.link .userattrs .alum {
+		font-weight:normal;
+	}
+	.comment.collapsed .tagline .userattrs a,
+	.comment.collapsed .tagline .userattrs .alum {
+		width:auto;
+		background:transparent;
+	}
+	.tagline .userattrs > a:first-of-type,
+	.tagline .userattrs > .alum:first-of-type {
+		margin-left:-5px;
+	}
+
+	/* Friend */
+	.tagline .userattrs a.friend {
+		background:#e78c5d;
+	}
+	.comment.collapsed .tagline .userattrs a.friend,
+	.comment.collapsed .tagline .userattrs a.friend:hover {
+		color:#e78c5d;
+	}
+
+	/* Submitter */
+	.tagline .userattrs a.submitter {
+		background:#3498db;
+	}
+	.comment.collapsed .tagline .userattrs a.submitter,
+	.comment.collapsed .tagline .userattrs a.submitter:hover {
+		color:#3498db;
+	}
+
+	/* Moderator */
+	.tagline .userattrs a.moderator {
+		background:#18af92;
+	}
+	.comment.collapsed .tagline .userattrs a.moderator,
+	.comment.collapsed .tagline .userattrs a.moderator:hover {
+		color:#18af92;
+	}
+
+	/* Admin */
+	.tagline .userattrs a.admin {
+		background:#e04232;
+	}
+	.comment.collapsed .tagline .userattrs a.admin,
+	.comment.collapsed .tagline .userattrs a.admin:hover {
+		color:#e04232;
+	}
+
+	/* Alumni */
+	.tagline .userattrs .alum {
+		background:#d32a4d;
+	}
+	.comment.collapsed .tagline .userattrs .alum {
+		color:#d32a4d;
+	}
+
+	/* Cakeday icon */
+	.tagline .userattrs .cakeday {
+		width:11px;
+		height:8px;
+		background:url(%%spritesheet%%) no-repeat -39px -95px;
+	}
+
+
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.4 OPTIONS
+-------------------------------------------------------------------*/
+
+	/* POST OPTIONS ------ */
+
+	.link .entry .flat-list {
+		padding:0;
+	}
+	.single-page .link .flat-list.buttons {
+		padding-left:1px;
+	}
+
+	/* Links */
+	.entry .buttons li a {
+		font-weight:normal;
+		color:#637481;
+	}
+	.link .entry .buttons li.first a {
+		font-weight:bold;
+		color:#3498db;
+	}
+	.entry .buttons li a:hover,
+	.link .entry .buttons li.first a:hover {
+		color:#9ab2ca;
+	}
+	.link .entry .buttons li .option.error > a {
+		color:#e74c3c;
+	}
+	.link.stickied .entry .buttons li.first a {
+		color:#18af92;
+	}
+	.link.stickied .entry .buttons li a:hover {
+		color:#a8cac3;
+	}
+	.link .entry .buttons li a:active,
+	.link .entry .buttons li a:focus {
+		outline:none;
+	}
+
+
+
+				/* NSFW AND PRIVATE TAGS ------ */
+
+				.nsfw-stamp,
+				.private-stamp {
+					padding:0;
+					margin-right:2px;
+					border:0;
+				}
+				.nsfw-stamp acronym {
+					font-weight:600;
+					color:#e74c3c;
+				}
+				.private-stamp {
+					font-weight:bold;
+					text-transform:uppercase;
+					color:#f27935;
+				}
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.4 OPTIONS
+-------- 4.3.4.1 ACTION
+-------------------------------------------------------------------*/
+
+	.action-form {
+		padding:8px;
+		background:#252529;
+		border:1px solid #303036;
+		border-radius:0;
+		font-family:sans-serif;
+	}
+	.pretty-form.sharelink {
+		padding-top:10px;
+		margin-top:10px;
+		font-family:sans-serif;
+	}
+	.action-form input[type="text"],
+	.pretty-form.sharelink input[type="text"] {
+		background:#292929;
+		border:1px solid #393939;
+		box-shadow:none;
+		color:#eeeef1;
+	}
+	.action-form input[type="text"] {
+		padding:2px;
+		background:#303036;
+		border-color:#404047;
+	}
+	.pretty-form.sharelink .little.gray {
+		font-size:11px;
+		font-weight:normal;
+		color:#99999f;
+	}
+	.sharetable.preftable button {
+		margin-top:5px;
+		background:#39393f;
+		border:1px solid #49494f;
+		border-radius:1px;
+		color:#eeeef1;
+	}
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.4 OPTIONS
+-------- 4.3.4.2 MOD
+-------------------------------------------------------------------*/
+
+	.flat-list.buttons li.reported-stamp,
+	.flat-list.buttons .pretty-button.neutral,
+	.flat-list.buttons .pretty-button.negative,
+	.flat-list.buttons .pretty-button.positive {
+		padding:1px 4px;
+		background:#353535;
+		border:0!important;
+		border-radius:3px;
+		line-height:normal;
+	}
+	.flat-list.buttons li.reported-stamp {
+		margin-left:5px;
+		color:#f6e69f;
+	}
+	.flat-list.buttons .pretty-button.neutral {
+		color:#bbb;
+	}
+	.flat-list.buttons .pretty-button.negative {
+		color:#fa6157;
+	}
+	.flat-list.buttons .pretty-button.positive {
+		color:#27ae60;
+	}
+
+	/* Pressed */
+	.flat-list.buttons .pretty-button.neutral.pressed {
+		background:#999;
+	}
+	.flat-list.buttons .pretty-button.negative.pressed {
+		background:#fa6157;
+	}
+	.flat-list.buttons .pretty-button.positive.pressed {
+		background:#27ae60;
+	}
+	.flat-list.buttons .pretty-button.pressed {
+		color:#101010;
+	}
+
+	/* Status message */
+	.flat-list.buttons .big-mod-buttons .status-msg {
+		color:#637481;
+	}
+	.flat-list.buttons > li > b {
+		font-weight:normal;
+		color:#637481;
+	}
+
+	/* Report reasons */
+	ul.report-reasons {
+		margin-top:3px;
+		background:#252525;
+		border:1px solid #2d2d2d;
+		border-radius:0;
+	}
+
+
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.5 EXPANDO
+-------------------------------------------------------------------*/
+
+	.link .entry .expando-button {
+		width:20px;
+		height:20px;
+		margin:4px 8px 0 0;
+		border:1px solid #151519;
+		background:url(%%spritesheet%%) no-repeat -9999px -9999px #252529!important;
+		transition:background-color 0.15s ease-in-out,background-position 0.15s ease-in-out;
+	}
+	.link .expando-button:hover {
+		cursor:pointer;
+	}
+
+	/* Self */
+	.link .entry .expando-button.selftext.collapsed {
+		background-position:0 -302px!important;
+	}
+	.link .entry .expando-button.selftext.expanded {
+		background-position:0 -282px!important;
+	}
+
+	/* Video/GIF */
+	.link .entry .expando-button.video.collapsed,
+	.link .entry .expando-button.video-muted.collapsed {
+		background-position:0 -342px!important;
+	}
+	.link .entry .expando-button.video.expanded,
+	.link .entry .expando-button.video-muted.expanded {
+		background-position:0 -322px!important;
+	}
+
+	/* Image (RES) */
+	.link .entry .expando-button.image.collapsed,
+	.link .entry .expando-button.image.expanded {
+		background-position:-30px -282px!important;
+	}
+	.link .entry .expando .error {
+		font-family:sans-serif;
+		font-size:12px;
+	}
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.3 LINKS
+------ 4.3.6 MARKDOWN
+-------------------------------------------------------------------*/
+
+	.link .usertext .md {
+		padding:0;
+		margin:10px 1px 5px;
+	}
+	.link .usertext-body .md {
+		padding:5px 8px;
+		position:relative;
+		background:#252529;
+		border:1px solid #101014;
+		border-radius:0;
+		font-family:sans-serif;
+		color:#dddde1;
+		z-index:1;
+	}
+	.link .md h1,
+	.link .md h2,
+	.link .md h3,
+	.link .md h4,
+	.link .md h5 {
+		font-weight:bold;
+	}
+
+
+
+
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.4 COMMENTS
+-------------------------------------------------------------------*/
+
+	.commentarea {
+		padding:5px 5px 10px;
+		background:#212124;
+		border:1px solid #28282d;
+		position:relative;
+		margin:-1px 1px 0;
+	}
+	.commentarea .sitetable.nestedlisting {
+		margin:0 10px;
+	}
+
+	/* Title */
+	.commentarea .panestack-title {
+		padding:10px;
+		margin:0;
+		border:none;
+		font-family:sans-serif;
+	}
+	.commentarea .panestack-title .title {
+		font-size:14px;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#eee;
+	}
+	.panestack-title a.title-button.gold {
+		padding:0;
+		background:transparent;
+		border:none;
+		color:#cd9930;
+	}
+
+	/* Menu */
+	.commentarea .menuarea {
+		margin:10px;
+		color:#888891;
+	}
+	.commentarea .panestack-title + .menuarea {
+		margin-top:0;
+	}
+	.commentarea .menuarea .error,
+	.commentarea .menuarea .error > a {
+		color:#e74c3c;
+	}
+
+			/* Contest mode */
+			.contest-mode.infobar {
+				margin:10px 0 -10px;
+				background:transparent;
+				border:0;
+				font-size:11px;
+				text-transform:none;
+			}
+			.contest-mode.infobar strong {
+				font-style:italic;
+				text-transform:uppercase;
+				color:#bbb;
+			}
+
+	/* Sticky button */
+	.commentarea .menuarea .toggle.set_subreddit_sticky-button .option,
+	.commentarea .menuarea .toggle.set_subreddit_sticky-button .option.active a {
+		color:#18af92;
+	}
+
+	/* COMMENTS ------ */
+
+	/* Entry field container */
+	.comment .usertext-edit {
+		margin-bottom:10px;
+	}
+
+	/* Body */
+	.commentarea .comment {
+		padding-top:1px;
+		padding-left:0;
+		margin-left:0;
+	}
+	.comment.collapsed {
+		padding-top:0;
+		padding-bottom:0;
+		margin-bottom:10px;
+	}
+	.comment .child,
+	.comment .showreplies {
+		padding-left:10px;
+		margin-left:20px;
+		margin-bottom:10px;
+		border-color:#333;
+	}
+
+	/* Top level comments */
+	.commentarea .sitetable.nestedlisting > .comment {
+		padding-top:10px;
+		margin-top:1px;
+		position:relative;
+		border-top:1px solid #2a2a2f;
+	}
+	.commentarea .sitetable.nestedlisting > .comment:before {
+		position:absolute;
+		content:"";
+		display:block;
+		height:1px;
+		background:#1a1a1b;
+		top:-2px;
+		left:0;
+		right:0;
+	}
+	.commentarea .sitetable.nestedlisting > .comment.collapsed {
+		padding-top:9px;
+		margin-bottom:11px;
+	}
+	.commentarea .sitetable.nestedlisting > .comment:nth-last-of-type(2) {
+		border-bottom:none;
+	}
+
+
+
+	/* COMMENT TAGLINE ------ */
+
+	.comment.collapsed .tagline,
+	.comment.collapsed .tagline a {
+		color:#637381;
+	}
+	.comment.collapsed .tagline a:hover {
+		color:#9ab2ca
+	}
+
+	/* Expand button */
+	.comment a.expand,
+	.comment.collapsed a.expand,
+	.message .entry .tagline a.expand,
+	.message.collapsed.threaded .tagline a.expand {
+		padding:0;
+		margin-right:4px;
+		color:#637481;
+		transition:color 0.15s ease-in-out;
+	}
+	.comment a.expand:hover,
+	.comment.collapsed a.expand:hover,
+	.message .entry .tagline a.expand:hover,
+	.message.collapsed.threaded .tagline a.expand:hover {
+		color:#9ab2ca;
+	}
+
+
+
+	/* COMMENT MARKDOWN ------ */
+
+	.comment .md {
+		background:transparent;
+		border:1px solid #292929;
+		border:none;
+		font-family:sans-serif;
+		color:#ddd;
+	}
+
+
+
+	/* COMMENT OPTIONS ------ */
+
+	.comment .flat-list.buttons {
+		margin-left:-1px;
+	}
+	.deepthread:after {
+		content:none;
+	}
+	.morecomments a,
+	.deepthread a {
+		padding:0 2px 1px 4px;
+		/*background:#2d2d2d;
+		border-radius:2px;*/
+		font-size:10px;
+		font-weight:bold;
+		color:#9ab2ca;
+	}
+	.morecomments a .gray {
+		color:#637481;
+	}
+	.morecomments a:hover,
+	.deepthread a:hover {
+		background:#303030;
+		color:#b6c9dc;
+	}
+	.deepthread a:after {
+		content:"";
+		width:24px;
+		height:7px;
+		padding-right:2px;
+		margin-left:5px;
+		display:inline-block;
+		background:url(%%spritesheet%%) no-repeat -34px -85px;
+	}
+
+
+
+	/* PERMALINK ------ */
+
+
+	.single-page.comments-page .commentarea > .infobar {
+		padding:8px 10px;
+		margin:10px;
+		border:1px solid #303036;
+		font-size:12px;
+	}
+
+	.comment .usertext.border .usertext-body {
+		padding:0 7px;
+		margin:5px 0 0;
+		background:#202020;
+		border:1px solid #1b1b1b;
+	}
+
+	/* GOLD HIGHLIGHTING */
+	.gold-accent.comment-visits-box {
+		padding:0;
+		margin-left:10px;
+		background:transparent;
+		border-radius:0;
+		border:none;
+		font-family:sans-serif;
+		color:#cd9930;
+	}
+	.new-comment .usertext-body {
+		margin:5px 10px 0 0;
+		padding-left:5px;
+		background:#292929;
+		border:1px solid #303030;
+	}
+	.new-comment .usertext-body .md {
+		margin:5px 0;
+		padding:0;
+	}
+
+	/* COMMENT LISTING */
+	.sitetable.linklisting .comment {
+		padding:10px 15px;
+		margin:0;
+		background:#202023;
+		border:1px solid #28282d;
+		border-bottom-color:#161618;
+	}
+	.menuarea ~ .sitetable.linklisting > .comment:first-of-type {
+		border-top-color:#161618;
+	}
+	.sitetable.linklisting .comment.collapsed {
+		padding-top:9px;
+	}
+	.sitetable.linklisting .comment .parent {
+		margin:0 0 6px 22px;
+		color:#637481;
+	}
+	.sitetable.linklisting .comment .parent a {
+		font-weight:normal;
+	}
+	.sitetable.linklisting .comment .parent a.title {
+		font-size:10px;
+		color:#aebec8;
+		color:#b5c4cd;
+	}
+	.sitetable.linklisting .comment .midcol,
+	.sitetable.linklisting .message .midcol {
+		margin-top:2px;
+	}
+	.sitetable.linklisting.comment.collapsed .tagline {
+		margin-top:-2px;
+	}
+	.sitetable.linklisting .comment > .child {
+		margin:0;
+	}
+	
+	
+	
+/*------------------------------------------------------------------
+-- 4. CONTENT
+---- 4.5 TRENDING
+-------------------------------------------------------------------*/
+
+/* Trending subreddits container (front page) */
+.trending-subreddits {
+	padding:8px 10px;
+	margin:8px 1px -6px;
+	position:relative;
+	background:#1e1e20;
+	border:1px solid #27272b;
+	border-bottom:1px solid #161618;
+}
+
+/* Adjust container margin with compressed links on */
+body.compressed-display .trending-subreddits {
+	margin-left:1px;
+}
+
+/* Rank and midcol elements don't appear but have width so remove */
+.trending-subreddits .rank-spacer,
+.trending-subreddits .midcol-spacer {
+	display:none;
+}
+
+/* Set "trending subreddits" text color to green */
+.trending-subreddits strong {
+	color:#27ae60;
+}
+
+/* Replace trending icon with custom one */
+.trending-subreddits strong:before {
+	width:15px;
+	height:11px;
+	background:url(%%spritesheet%%) no-repeat -38px -65px;
+}
+
+/* Style "x comments" link at end */
+.trending-subreddits .comments {
+	font-weight:normal;
+	color:#637481;
+}
+
+/* Set hover color of "x comments" link */
+.trending-subreddits .comments:hover {
+	color:#9ab2ca;
+}
+
+
+
+
+	/* SPAM/REPORTED */
+	.thing.reported {
+		border-left:3px solid #e3d493!important;
+	}
+	.thing.spam {
+		border-left:3px solid #fa6157!important;
+	}
+	.sitetable.linklisting .link.spam {
+		background:#202020;
+	}
+	.sitetable.linklisting .comment.spam,
+	.sitetable.linklisting .comment.reported
+	/*.sitetable > .message.spam*/ {
+		padding-left:13px;
+	}
+	.sitetable.linklisting .link.spam,
+	.sitetable.linklisting .link.reported {
+		padding-left:8px;
+	}
+	.commentarea .comment.reported,
+	.commentarea .comment.spam {
+		padding-left:10px;
+		margin-left:-13px;
+		background:transparent;
+	}
+	.thing.spam.banned-user {
+		opacity:0.5;
+	}
+	.thing.spam.banned-user:hover {
+		opacity:1;
+	}
+	.comment.spam > .child {
+		padding-left:10px;
+		margin-left:20px;
+		background:transparent;
+	}
+	.message.spam > .child {
+		background:transparent;
+	}
+
+	/* MESSAGES */
+	.sitetable > .message {
+		background:#202023;
+	}
+	.content > .sitetable > .message {
+		padding:10px 15px;
+		margin:0;
+		background:#202023;
+		border:1px solid #28282d;
+		border-bottom:1px solid #161618;
+		-webkit-transition:all 0.1s ease-in-out;
+	}
+	.menuarea ~ .sitetable > .message:nth-of-type(1) {
+		border-top:1px solid #161618;
+	}
+	.message .subject,
+	.message.message-parent .subject {
+		margin-bottom:5px;
+		font-family:sans-serif;
+	}
+	.message.was-comment .subject {
+		margin-bottom:7px;
+	}
+	.message .subject .subject-text {
+		color:#eeeef1;
+	}
+	.message .subject a.title {
+		color:#aebec8;
+		color:#b5c4cd;
+	}
+	.message .subject .correspondent {
+		padding:0;
+	  background:#39393f;
+		border:1px solid #161618;
+		border-radius:1px;
+	}
+	.message .subject .correspondent a {
+		padding:2px 5px;
+		display:block;
+	  border:1px solid #45454b;
+		border-radius:1px;
+		color:#eeeef1;
+	}
+	.message .subject .correspondent a.author {
+		margin-right:0;
+	}
+	.message .subject .expand-btn {
+		margin:8px 10px 5px 0;
+		font-family:verdana,sans-serif;
+	}
+	.message.message-reply .entry,
+	.message.message-reply:not(.threaded) .entry,
+	.message.message-parent .entry,
+	.message.message-parent:not(.threaded) .entry {
+		padding-bottom:0;
+		margin-left:1px;
+		margin-bottom:10px;
+		border-left:1px dashed #494950;
+	}
+	
+	.message.threaded .child {
+		margin-left:20px;
+		border-left:1px dashed #494950;
+	}
+.message-parent.threaded > .child {
+	margin-left:22px;
+}
+.message-parent.threaded > .child > .sitetable {
+	position:relative;
+}
+.message-parent.threaded > .child > .sitetable:before {
+	content:"";
+	border-left:1px dashed #494950;
+	position:absolute;
+	left:-22px;
+	bottom:0;
+	width:1px;
+	top:-6px;
+}
+.message-reply.threaded .entry {
+  margin-left:0;
+  border-left:0;
+}
+	
+	
+	.message.new > .entry {
+		padding:5px 10px;
+		background:#232327;
+		border-color:#2d2d33;
+		margin-left:0;
+		border-left:3px solid #fb8500;
+	}
+	.message.spam > .entry {
+		border-left:none;
+	}
+	.message .entry a.parent-link {
+		padding:0;
+		margin:5px 0 0;
+		display:inline-block;
+	}
+	.message .tagline {
+		color:#637481;
+	}
+	.message.message-parent .tagline, 
+	.message.message-reply .tagline {
+		margin-bottom:5px;
+		color:#637481;
+	}
+	.message.message-reply.recipient > .entry .head, 
+	.message.message-parent.recipient > .entry .head {
+		font-weight:normal;
+		color:#637481;
+	}
+	.message .collapsed .head {
+	  font-style:normal;
+		color:#637481;
+	}
+	.message.new > .entry .head {
+		font-weight:normal;
+		color:#e74c3c;
+	}
+	.message.collapsed > .entry .head > a[id^="more"] {
+		font-size:10px!important;
+		font-weight:normal!important;
+	}
+	.message.collapsed.threaded .tagline a {
+		color:#3498db;
+	}
+	.message.collapsed.threaded .head {
+		color:#637481;
+	}
+	/*.message.collapsed .tagline .head a {
+		color:#637481;
+	}*/
+	.message.collapsed.threaded .tagline :not(.expand),
+	.message.collapsed.threaded .tagline a :not(.expand) {
+		font-style:normal;
+	}
+	.message .entry .md {
+		padding:5px 8px;
+		margin:5px 1px;
+		position:relative;
+		background:#252529;
+		border:1px solid #303036;
+		font-family:sans-serif;
+		color:#dddde1;
+		z-index:1;
+	}
+	.message.message-parent .entry .md,
+	.message.message-reply .entry .md {
+		color:#6ebf83;
+		color:#6ebf88;
+	}
+	.message.message-parent.recipient > .entry .md,
+	.message.recipient > .entry .md {
+		color:#dddde1;
+	}
+	.message .usertext-edit .md {
+		margin:5px 0;
+	}
+	.message .entry .flat-list.buttons {
+		margin-left:0;
+	}
+	.message.gold {
+		max-width:none;
+		border-radius:0;
+	}
+	.message.gold .subject {
+		max-width:36em;
+		text-shadow:none;
+	}
+	.message.gold .entry .md {
+		max-width:50em;
+		text-shadow:none;
+	}
+
+	/* ??? .messages-page .message .entry .parent {
+		max-width:none;
+		margin:5px 0;
+		border:none;
+	}
+	.messages-page .message .entry .parent .md {
+		border-color:#292929;
+	}*/
+
+
+
+	/* COMPOSE MESSAGE */
+	.compose-page .content > h1 {
+		width:500px;
+		padding:10px 15px;
+		margin:0;
+		position:relative;
+		background:#212125;
+		border:1px solid #28282d;
+		font-family:sans-serif;
+		font-size:15px;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#eeeef1;
+	}
+	.compose-page .content > form > .spacer {
+		margin:0;
+	}
+	.compose-page .content > form .roundfield {
+		padding:10px 15px;
+		margin:0;
+		position:relative;
+		background:#202023;
+		border:1px solid #28282d;
+		border-top:none;
+		border-bottom:none;
+		border-radius:0;
+		font-family:sans-serif;
+	}
+	.compose-page .content > form > .spacer:first-of-type .roundfield {
+		border-top:1px solid #161618;
+	}
+	.compose-page .content > form > .spacer:nth-last-of-type(2) .roundfield {
+		border-bottom:1px solid #28282d;
+	}
+	.compose-page .content > form > .spacer:nth-last-of-type(2) .roundfield:before {
+		border-bottom:1px solid #101014;
+		bottom:-2px;
+	}
+	.compose-page .content > form .roundfield .title {
+		font-size:16px;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#eeeef1;
+	}
+	.compose-page .content > form .roundfield .gray {
+		font-size:12px;
+		color:#bbbbc1;
+	}
+	.compose-page #compose-message .status {
+		font-size:11px;
+	}
+
+	/* NO RESULTS */
+	.sitetable #noresults {
+		padding:10px 15px;
+		margin:0;
+		border:1px solid #28282d;
+		background:#202023;
+		font-family:sans-serif;
+		color:#9999a1;
+	}
+	.single-page .sitetable #noresults {
+		padding:10px 0 0;
+		background:transparent;
+		border:none;
+		border-top:1px solid #28282d;
+		/*now need dark border commentarea*/
+	}
+	.commentarea #noresults {
+		padding:0 10px 5px;
+		background:transparent;
+	}
+	.menuarea ~ .sitetable > #noresults,
+	.infobar ~ .sitetable > #noresults {
+		border-top:1px solid #161618;
+	}
+
+	/* PAGINATION */
+	.nextprev {
+		height:30px;
+		padding:0 15px;
+		margin:0;
+		display:block;
+		background:#212125;
+		border:1px solid #28282d;
+		font-family:sans-serif;
+		font-size:11px;
+		line-height:31px;
+		text-transform:uppercase;
+		color:#9999a1;
+	}
+	.nextprev a {
+		padding:1px 0;
+		background:transparent;
+		border:none;
+		border-radius:0;
+		font-weight:bold;
+		color:#eeeef1;
+	}
+	.nextprev > a:first-of-type {
+		margin-left:2px;
+	}
+	.explore-page .nextprev > a:first-of-type {
+		margin-left:0;
+	}
+	.nextprev a:hover {
+		background:transparent;
+		border:none;
+	}
+	.nextprev .separator {
+		margin:0;
+		visibility:hidden;
+	}
+	.nav-buttons .next-suggestions {
+		padding:8px 15px;
+		margin:0;
+		display:block;
+		background:#202020;
+		border:1px solid #272727;
+		border-top:1px solid #181818;
+		text-transform:uppercase;
+		font-size:11px;
+		font-family:sans-serif;
+		color:#999;
+	}
+	.nav-buttons .next-suggestions a {
+		padding:0;
+		background:transparent;
+		border:none;
+		font-weight:bold;
+	}
+
+	/* PROMOTED LINKS NAV */
+	.organic-listing .nextprev {
+		height:auto;
+		padding:0;
+		margin:0;
+		background:#1d1d1d;
+		border-top:1px solid #222;
+		border-right:1px solid #222;
+		border-bottom:1px solid #272727;
+		border-left:1px solid #272727;
+		line-height:normal;
+	}
+	.organic-listing .nextprev:before {
+		content:"";
+		width:14px;
+		height:27px;
+		display:block;
+		position:absolute;
+		top:-1px;
+		left:-14px;
+		background:url(%%nextprev-bg%%) no-repeat 0 0;
+	}
+	.organic-listing .nextprev .arrow.prev,
+	.organic-listing .nextprev .arrow.next {
+		width:25px;
+		height:25px;
+		padding:0;
+		margin:0;
+		position:relative;
+		background:url(%%nextprev%%) no-repeat -9999px -9999px transparent;
+		border:none;
+	}
+	.organic-listing .nextprev .arrow.prev:active,
+	.organic-listing .nextprev .arrow.next:active {
+		top:0;
+		bottom:0;
+	}
+	.organic-listing .nextprev .arrow.prev:active {
+		background-position:2px 4px;
+	}
+	.organic-listing .nextprev .arrow.next:active {
+		background-position:-17px 4px;
+	}
+	.organic-listing .nextprev .arrow.prev {
+		background-position:2px 3px;
+	}
+	.organic-listing .nextprev .arrow.next {
+		background-position:-17px 3px;
+	}
+
+	/* FOOTER */
+	.footer-parent {
+		padding:40px 0;
+		transition:margin-left 0.25s ease-in-out;
+	}
+	.footer {
+		border:none;
+	}
+	.footer .col {
+		border:none;
+	}
+	.footer .flat-vert.title {
+		font-family:sans-serif;
+		font-size:14px;
+		text-transform:capitalize;
+		color:#66666d;
+	}
+	.footer .flat-vert li a {
+		font-family:sans-serif;
+		color:#aaaaae;
+	}
+	.footer .flat-vert li a:hover {
+		color:#eeeef1;
+	}
+	.footer .flat-vert li a.buygold,
+	.footer .flat-vert li a.buygold:hover {
+		font-weight:normal;
+		color:#cd9930;
+	}
+	.footer-parent p.bottommenu {
+		font-family:sans-serif;
+		font-size:11px;
+		color:#808087;
+	}
+	.footer-parent p.bottommenu a {
+		text-decoration:none;
+		color:#3498DB;
+	}
+
+	/* DEBUGINFO */
+	body > .debuginfo {
+		background:#1e1e20;
+		border-top:1px solid #25252a;
+		position:relative;
+	}
+	body.with-listing-chooser > .debuginfo {
+		margin-left:153px;
+		border-left:1px solid #25252a;
+		transition:margin-left 0.25s ease-in-out;
+	}
+	body.with-listing-chooser.listing-chooser-collapsed > .debuginfo {
+		margin-left:23px;
+	}
+	body > .debuginfo:after {
+		content:"Carbon by /u/ggitaliano";
+		padding:3px 0 0 5px;
+		float:left;
+		font-family:sans-serif;
+		color:#66666d;
+	}
+
+	/* SUBMIT PAGE */
+	.submit-page .content > .submit.content {
+		width:520px;
+		padding:0px;
+		margin:0;
+		background:transparent;
+		border:none;
+	}
+	.submit-page .content > h1 {
+		display:none;
+	}
+	.submit-page > .content ul.tabmenu.formtab {
+		width:520px;
+		padding:0;
+		margin:0;
+		border:1px solid #101014;
+		border-bottom:none;
+	}
+	.submit-page > .content ul.tabmenu.formtab li a {
+		width:238px;
+		height:35px;
+		padding:0 10px;
+		display:inline-block;
+		background:#202023;
+		border:1px solid #28282d;
+		font-family:lato,sans-serif;
+		font-size:12px;
+		font-weight:400;
+		letter-spacing:1px;
+		line-height:35px;
+		text-align:center;
+		text-transform:uppercase;
+		color:#888;
+		-webkit-transition:background 0.15s ease-in-out,color 0.15s ease-in-out;
+		-moz-transition:background 0.15s ease-in-out,color 0.15s ease-in-out;
+		-o-transition:background 0.15s ease-in-out,color 0.15s ease-in-out;
+		transition:background 0.15s ease-in-out,color 0.15s ease-in-out;
+	}
+	.submit-page > .content ul.tabmenu.formtab li.selected a {
+		background:#282828;
+		border:1px solid #303030!important;
+		color:#fb8500;
+	}
+	.submit-page > .content ul.tabmenu.formtab li a:hover {
+		color:#eee;
+	}
+	.submit-page > .content ul.tabmenu.formtab li.selected a:hover {
+		color:#fb8500;
+	}
+	.submit-page > .content ul.tabmenu.formtab li.selected + li a {
+		border-left-color:#202020;
+	}
+	.submit-page > .content ul.tabmenu.formtab > li:first-of-type a {
+		border-right-color:#202020;
+	}
+	.submit-page > .content .formtabs-content {
+		width:520px;
+		padding-top:0px;
+		margin-top:0;
+		border-top:1px solid #161618;
+		border-bottom:1px solid #161618;
+		border-left:1px solid #101014;
+		border-right:1px solid #101014;
+	}
+	.submit-page .formtabs-content .spacer {
+		margin:0;
+	}
+	.submit-page .formtabs-content .infobar {
+		padding:10px;
+		border:1px solid #2d2d2d;
+		font-size:11px;
+		color:#ddd;
+	}
+	.submit-page .tabmenu.formtab + .formtabs-content .infobar {
+		border-top:none;
+	}
+	.submit-page .formtabs-content .roundfield {
+		background:#202023;
+		border:1px solid #28282d;
+		border-top:none;
+		border-bottom:none;
+		border-radius:0;
+		width:498px;
+		padding:10px;
+	}
+	.submit-page #sr-autocomplete-area {
+		z-index:9;
+	}
+	.submit-page .formtabs-content .roundfield#title-field {
+		padding-top:10px;
+		border-top:1px solid #161618;
+	}
+	.submit-page .formtabs-content .roundfield .title {
+		font-family:sans-serif;
+		font-size:16px;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#eeeef1;
+	}
+	.submit-page .formtabs-content .roundfield .gray {
+		font-family:sans-serif;
+		font-size:12px;
+		color:#bbbbbe;
+	}
+	.submit-page .formtabs-content .roundfield#text-field,
+	.submit-page .formtabs-content .roundfield#url-field {
+		margin-bottom:-10px;
+	}
+	.submit-page .roundfield #suggest-title button {
+		padding:0;
+		margin-top:0;
+		background:transparent;
+		border:none;
+		font-family:sans-serif;
+		color:#3498db;
+	}
+	.submit-page .roundfield .roundfield-content .error {
+		float:left;
+		font-family:sans-serif;
+		font-size:11px;
+		color:#e74c3c;
+	}
+	.submit-page .roundfield#url-field .roundfield-content .error {
+		margin-top:4px;
+	}
+	.submit-page .formtabs-content .roundfield#reddit-field {
+		padding-bottom:20px;
+	}
+	.submit-page .formtabs-content .roundfield#reddit-field #suggested-reddits {
+		display:none;
+	}
+
+	.submit-page .formtabs-content .roundfield.submit_text.enabled {
+	color:#ddd;
+	background:#222;
+	border-top:1px solid #272727;
+	border-bottom:1px solid #272727;
+	font-family:sans-serif;
+	position:relative;
+	z-index:1;
+	/*overflow:visible;*/
+	}
+	.submit-page .formtabs-content .roundfield.submit_text.enabled:before {
+	content:"";
+	z-index:-1;
+	background:#181818;
+	position:absolute;
+	top:-2px;
+	height:1px;
+	left:0;
+	right:0;
+	}
+	.submit-page .formtabs-content .roundfield.submit_text.enabled:after {
+	content:"";
+	z-index:-1;
+	background:#181818;
+	position:absolute;
+	height:1px;
+	bottom:-2px;
+	left:0;
+	right:0;
+	}
+
+	.submit-page .formtabs-content .roundfield.submit_text.enabled > h1 {
+		margin-top:0;
+		color:#eee;
+	}
+	.submit-page .formtabs-content .roundfield.submit_text.enabled .md {
+		color:#ddd;
+	}
+	.submit-page .formtabs-content > .spacer:last-of-type > .roundfield {
+		padding:10px 10px 15px;
+	}
+	.submit-page .roundfield-content > label {
+		font-family:sans-serif;
+		font-size:12px;
+		color:#ddd;
+	}
+	.submit-page .content.submit .info-notice {
+		width:499px;
+		padding-left:10px;
+		margin:0px 0 15px 1px;
+		position:relative;
+		background:#212125;
+		border:1px solid #28282d;
+		border-radius:0;
+		font-family:sans-serif;
+		font-size:11px;
+		color:#dddde1;
+		z-index:1;
+	}
+	.submit-page .content.submit .info-notice:before {
+		content:none;
+	}
+	.submit-page .content.submit .info-notice a {
+		font-weight:normal;
+		text-decoration:none;
+	}
+
+	/* BUTTONS */
+	.submit-page .content.submit .btn[name="submit"],
+	.compose-page .content > form > button#send,
+	.wiki-page .wiki-page-content #editform input#wiki_save_button {
+	display:inline-block;
+	padding:0;
+	border-radius:1px;
+	background:#39393f;
+	border:1px solid #49494f;
+	color:#eeeef1;
+	font-weight:400;
+	position:relative;
+  }
+	.submit-page .content.submit .btn[name="submit"],
+	.compose-page .content > form > button#send {
+	letter-spacing:1px;
+	text-transform:uppercase;
+	font-family:lato, sans-serif;
+	}
+	.wiki-page .wiki-page-content #editform input#wiki_save_button {
+		padding:4px 6px;
+	}
+	.submit-page .content.submit .btn[name="submit"] {
+		margin:0;
+	height:35px;
+		width:100%;
+	font-size:13px;
+	}
+	.compose-page .content > form > button#send {
+		height:28px;
+		padding:0 15px;
+		margin-top:10px;
+		margin-left:0;
+		font-size:11px;
+		text-shadow:0 2px 4px #212125;
+	}
+
+
+
+
+/*------------------------------------------------------------------
+-- 7. Search Page
+---- 7.1 Legacy
+-------------------------------------------------------------------*/
+
+
+	/* SEARCH PAGE */
+	.search-page .side > .spacer:first-of-type {
+		margin-bottom:0;
+	}
+	
+	/* Main search area */
+	.searchpane.raisedbox {
+		padding:15px 15px 15px 15px;
+		margin:0 1px;
+		position:relative;
+		background:#212125;
+		border:1px solid #28282d;
+	}
+	.searchpane.raisedbox > h4 {
+		margin-bottom:5px;
+		font-family:sans-serif;
+		font-size:12px;
+		text-transform:capitalize;
+		color:#eeeef1!important;
+	}
+	
+	
+	.searchpane.raisedbox #search input[type="text"] {
+		padding:6px 7px;
+		background:#27272d;
+		border:1px solid #32323a;
+		font-size:12px;
+		color:#eeeef1!important;
+	}
+	.searchpane.raisedbox #search input[type="text"]:hover,
+	.searchpane.raisedbox #search input[type="text"]:active,
+	.searchpane.raisedbox #search input[type="text"]:focus {
+		border-color:#46464a;
+	}
+	.search-page .searchpane.raisedbox #search label,
+	.search-page .searchpane.raisedbox #moresearchinfo dl {
+		color:#ddd;
+	}
+	.search-page .searchpane.raisedbox #previoussearch #moresearchinfo {
+		margin:10px 0;
+		border-color:#333339;
+	}
+	.search-page .searchpane.raisedbox #moresearchinfo > p {
+		margin:0 0 10px;
+		color:#dddde1;
+	}
+	.search-page .searchpane.raisedbox + .menuarea {
+		margin-top:9px;
+	}
+	.search-page .searchpane.raisedbox + .menuarea:after {
+		content:"";
+		height:1px;
+		display:block;
+		position:absolute;
+		top:-2px;
+		left:-2px;
+		right:-2px;
+		background:#101014;
+		z-index:-1;
+	}
+	
+	/* Narrow down by subreddit container */
+	.search-page .searchfacets {
+		padding:10px 10px 25px;
+		margin:0 0 8px;
+		position:relative;
+		background:#202023;
+		border:1px solid #101014;
+		border-top:none;
+		box-shadow:none;
+		z-index:1;
+	}
+	.search-page .searchfacets:before {
+		content:"";
+		display:block;
+		position:absolute;
+		top:0;
+		bottom:0px;
+		left:0px;
+		right:0px;
+		border:1px solid #28282d;
+		border-top:1px solid #161618;
+		z-index:-1;
+	}
+	.search-page .searchfacets .list {
+		margin:0;
+	}
+	.search-page .searchfacets h4.title {
+		font-family:sans-serif;
+		font-size:12px;
+		color:#eeeef1;
+	}
+	.search-page .searchfacets .list li {
+		margin-right:20px;
+		margin-bottom:1px;
+		font-family:sans-serif;
+		font-size:12px;
+	}
+	.search-page .searchfacets .list li .facet.count {
+		font-size:11px;
+		font-weight:normal;
+		color:#637481;
+	}
+	.search-page .searchfacets .list li .facet.count:hover {
+		text-decoration:none;
+	}
+	.search-page > .content > .sitetable.searchlisting {
+		border:1px solid #101014;
+		border-top:none;
+	}
+	
+	/* Subreddits search results */
+.combined-search-page .searchpane.raisedbox > h4 {
+	text-transform:uppercase;
+	font-size:11px;
+}
+.combined-search-page #search label,
+.combined-search-page #moresearchinfo,
+.combined-search-page #previoussearch p {
+	font-size:10px;
+}
+.combined-search-page .search-submit-button {
+  padding:4px 8px;
+  margin-top:0;
+	background:#39393f;
+  border:1px solid #49494f;
+  border-radius:2px;
+}
+.combined-search-page .search-icon {
+	width:17px;
+	height:17px;
+	background-size: 17px 17px;
+}
+.combined-search-page .search-result-listing {
+	margin-top:7px;
+}
+.combined-search-page .search-result-group {
+	max-width:none;
+	min-width:none;
+	padding:0;
+	border:1px solid #101014;
+}
+.combined-search-page .search-result-group .search-result-group-header {
+	padding:10px 15px;
+	margin:0;
+	background:#212125;
+	border:1px solid #28282d;
+	font-family:sans-serif;
+	font-size:11px;
+	text-transform:uppercase;
+	position:relative;
+	overflow:visible;
+	color:#9999a1;
+}
+.combined-search-page .search-result-group .search-header-label {
+	font-size:11px;
+	line-height:normal;
+	color:#eeeef1;
+}
+.combined-search-page .search-result {
+	padding:9px 15px;
+	margin:0;
+	background:#202023;
+	border:1px solid #28282d;
+	border-bottom:1px solid #161618;
+}
+.combined-search-page .search-result:first-of-type {
+	border-top:1px solid #161618;
+}
+.combined-search-page .search-result-group footer .nav-buttons {
+	margin:0;
+	font-size:11px;
+}
+.combined-search-page .search-result-group .search-header-menus {
+	display:inline-block;
+	float:none;
+}
+.combined-search-page .search-result-group .search-menu {
+	line-height:normal;
+}
+.combined-search-page .searchfacets {
+	max-width:none;
+	min-width:none;
+	margin-top:7px;
+	border-top:1px solid #101014;
+}
+.combined-search-page .searchfacets:before {
+	border-top:1px solid #28282d;
+}
+.combined-search-page .search-result .search-result-meta,
+.combined-search-page .search-result .search-comments {
+	color:#637481;
+}
+.combined-search-page .search-result .search-result-meta {
+	margin:4px 0;
+	line-height:normal;
+}
+.combined-search-page .search-result .search-score {
+	margin-right:0;
+	font-size:11px;
+}
+.combined-search-page .search-result .search-score:after {
+	content:' -';
+}
+.combined-search-page .search-result-icon-score,
+.combined-search-page .search-result-icon-external {
+	display:none;
+}
+.combined-search-page .search-result .search-result-footer .search-link {
+	margin-left:0;
+}
+.combined-search-page .search-result a,
+.combined-search-page .search-result a.search-subreddit-link > mark,
+.combined-search-page .search-result a:visited,
+.combined-search-page .search-result a:visited > mark {
+	color:#3498db;
+}
+.combined-search-page .search-result a.search-title > mark {
+	color:#d0dce1;
+}
+.combined-search-page .search-result.visited a.search-title > mark,
+.combined-search-page .search-result a.search-title:visited > mark {
+	color:#9eaab1;
+}
+.combined-search-page .search-result-meta mark {
+	font-weight:normal;
+}
+.combined-search-page .search-result .search-expando {
+	max-width:60em;
+}
+.combined-search-page .search-result .search-expando.collapsed:before {
+	content:"...";
+	width:auto;
+	padding-bottom:5px;
+	right:0;
+	background:#252529;
+	border:1px solid #101014;
+	border-top:0;
+	text-indent:8px;
+}
+.combined-search-page .search-result .search-expando.collapsed:after {
+	content:"";
+	height:20px;
+	position:absolute;
+	left:1px;
+	right:1px;
+	bottom:1px;
+	border:1px solid #303036;	
+	border-top:0;
+}
+
+	.combined-search-page .search-result.search-result-subreddit .search-result-body {
+	  padding:5px 8px;
+	  display:inline-block;
+	  position:relative;
+		background:#252529;
+		border:1px solid #101014;
+		font-family:sans-serif;
+		font-size:13px;
+	  color:#ccccd1;
+	  z-index:1;
+	}
+	.combined-search-page .search-result-subreddit .search-result-body:before {
+		content:"";
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		border:1px solid #303036;
+		z-index:-1;
+	}
+	
+
+
+.combined-search-page .search-result .search-result-body {
+	padding:0;
+	border:1px solid #101014;
+	color:#4f4f4f;
+}
+.combined-search-page .search-result .search-result-body .md {
+	padding:5px 8px;
+	background:#252529;
+	border:1px solid #303036;
+	font-family:sans-serif;
+}
+.combined-search-page .search-result .search-expando-button {
+	padding:5px 2px 0;
+	color:#3498db;
+}
+.combined-search-page .search-result .search-expando-button:hover {
+	text-decoration:none;
+}
+.combined-search-page .search-result .search-expando-button:before {
+	content:"read ";
+}
+.combined-search-page .flair {
+	margin-left:0.5em;
+}
+.combined-search-page .search-result .author + .flair {
+	display:none;
+}
+	.combined-search-page .search-result a.search-title {
+		color:#b5c4cd;
+	}
+	.combined-search-page .search-result a.search-title:hover {
+		color:#ccd8de;
+	}
+	.combined-search-page .search-result.visited a.search-title,
+	.combined-search-page .search-result a.search-title:visited {
+		color:#808c94;
+	}
+	.combined-search-page .search-result.visited a.search-title:hover,
+	.combined-search-page .search-result a.search-title:visited:hover {
+		color:#97a3aa;
+	}
+
+
+
+	/* RELATED/OTHER PAGE */
+	.related-page .commentarea,
+	.other-discussions-page .commentarea {
+		padding:0;
+		margin-top:8px;
+	}
+	.related-page .commentarea .panestack-title,
+	.other-discussions-page .commentarea .panestack-title {
+		height:33px;
+		padding:0 15px;
+		border-bottom:1px solid #272727;
+		line-height:34px;
+	}
+	.related-page .commentarea .panestack-title .title ,
+	.other-discussions-page .commentarea .panestack-title .title {
+		color:#eee;
+	}
+	.related-page .commentarea .link,
+	.other-discussions-page .commentarea .link {
+		padding-bottom:10px;
+		border-left:none;
+		border-right:none;
+		margin-bottom:0;
+	}
+	.related-page .commentarea .nextprev,
+	.other-discussions-page .commentarea .nextprev {
+		border:none;
+		border-top:1px solid #272727;
+	}
+
+
+	/* WIKI PAGE */
+	.wiki-page > .content {
+		background:#202023;
+		border:1px solid #101014;
+	}
+	.wiki-page > .content > .infobar {
+	border:0;
+	}
+	.wiki-page > .content > .infobar .md {
+		color:#bbbbbe;
+	}
+	.wiki-page > .content > span:first-of-type {
+		padding:10px 5px;
+		display:block;
+		background:#212125;
+		border:1px solid #28282d;
+	}
+	.wiki-page > .content > .infobar + span:first-of-type {
+		border-top:1px solid #161618;
+	}
+	.wiki-page .wikititle {
+		margin:0 0 0 10px;
+		display:inline-block;
+		font-family:sans-serif;
+		font-size:15px;
+		vertical-align:bottom;
+		color:#eeeef1;
+	}
+	.wiki-page .pageactions {
+		border:none;
+		margin-left:15px;
+	}
+	.wiki-page .pageactions a.wikiaction {
+		padding:0 6px;
+		margin:0;
+		font-family:sans-serif;
+		font-size:11px;
+		text-transform:uppercase;
+		color:#bbbbbe;
+	}
+	.wiki-page .pageactions a.wikiaction:hover {
+		background:transparent;
+		color:#eeeef1;
+	}
+	.wiki-page .pageactions a.wikiaction.wikiaction-current {
+		background:transparent;
+		color:#fb8500;
+	}
+	.wiki-page .wiki-page-content {
+		margin:0;
+		background:#202023;
+		border:1px solid #28282d;
+		border-top:	1px solid #161618;
+		font-family:sans-serif;
+	}
+	.wiki-page-content .md.wiki {
+		padding:15px 300px 15px 15px;
+		border-bottom:1px solid #28282d;
+	}
+	.wiki-page-content .md.wiki > .toc > ul {
+		position:relative;
+		background:#212125;
+		border:1px solid #28282d;
+		z-index:1;
+	}
+	.wiki-page .wiki-page-content .wiki>.toc>ul ul {
+		border-left:1px dotted #39393f;
+	}
+	.wiki-page-content .md.wiki > .toc + * {
+		margin-top:0;
+	}
+	.wiki-page-content .md h1, 
+	.wiki-page-content .md h2,
+	.wiki-page-content .md h6 {
+		color:#ccccd1;
+	}
+	.wiki-page-content > hr {
+		display:none;
+	}
+	.wiki-page-content > em {
+		padding:9px 15px;
+		display:block;
+		background:#1e1e20;
+		border-top:1px solid #161618;
+		font-family:sans-serif;
+		color:#bbbbbe;
+		min-height:15px;
+	}
+	.wiki-page-content > em .flair {
+		font-size:11px;
+	}
+	.wiki-page-content > textarea.source {
+		max-width:95%;
+		margin:15px;
+	}
+	.wiki-page-content #editform {
+		padding:15px;
+	}
+	.wiki-page-content #editform textarea#wiki_page_content {
+		max-width:95%;
+	}
+	.wiki-page-content #editform > .help-toggle {
+		margin-top:5px;
+		margin-bottom:-10px;
+		display:block;	
+		font-size:12px;
+	}
+	.wiki-page-content #editform .markhelp {
+		padding:10px 0 0;
+		margin:10px 0 0;
+	}
+	.wiki-page-content #editform input#wiki_revision_reason {
+		max-width:95%;
+		margin-top:6px;
+		background:#292929;
+		border:1px solid #393939;
+		box-shadow:none;
+		font-family:sans-serif;
+		font-size:12px;
+		color:#eeeef1;
+	}
+	.wiki-page .sitetable.wikirevisionlisting {
+		padding:15px;
+		border-bottom:1px solid #161618;
+	}
+	.wiki-page-content .wikirevisionlisting .generic-table {
+		margin-left:0;
+		color:#dddde1;
+	}
+	.wiki-page-content .wikirevisionlisting .generic-table .flair {
+		font-size:11px;
+		text-indent:0;
+	}
+	.wiki-page-content .wikirevisionlisting .generic-table td {
+		padding:3px 0;
+		border:1px solid #2d2d2d;
+		text-indent:5px;
+	}
+	.wiki-page-content .wikirevisionlisting .generic-table tr:nth-of-type(odd) td {
+		background:#292929;
+	}
+	.wiki-page-content .wikirevisionlisting .generic-table tr:nth-of-type(even) td {
+		background:#252525;
+	}
+	.wiki-page .sitetable.wikirevisionlisting ~ button {
+		margin:10px 15px;
+	}
+	table.diff {
+		margin:15px;
+	}
+	table.diff .diff_next {
+		background-color:#333;
+		border-bottom:1px solid #333;
+		border-left:1px solid #333;
+	}
+	table.diff .diff_header {
+		background-color:#333;
+		border-right:1px solid #333;
+		border-bottom:1px solid #333;
+		border-left:1px solid #333;
+		color:#bbb;
+	}
+	table.diff .diff_chg,
+	table.diff .diff_sub,
+	table.diff .diff_add {
+		color:#111;
+	}
+	.wiki-page .wiki-page-content > .description {
+		padding:0;
+	}
+	.wiki-page .wiki-page-content .description h2 {
+		padding:10px 15px;
+		border-bottom:1px solid #181818;
+		font-size:12px;
+		font-weight:normal;
+		color:#ddd;
+	}
+	.wiki-page .wiki-page-content > .sitetable.linklisting {
+		border:0;
+	}
+	.wiki-page .wiki-page-content > .sitetable.linklisting .link {
+		border-left:0;
+		border-right:0;
+	}
+	.wiki-page .wiki-page-content > .sitetable.linklisting > .link:nth-last-of-type(2) {
+		border-bottom:1px solid #272727;
+	}
+	.wiki-page .wiki-page-content .discussionlink {
+		padding:10px 15px;
+		margin:0;
+		display:block;
+		background:#1e1e1e;
+		border:none;
+		border-top:1px solid #181818;
+	}
+	.wiki-page .wiki-page-content .discussionlink a {
+		width:130px;
+		height:25px;
+		padding:0;
+		display:block;
+		position:relative;
+		background:#393939;
+		border:1px solid #494949;
+		border-radius:1px;
+		font-size:12px;
+		font-weight:400;
+		letter-spacing:0;
+		line-height:25px;
+		color:#eee;
+	}
+	.wiki-page .wiki-page-content .discussionlink .nub {
+		display:none;
+	}
+
+
+	/* CREATE/SETTINGS/FLAIR PAGES */
+	.fancy-settings .linefield {
+		padding:7px 5px;
+		margin-bottom:0;
+		position:relative;
+		background-color:#202023;
+		border:1px solid #28282d;
+		border-top:none;
+		border-bottom:none;
+		font-family:sans-serif;
+	}
+	.fancy-settings .pretty-form > .linefield:nth-of-type(1) {
+		border-top:1px solid #28282d;
+	}
+	.flair-settings.fancy-settings .pretty-form .linefield:nth-of-type(1) {
+		border-top:1px solid #161618;
+	}
+	.fancy-settings .pretty-form > .linefield:nth-of-type(1):before {
+		top:-2px;
+	}
+	.fancy-settings .pretty-form .linefield:nth-last-of-type(2) {
+		border-bottom:1px solid #28282d;
+	}
+	.fancy-settings .pretty-form .linefield:nth-last-of-type(2):before {
+		bottom:-2px;
+	}
+	.fancy-settings .linefield-content {
+		padding:2px 7px 5px;
+	}
+	.fancy-settings .linefield .title {
+		padding:1px 7px;
+		font-family:sans-serif;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#eeeef1;
+	}
+	.fancy-settings .pretty-form > .linefield:first-of-type > .title {
+		margin-bottom:3px;
+		display:inline-block;
+	}
+	.linefield-content label + input[type="text"] {
+		margin-top:6px;
+	}
+	.linefield .small-field, 
+	.linefield .delete-field {
+		padding-bottom:3px;
+	}
+	.linefield .delete-field > p.little.gray {
+		margin:3px 0 6px;
+		color:#888;
+	}
+	.linefield .delete-field > p.little.gray + table {
+		font-size:13px;
+	}
+	.linefield .delete-field > p.little.gray + table tr > td:nth-of-type(1) {
+		padding-right:5px;
+		padding-bottom:1px;
+	}
+	.linefield .delete-field > p.little.gray + table tr td label {
+		font-size:13px;
+	}
+	.linefield .gray {
+		color:#888;
+	}
+	.linefield form#image-upload > label {
+		font-family:sans-serif;
+	}
+	.linefield form#image-upload > label:first-of-type {
+		margin:5px 0 8px;
+		display:inline-block;
+		font-weight:bold;
+	}
+	.linefield form#image-upload > label:nth-of-type(2) {
+		text-transform:lowercase;
+	}
+	.linefield form#image-upload > input#file {
+		margin-top:10px;
+	}
+	.linefield #img-preview-container {
+		margin:10px 0 0;
+		background:#1e1e20;
+		border:1px solid #161618;
+		border-radius:1px;	
+	}
+	.pretty-form .save-button {
+		padding:10px 0;
+	}
+	.pretty-form .save-button > button {
+		margin:0;
+	}
+	.pretty-form .error {
+		font-size:11px;
+	}
+	.flair-settings.fancy-settings > h1 {
+		width:500px;
+		padding:8px 12px;
+		margin:0;
+		display:inline-block;
+		position:relative;
+		background:#212125;
+		border:1px solid #28282d;
+		font-family:sans-serif;
+		font-size:15px;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#999;
+	}
+	.flair-settings.fancy-settings > h1 strong {
+		text-transform:none;
+		color:#999;
+	}
+	.flair-settings ~ .tabmenu {
+		margin:0 0 -1px;
+	}
+	.flair-settings ~ .tabmenu li {
+		margin:0;
+		display:inline-block;
+	}
+	.flair-settings ~ .tabmenu li a {
+		padding:8px 10px;
+		display:block;
+		background:#202023;
+		border:1px solid #28282d;
+		font-family:sans-serif;
+		font-size:11px;
+		font-weight:normal;
+		text-transform:uppercase;
+		color:#bbbbbe;
+	}
+	.flair-settings ~ .tabmenu li.selected a {
+		background:#212125;
+		border:1px solid #28282d;
+		border-bottom-color:#212125;
+		color:#fb8500;
+	}
+	.flair-settings ~ .tabmenu > li:nth-of-type(2) a,
+	.flair-settings ~ .tabmenu > li:nth-of-type(3) a {
+		border-left:none;
+	}
+	.flair-settings ~ .tabpane-content {
+		padding:0;
+		background:#212125;
+		border:1px solid #28282d;
+	}
+	.flair-settings ~ .tabpane-content .linefield {
+		padding:10px 0;
+		background:#212125;
+	}
+	.flair-settings ~ .tabpane-content .linefield .title {
+		font-family:sans-serif;
+		font-size:15px;
+		font-weight:bold;
+		color:#eeeef1;
+	}
+	.flair-settings ~ .tabpane-content .linefield .linefield-content {
+		padding:6px 9px;
+	}
+	.flair-settings ~ .tabpane-content .flairlist {
+		padding:10px 0 5px;
+	}
+	.flair-settings ~ .tabpane-content .flairlist .clearflairtemplates-button {
+		background:#292929;
+		border-color:#303030;
+	}
+
+	/* STYLESHEET PAGE */
+	.stylesheet-customize-container {
+		border:1px solid #101014;
+	}	
+	.stylesheet-customize-container form#subreddit_stylesheet,
+	.stylesheet-customize-container #preview-table {
+		padding:10px;
+		background:#202023;
+		border:1px solid #28282d;
+		border-bottom:1px solid #161618;
+	}
+	.stylesheet-customize-container #images {
+		padding:10px 10px 0;
+		background:#212125;
+		border:1px solid #28282d;
+	}
+	.stylesheet-customize-container h2 {
+		margin-top:0;
+		font-family:sans-serif;
+		text-transform:capitalize;
+	}
+	.stylesheet-customize-container h2,
+	.stylesheet-customize-container h2 a {
+		color:#eeeef1;
+	}
+	.stylesheet-customize-container .sheets .col > div,
+	.stylesheet-customize-container .sheets .buttons {
+		margin-left:0;
+	}
+	.stylesheet-customize-container #preview-table > table {
+		margin:5px 0;
+		background:#1a1a1a;
+		border:1px solid #101014;
+	}
+	.stylesheet-customize-container #image-preview-list {
+		position:relative;
+		top:50px;
+	}
+
+	/* EXPLORE PAGE */
+	.explore-page .sitetable.exploreitemlisting {
+		border:1px solid #101014;
+	}
+	.explore-page .explore-header {
+		padding:8px 10px;
+		margin:0;
+		background:#212125;
+		border:1px solid #28282d;
+		color:#dddde1;
+	}
+	.explore-page .explore-header .explore-title {
+		padding:0 5px;
+		font-family:sans-serif;
+	}
+	.explore-header .explore-discuss-link {
+		margin:3px 5px;
+	}
+	.explore-header .explore-discuss-link a {
+		font-weight:normal;
+	}
+	.explore-header #explore-settings {
+		font-family:sans-serif;
+		font-size:12px;
+		color:#bbb;
+	}
+	.explore-page .explore-item {
+		margin:0;
+		background:#202023;
+		border:1px solid #28282d;
+		border-bottom:1px solid #161618;
+	}
+	.explore-page .explore-header + .explore-item {
+		border-top:1px solid #161618;
+	}
+	.explore-page .explore-item .explore-sr {
+		padding:0;
+		margin:10px 15px;
+	}
+	.explore-item.explore-discovery .explore-label,
+	.explore-item.explore-rising .explore-label {
+		padding:0;
+		background:transparent;
+		border:none;
+		border-radius:0;
+		font-family:sans-serif;
+		font-size:12px;
+		color:#eeeef1;
+	}
+	.explore-item .explore-label .explore-label-type {
+		padding-left:0;
+	}
+	.explore-item.explore-rising .explore-label .explore-label-type {
+		color:#27ae60;
+	}
+	.explore-item .explore-label .explore-label-link {
+		padding-right:0;
+		color:#eeeef1;
+	}
+	.explore-item .explore-sr-details {
+		color:#637481;
+	}
+	.explore-page .explore-item .link {
+		padding:9px 15px;
+		border:none;
+	}
+	.explore-item .explore-feedback-dismiss {
+		background:url(%%remove%%) no-repeat 0 0;
+		opacity:1;
+	}
+
+	/* SUBREDDITS PAGE */
+	.subreddits-page .side > .spacer:first-of-type {
+		margin-bottom:0;
+	}
+	.subreddits-page .sr-interest-bar {
+		margin:0 1px 10px;
+		position:relative;
+		overflow:visible;
+	}
+	.subreddits-page > .content > .menuarea {
+		border-bottom:1px solid #161618;
+	}
+	.subreddits-page > .content > .infobar {
+		margin:0 0 -1px;
+		border-top:none;
+	}
+	.subreddits-page > .content > .infobar .md {
+		font-size:13px;
+		line-height:16px;
+	}
+	.subreddits-page > .content > .infobar > .md > p > code {
+		height:12px;
+		padding:1px 6px;
+		display:inline-block;
+		border:none;
+		border-radius:2px;
+		font-family:verdana,sans-serif;
+		font-size:10px;
+		font-weight:bold;
+		line-height:normal;
+		line-height:12px;
+		color:#181818;
+	}
+	.subreddits-page > .content > .infobar > .md > p > code:nth-of-type(1) {
+		background:#27ae60;
+	}
+	.subreddits-page > .content > .infobar > .md > p > code:nth-of-type(2) {
+		background:#e74d4d;
+	}
+	.subreddits-page .searchpane.raisedbox {
+		padding:15px;
+		margin:0 1px;
+		position:relative;
+		background:#222;
+		border:1px solid #272727;
+		border-bottom:1px solid #181818;
+	}
+	.sitetable.linklisting .thing.subreddit {
+		padding:9px 10px 9px 0;
+		margin:0;
+		background:#202020;
+		border:1px solid #272727;
+		border-bottom:1px solid #181818;
+	}
+	.sitetable.linklisting > .thing.subreddit:first-of-type {
+		border-top-color:#181818;
+	}
+	.sitetable.linklisting > .thing.subreddit:nth-last-of-type(2) {
+		border-bottom:1px solid #272727;
+	}
+	.thing.subreddit .midcol {
+		width:80px!important;
+		margin:0 10px 5px 13px;
+		text-align:center;
+	}
+	.thing.subreddit .midcol .fancy-toggle-button .add,
+	.thing.subreddit .midcol .fancy-toggle-button .remove {
+		border:none;
+		color:#181818;
+	}
+	.sitetable.linklisting .thing.subreddit .entry {
+		padding-top:1px;
+	}
+	.sitetable.linklisting .thing.subreddit .titlerow {
+		font-family:sans-serif;
+	}
+	.sitetable.linklisting .thing.subreddit .titlerow a.title {
+		color:#3498db;
+	}
+	.sitetable.linklisting .thing.subreddit .usertext .md {
+		padding:0;
+		margin-left:1px;
+		position:relative;
+		background:#202020;
+		border:none;
+		border-radius:0;
+		font-family:sans-serif;
+		color:#ddd;
+		z-index:1;
+	}
+	.sitetable.linklisting .thing.subreddit .tagline {
+		margin-right:8px;
+		display:inline-block;
+	}
+	.sitetable.linklisting .thing.subreddit .report-button a {
+		color:#637481;
+	}
+
+	.sidecontentbox .subscription-box .fancy-toggle-button .add,
+	.sidecontentbox .subscription-box .fancy-toggle-button .remove {
+		font-size:10px;
+		font-family:verdana,arial,sans-erif;
+	}
+	.sidecontentbox .subscription-box .box-top {
+		height:auto;
+	}
+	.sidecontentbox .subscription-box .column {
+		text-align:left;
+		float:none;
+		width:auto;
+		display:block;
+		padding:2px 0 5px;
+	}
+	.sidecontentbox .subscription-box .column.giftgold a {
+		color:#cd9930;
+	}
+	.sidecontentbox .subscription-box .column.giftgold a:before {
+	margin-right:2px;
+	top:0;
+	}
+	.sidecontentbox .subscription-box .box-separator {
+		margin:8px 0;
+		border-color:#333;
+	}
+	.sidecontentbox .subscription-box ul > a.title {
+		font-weight:bold;	
+	}
+	.sidecontentbox .subscription-box li {
+		margin-bottom:5px;
+	}
+	.sidecontentbox .subscription-box li .fancy-toggle-button {
+		float:none;
+		display:inline-block;
+		margin-bottom:0;
+	}
+	.sidecontentbox .subscription-box a.title {
+		color:#3498db;
+	}
+
+	/* SUBREDDIT SUGGESTION */
+	.sr-interest-bar,
+	.organic-listing .sr-interest-bar {
+		background:#202023;
+		border:1px solid #28282d;
+	}
+	.sr-interest-bar .bubble {
+		margin-left:0;
+		background:#202023;
+		border:none;
+		border-radius:1px;
+		font-family:sans-serif;
+		color:#dddde1;
+	}
+	.sr-interest-bar .bubble:after {
+		content:none;
+	}
+	.sr-interest-bar .caption .subscribe {
+		padding:0;
+		background:transparent;
+		border:none;
+		border-radius:0;
+		color:#27ae60;
+	}
+	.sr-interest-bar .query-box {
+		padding:0;
+		border:1px solid #161618;
+		border-radius:1px;
+	}
+	.sr-interest-bar .query-box input.query {
+		padding:3px 0;
+		background:#27272b;
+		border:1px solid #323236;
+		border-radius:1px;
+		font-size:14px;
+		text-indent:5px;
+		color:#eeeef1;
+	}
+	.sr-interest-bar ul.results {
+		padding:5px 0px 0px;
+		margin:8px 1px 0px;
+		border:none;
+	}
+	.sr-interest-bar ul.results li {
+		margin:3px 6px 3px 0;
+	}
+	.sr-interest-bar ul.results > li:first-of-type {
+		padding-bottom:3px;
+		margin-left:1px;
+		display:block;
+		font-family:sans-serif;
+		font-size:12px;
+		font-weight:bold;
+		text-transform:capitalize;
+		color:#dddde1;
+	}
+	.sr-interest-bar ul.results li a.random {
+		font-weight:normal;
+		color:#637481;
+	}
+
+	/* SUBSCRIBE BUTTONS */
+	.fancy-toggle-button .add, 
+	.fancy-toggle-button .remove,
+	.explore-item .explore-feedback .fancy-toggle-button .add:hover,
+	.explore-item .explore-feedback .fancy-toggle-button .add, 
+	.explore-item .explore-feedback .fancy-toggle-button .add:hover,
+	.explore-item .explore-feedback .fancy-toggle-button .remove,
+	.explore-item .explore-feedback .fancy-toggle-button .remove:hover,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .add,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .remove {
+		padding:1px 4px;
+		border:none;
+		color:#101014;
+	}
+	.fancy-toggle-button .add, 
+	.subreddit .midcol .fancy-toggle-button .add,
+	.sidecontentbox .subscription-box .fancy-toggle-button .add,
+	.explore-item .explore-feedback .fancy-toggle-button .add,
+	.explore-item .explore-feedback .fancy-toggle-button .add:hover,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .add,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .add:active {
+		background:#27ae60;
+	}
+	.fancy-toggle-button .remove,
+	.subreddit .midcol .fancy-toggle-button .remove,
+	.explore-item .explore-feedback .fancy-toggle-button .remove,
+	.sidecontentbox .subscription-box .fancy-toggle-button .remove,
+	.explore-item .explore-feedback .fancy-toggle-button .remove:hover,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .remove,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .remove:active {
+		background:#e74d4d;
+	}
+	.combined-search-page .search-result-subreddit .search-subscribe-button {
+		margin-right:8px;
+	}
+	.combined-search-page .search-result-subreddit .search-subscribe-button .add,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .remove {
+		width:80px;
+		line-height:normal;
+	}
+	.combined-search-page .search-result-subreddit .search-subscribe-button .add:focus,
+	.combined-search-page .search-result-subreddit .search-subscribe-button .remove:focus {
+		box-shadow:none;
+	}
+
+	/* NEWSLETTER */
+	.infobar.newsletterbar {
+		margin:0 1px 8px;
+		position:relative;
+		border:1px solid #2b2b2b;
+		overflow:visible;
+		padding:10px 15px;
+		z-index:1;
+	}
+
+	.infobar.newsletterbar input.c-form-control {
+		background:#333;
+		border:1px solid #444;
+		border-radius:1px;
+		color:#eee;
+	}
+
+	/* FLAIR */
+	.flair,
+	.linkflairlabel {
+		display:inline-block;
+		padding:0 3px;
+		background:#333339;
+		border:none;
+		border-radius:1px;
+		font-family:verdana,arial,helvetica,sans-serif;
+		color:#ccccd1;
+	}
+
+	/* FLAIR TOGGLE */
+	.titlebox .tagline .flairselector.drop-choices {
+		width:330px!important;
+		padding:10px!important;
+		top:0!important;
+		right:300px;
+		left:auto!important;
+		background:#2D2D2D;
+		border:none;
+		box-shadow:none;
+	}
+	.titlebox .tagline .flairselector.drop-choices h2 {
+		display:none;
+	}
+	.titlebox .tagline .flairselector.drop-choices .flairoptionpane {
+		margin-bottom:10px;
+	}
+	.titlebox .tagline .flairselector ul {
+		width:93px!important;
+		margin-right:10px;
+	}
+	.titlebox .tagline .flairselector ul li {
+		width:93px!important;
+		padding-left:0;
+		margin-bottom:5px;
+		border:none;
+	}
+	.titlebox .tagline .flairselector li:hover,.titlebox .tagline .flairselector li.selected {
+		background:#2D2D2D;
+	}
+	.titlebox .tagline .flairselector ul li > .flair,.titlebox .tagline .flairselector form .flairselection .flair {
+		background-color:#444;
+		border:1px solid #444;
+		color:#eee;
+	}
+	.titlebox .tagline .flairselector ul li:hover > .flair,.titlebox .tagline .flairselector li.selected .flair {
+		background-color:#4C4C4C;
+		border-color:#777;
+	}
+	.titlebox .tagline .flairselector form {
+		padding-top:10px;
+		border-color:#444;
+		text-align:left;
+	}
+	.titlebox .tagline .flairselector form .flairremove {
+		color:#2D2D2D;
+	}
+	.titlebox .tagline .flairselector form .flairremove a {
+		color:#eee;
+	}
+	.titlebox .tagline .flairselector form .flairremove a:hover {
+		color:#F7C83F}
+	.titlebox .tagline .flairselector form .customizer {
+		margin-top:10px;
+	}
+	.titlebox .tagline .flairselector form .customizer input[type="text"]{
+		padding:3px;
+		margin-right:5px;
+		border:none;
+	}
+	.titlebox .tagline .flairselector form button {
+		margin-left:0;
+	}
+	.titlebox .tagline .flairselector form > .status {
+		font-family:sans-serif;
+		font-size:11px;
+		color:#888;
+	}
+
+	/* LINKFLAIR TOGGLE */
+	.link .flairselector.drop-choices {
+		padding:0!important;
+		margin-top:15px;
+		background:#252525;
+		border:1px solid #2d2d2d;
+		box-shadow:none;
+	}
+	.link .flairselector.drop-choices h2 {
+		padding:5px 0;
+		margin-bottom:0;
+		background:#333;
+		font-family:sans-serif;
+		font-size:11px;
+		text-transform:uppercase;
+		color:#ddd;
+	}
+	.link .flairselector.drop-choices .flairoptionpane {
+		padding:10px 0;
+		margin-bottom:0;
+	}
+	.link .flairselector.drop-choices .flairoptionpane > ul {
+		margin:0 auto!important;
+	}
+	.link .flairselector.drop-choices ul li.flairsample-left {
+		height:18px;
+		padding:0;
+		margin-bottom:4px;
+		border:none;
+	}
+	.link .flairselector.drop-choices ul li a.title,.link .flairselector.drop-choices form a.title {
+		display:none;
+	}
+	.link .flairselector.drop-choices ul li .linkflair {
+		text-align:center;
+	}
+	.link .flairselector.drop-choices .linkflairlabel {
+		margin:0;
+		line-height:18px;
+	}
+	.link .flairselector li:hover {
+		background:transparent;
+	}
+	.link .flairselector li.selected .linkflairlabel {
+		background:#eee;
+		font-weight:bold;
+		color:#333;
+	}
+	.link .flairselector form {
+		padding-top:10px;
+		background:#252525;
+		border-color:#333;
+	}
+	.link .flairselector form .flairselection {
+		margin:0;
+	}
+	.link .flairselector form .flairremove {
+		margin-bottom:10px;
+		color:#ddd;
+	}
+	.link .flairselector form .flairremove a {
+	}
+	.link .flairselector form .flairremove a:hover {
+	}
+	.link .flairselector form .customizer {
+		display:none;
+	}
+	.link .flairselector form button {
+		margin:0 0 10px;
+	}
+	.link .flairselector form > .status {
+		font-family:sans-serif;
+		font-size:11px;
+		color:#888;
+	}
+	@media screen and (-webkit-min-device-pixel-ratio:0){
+		.link .flairselector.drop-choices .linkflairlabel {
+		line-height:16px;
+	}}
+
+
+
+
+
+	/* PSEUDO BORDER */
+
+	.titlebox:before,
+	.linkinfo:before,
+	body > .content > .menuarea:before,
+	.trending-subreddits:before,
+	.link .usertext-body .md:before,
+	.messages-page .message .entry .md:before,
+	.commentarea:before,
+	.messages-page.compose-page .content > h1:before,
+	.messages-page.compose-page .content > form .roundfield:before,
+	body > .debuginfo:before,
+	.submit-page .content.submit .info-notice:after,
+	.searchpane.raisedbox:before,
+	.wiki-page .wiki-page-content .md.wiki > .toc > ul:before,
+	.flair-settings.fancy-settings > h1:before,
+	.subreddits-page .sr-interest-bar:before,
+	.fancy-settings .linefield:before,
+	.sr-interest-bar + .searchpane.raisedbox:before,
+	.menuarea .drop-choices.lightdrop:before,
+	.login-form-side:before,
+	.infobar.newsletterbar:before {
+		content:"";
+		display:block;
+		position:absolute;
+		z-index:-1;
+	}
+
+	.titlebox:before,
+	.linkinfo:before,
+	body > .content > .menuarea:before,
+	.trending-subreddits:before,
+	.commentarea:before,
+	.messages-page.compose-page .content > h1:before,
+	.messages-page.compose-page .content > form .roundfield:before,
+	body > .debuginfo:before,
+	.submit-page .content.submit .info-notice:after,
+	.searchpane.raisedbox:before,
+	.subreddits-page .sr-interest-bar:before,
+	.flair-settings.fancy-settings > h1:before,
+	.fancy-settings .linefield:before,
+	.sr-interest-bar + .searchpane.raisedbox:before,
+	.menuarea .drop-choices.lightdrop:before,
+	.login-form-side:before,
+	.infobar.newsletterbar:before {
+		border:1px solid #101010;
+	}
+
+	.messages-page .message .entry .md:before,
+	.wiki-page .wiki-page-content .md.wiki > .toc > ul:before {
+		border:1px solid #181818;
+	}
+
+	.titlebox:before,
+	.linkinfo:before,
+	.messages-page .message .entry .md:before,
+	.wiki-page .wiki-page-content .md.wiki > .toc > ul:before,
+	.subreddits-page .sr-interest-bar:before,
+	.sr-interest-bar + .searchpane.raisedbox:before,
+	.commentarea:before,
+	.flair-settings.fancy-settings > h1:before,
+	.menuarea .drop-choices.lightdrop:before,
+	.searchpane.raisedbox:before,
+	.login-form-side:before,
+	.infobar.newsletterbar:before {
+		top:-2px;
+		bottom:-2px;
+		left:-2px;
+		right:-2px;
+	}
+
+	body > .content > .menuarea:before,
+	.trending-subreddits:before {
+		top:-2px;
+		bottom:-1px;
+		left:-2px;
+		right:-2px;
+	}
+	.submit-page .content.submit .info-notice:after {
+		top:-1px;
+		left:-2px;
+		right:-2px;
+		bottom:-2px;
+		border-top:none;
+	}
+
+
+	.link .usertext-body .md:before {
+	top:0;right:0;bottom:0;left:0;
+	}
+	.link .usertext-body .md:before {
+	border:1px solid #303036;
+	}
+
+
+
+
+
+	/* .searchpane.raisedbox:before, */
+	.flair-settings.fancy-settings > h1:before {
+		border-bottom:none;
+	}
+
+	.fancy-settings .linefield:before {
+		left:-2px;
+		right:-2px;
+		top:0;
+		bottom:0;
+	}
+	.submit-page .content.submit .btn[name="submit"]:before,
+	.messages-page.compose-page .content > form > button#send:before,
+	.wiki-page .wiki-page-content #editform input#wiki_save_button:before {
+	content:"";
+	border:1px solid #101010;
+	position:absolute;
+	display:block;
+	top:-2px;
+	left:-2px;
+	right:-2px;
+	border-radius:1px;
+	z-index:-1;
+	bottom:-2px;
+	}
+	.comments-page .commentarea:before {
+		border-top:none;
+		top:-1px;
+	}
+	.messages-page.compose-page .content > h1:before {
+		top:-2px;
+		bottom:0;
+		right:-2px;
+		left:-2px;
+		border-bottom:none;
+	}
+	.messages-page.compose-page .content > form .roundfield:before {
+		top:0;
+		bottom:0;
+		right:-2px;
+		left:-2px;
+		border-top:none;
+		border-bottom:none;
+	}
+	body > .debuginfo:before {
+		top:-2px;
+		bottom:0;
+		left:0;
+		right:0;
+	}
+	body.with-listing-chooser > .debuginfo:before {
+		left:-2px;
+	}
+
+
+
+
+
+	/* LISTING CHOOSER ---- */
+
+	body.with-listing-chooser .listing-chooser {
+		top:115px;
+		background:#202023;
+		border:1px solid #101014;
+		border-left:none;
+	}
+	body.with-listing-chooser .listing-chooser .grippy {
+		background:#202023;
+		border:1px solid #2d2d30;
+	}
+	body.with-listing-chooser .listing-chooser .grippy:hover {
+		background:#242429;
+	}
+
+	/* grippy image */
+	body.with-listing-chooser .listing-chooser .grippy:before,
+	body.with-listing-chooser .listing-chooser:hover .grippy:before {
+		opacity:1;
+		-webkit-transition:none;
+		-moz-transition:none;
+		-o-transition:none;
+		transition:none;
+	}
+	body.with-listing-chooser .listing-chooser .grippy:before {
+		background-image:url(%%sidebar-grippy-hide%%);
+		background-position:133px center;
+	}
+	body.with-listing-chooser.listing-chooser-collapsed .listing-chooser .grippy:before {
+		background-image:url(%%sidebar-grippy-show%%);
+		background-position:1px center;
+	}
+
+	/* grippy left half + middle border */
+	body.with-listing-chooser .listing-chooser .grippy:after,
+	body.with-listing-chooser.listing-chooser-collapsed .listing-chooser .grippy:after {
+		background:#252529;
+		border-right:1px solid #1a1a1b;
+	}
+	body.with-listing-chooser .listing-chooser .grippy:hover:after {
+		background:#28282d;
+		border-right-color:#161618;
+	}
+
+	.listing-chooser > .contents {
+		border-top:1px solid #2d2d33;
+		font-family:sans-serif;
+		font-size:11px;
+	}
+
+	.listing-chooser li.selected:before {
+		right:5px;
+		border-left-color:#99999f;
+	}
+
+	.listing-chooser ul.global {
+		width:127px;
+		padding:0;
+		border-right:1px solid #1d1d1f;
+	}
+	.listing-chooser ul.global li {
+		padding:0;
+		margin:0;
+		background:#212125;
+		border:none;
+		box-shadow:none;
+	}
+	.listing-chooser ul.global li:hover {
+		background:#252529;
+	}
+	.listing-chooser ul.global li.selected {
+		z-index:1;
+	}
+	.listing-chooser ul.global li a {
+		padding:10px 15px;
+		margin:0;
+		font-size:12px;
+		font-weight:bold;
+	}
+	.listing-chooser ul.global li a[href="/"] {
+		border-bottom:1px solid #161618;
+		color:#27ae60;
+	}
+	.listing-chooser ul.global li a[href="/explore"] {
+		border-top:1px solid #28282d;
+		border-bottom:1px solid #28282d;
+	}
+	.listing-chooser ul.global li a .description {
+		color:#99999f;
+	}
+
+
+	.listing-chooser h3 {
+		width:97px;
+		padding:10px 15px;
+		border:1px solid #161618;
+		border-right:1px solid #1a1a1b;
+		border-left:none;
+		text-align:left;
+		color:#dddde1;
+	}
+	.listing-chooser .intro {
+		width:127px;
+		padding:5px 0;
+		margin-bottom:0;
+		background:#272727;
+		border-top:1px solid #2e2e2e;
+		border-bottom:1px solid #1d1d1d;
+		border-right:1px solid #1b1b1b;
+		color:#bbbbc1;
+	}
+	.listing-chooser .intro p {
+		padding:3px 15px;
+		margin:0;
+		font-size:11px;
+	}
+
+	.listing-chooser .contents > ul.multis {
+		width:127px;
+		padding:10px 0;
+		background:#212125;
+		border-top:1px solid #28282d;
+		border-bottom:1px solid #28282d;
+		border-right:1px solid #1a1a1b;
+		position:relative;
+	}
+	.listing-chooser .contents > ul.multis:after {
+		content:"";
+		height:1px;
+		display:block;
+		position:absolute;
+		left:0;
+		right:0;
+		bottom:-2px;
+		background:#1d1d1d;
+	}
+	.listing-chooser ul.multis li {
+		background:#39393f;
+		border:1px solid #49494f;
+		border-right:none;
+		border-radius:1px 0 0 1px;
+	}
+	.listing-chooser ul.multis li:hover {
+		background:#3d3d43;
+	}
+
+	.listing-chooser ul.multis li.selected {
+		margin-right:-10px;
+		border-right:none;
+		box-shadow:none;
+	}
+	.listing-chooser ul.multis li.selected:before,
+	.listing-chooser ul.other li.selected:before {
+		right:5px;
+		border-left-color:#bbbbc1;
+	}
+	.listing-chooser ul.multis li a {
+		padding:8px 5px 8px 10px;
+		font-size:12px;
+		color:#eeeef1;
+	}
+	.listing-chooser ul.multis li:hover a {
+		color:#fff;
+	}
+	.listing-chooser ul.multis li.create {
+		padding:3px 5px 8px 10px;
+		background:#333337;
+		border-color:#3d3d42;
+	}
+	.listing-chooser ul.multis li.create:hover,
+	.listing-chooser ul.multis li.create.expanded {
+		margin-left:12px;
+		background:#333;
+	}
+	.listing-chooser ul.multis li.create input[type="text"] {
+		width:80px;
+		margin:5px 0;
+		background:#444;
+		border:1px solid #555;
+		color:#eee;
+	}
+	.listing-chooser ul.multis li.create .error {
+		margin:4px 0;
+		font-size:11px;
+	}
+	.listing-chooser ul.multis li.create button {
+		width:100%;
+		padding:0;
+		display:block;
+		background:transparent;
+		border:none;
+		box-shadow:none;
+		font-family:sans-serif;
+		font-size:12px;
+		text-align:left;
+		color:#eee;
+		opacity:1;
+	}
+	.listing-chooser ul.multis li.create button:before {
+		content:"+ ";
+	}
+
+	.listing-chooser ul.other {
+		width:127px;
+		margin-top:0;
+		padding-top:18px;
+		border-right:1px solid #1b1b1b;
+	}
+	.listing-chooser ul.other li {
+		margin-left:12px;
+		background:#2d2d32;
+		border:1px solid #38383d;
+		border-radius:1px 0 0 1px;
+		box-shadow:none;
+		transition:all 0.15s ease-in-out;
+	}
+	.listing-chooser ul.other li:hover {
+		margin-left:9px;
+	}
+	.listing-chooser ul.other li.gold-perks {
+		background:#2b2b30;
+	}
+	.listing-chooser ul.other li.selected {
+		margin-right:-10px;
+		background:#333;
+		border-color:#3b3b3b;
+	}
+	.listing-chooser ul.other li a {
+		padding:10px 5px 10px 10px;
+		border-radius:0;
+		font-size:12px;
+		color:#eeeef1;
+	}
+	.listing-chooser ul.other li a[href="/r/mod"] {
+		color:#18af92;
+	}
+	.listing-chooser ul.other li.gold-perks a {
+		color:#cd9930;
+	}
+	.listing-chooser ul.other li .description {
+		color:#bbbbc1;
+	}
+
+
+	/* LIVE NEWS */
+	.happening-now-wrap {
+	background:#222;
+	border:1px solid #101010;
+	}
+	.happening-now-wrap .rank-spacer,
+	.happening-now-wrap .midcol-spacer {display:none;}
+	.happening-now-wrap .happening-now {
+	padding-left:8px;
+	margin-left:68px;
+	background:#252525;
+	border:1px solid #2b2b2b;
+	font-family:sans-serif;
+	color:#3498db;
+	}
+	.happening-now p.watching {
+	font-family:verdana,sans-serif;
+	font-size:10px;
+	color:#637481;
+	}
+	.happening-now p.state:before {
+	width:6px;
+	height:6px;
+	position:relative;
+	top:-1px;
+	}
+	span.happening-now-logo {
+	width:66px;
+	height:24px;
+	margin:0;
+	background:url(%%live%%) no-repeat 8px 6px / 50px auto #222;
+	border:1px solid #292929;
+	border-right-color:#1e1e1e;
+	}
+
+
+
+
+	/* GOLD ONLY */
+	.gold-only #header {
+	background:#202020;
+	border-bottom-color:#101010;
+	}
+	.gold-only #header #sr-header-area {
+	background-color:#1a1a1a;
+	border-bottom:1px solid #101010;
+	opacity:1;
+	}
+	.gold-only #header .tabmenu li a,
+	.gold-only #header .tabmenu li.selected a {
+	background:transparent;
+	border:none;
+	color:#bbb;
+	}
+	.gold-only #header .tabmenu li a:hover {
+		color:#eee;
+	}
+	.gold-only #header .tabmenu li.selected a,
+	.gold-only #header .tabmenu li.selected a:hover {
+		color:#cd9930;
+	}
+	.gold-only .titlebox .fancy-toggle-button .option.add {
+		color:#cd9930;
+	}
+	.gold-only #header-img.default-header {
+	background-image:url(%%logo-gold%%);
+	}
+	.gold-only .link .score.likes {
+	color:#d0aa48;
+	}
+	.gold-only .link .score.dislikes {
+	color:#927732;
+	}
+	.gold-only .link.stickied a.title {
+		color:#cd9930!important;
+	}
+	.gold-only .link.stickied .flat-list.buttons li.first a,
+	.gold-only .link.stickied .flat-list.buttons li a:hover,
+	.gold-only .tagline .stickied-tagline {
+		color:#cd9930;
+	}
+	.gold-only .arrow.upmod,
+	.gold-only .arrow.downmod {
+	background-image:url(%%gold-arrow%%);
+	}
+	.gold-only .arrow.upmod {
+	background-position:-45px 0;
+	}
+	.gold-only .arrow.downmod {
+	background-position:-15px 0;
+	}
+
+	/* gold progress */
+	.side .goldvertisement {
+	  background:#212125;
+		border:1px solid #101014;
+		border-radius:0;
+		box-shadow:none;
+		font-family:sans-serif;
+	}
+	.side .goldvertisement .inner {
+		padding:0 0 8px;
+		margin:0;
+	  border:1px solid #28282d;
+	}
+	.side .goldvertisement h2 {
+		padding:10px 15px;
+		background:#212125;
+		border-bottom:1px solid #28282d;
+		font-size:12px;
+		font-weight:bold;
+		color:#cd9930;
+	}
+	.side .goldvertisement .progress {
+		padding:13px 15px 8px;
+		border-top:1px solid #161618;
+	}
+	.gold-bubble div.history .progress {
+	opacity:1;
+	}
+	.side .goldvertisement .progress p {
+		margin-left:8px;
+		color:#cd9930;
+	}
+	.hover-bubble.anchor-top-centered:after {
+	border-bottom-color: #2d2d2d;
+	}
+	.gold-bubble.anchor-top-centered:before {
+	border-bottom-color:#353535;
+	}
+	.side .goldvertisement .progress .bar,
+	.gold-bubble div.history .progress .bar {
+		background:#292929;
+		border:1px solid #333;
+		border-radius:1px;
+	}
+	.gold-bubble div.history .progress .bar {
+		background:#222;
+	}
+	.side .goldvertisement .progress .bar span,
+	.gold-bubble div.history .progress .bar span {
+		background:-webkit-linear-gradient(left,#fed36e,#f4b639);/*!!*/
+		border-radius:1px 0 0 1px;
+	}
+	.side .goldvertisement a {
+		margin:5px 0 0;
+		background:transparent;
+		border:none;
+		border-radius:0;
+		font-size:11px;
+		font-weight:bold;
+		color:#3498DB;
+	}
+
+	.giftgold a:before,
+	.gilded-link a:before {
+	background:url(%%gildedalt2%%) no-repeat 0 0;
+	position:relative;
+	margin-left:0;
+	}
+	.giftgold.allminus-link a:before,
+	.gilded-link a:before {
+	top:-1px;
+	}
+
+
+	.hover-bubble.gold-bubble {
+	background: #2d2d2d;
+	border: 1px solid #353535;
+	border-radius: 0;
+	box-shadow: 0 0px 5px rgba(16,16,16,0.5);
+	margin-left: 4px;
+	color: #ddd;
+	width:288px;
+	font-family: sans-serif;
+	font-size: 12px;
+	line-height:normal;
+	}
+	.gold-bubble span.gold-branding {
+	background-image:url(%%gold-logo%%);
+	}
+	.gold-bubble p.buy-gold a,
+	.gold-bubble div.history p,
+	.gold-bubble div.history .progress p {
+	color: #cd9930;
+	}
+	.gold-bubble div.history .progress p {
+	font-size: 12px;
+	}
+	.gold-bubble p.aside {
+	color: #999;
+	font-size: 11px;
+	}
+	.gold-bubble div.history {
+	border-top: 1px solid #444;
+	}
+
+	/* gold messages */
+	.link .gold-wrap {
+		margin-left:5px;
+	}
+	.comment .gold-wrap {
+		margin-left:-11px;
+		margin-bottom:15px;
+	}
+	.gold-wrap .fancy {
+		background-color:#292929;
+		border:1px solid #303030;
+	}
+	.gold-wrap .fancy .fancy-inner {
+		border:1px solid #333;
+	}
+	.gold-wrap .fancy .fancy-inner .container a {
+		color:#938870;
+	}
+	.gold-wrap .fancy .fancy-inner .gold-form.gold-payment,
+	.gold-wrap .fancy .fancy-inner .gold-form .note {
+		color:#bbb;
+	}
+	.gold-payment .close-button {
+		background:url(%%spritesheet%%) no-repeat 0 -85px;
+	}
+	.gold-wrap.cloneable-comment .container,
+	.gold-wrap.cloneable-link .container {
+		padding:10px 30px;
+		background-color:#242424;
+		background-color:rgba(31,31,31,0.5);
+		border:1px solid #333;
+	}
+	.gold-wrap .container h2.sidelines span:before,
+	.gold-wrap .container h2.sidelines span:after {
+		border-color:#444;
+	}
+
+
+  /* /r/mod .titlebox doesn't have .md just p */
+	.titlebox > h1 + .usertext > p {
+		padding:10px 15px;
+		border-top:1px solid #181818;
+	}
+	.titlebox > h1 + .usertext + .modsr-link,
+	.filtered-details .unfilter {
+		margin:0 15px 10px;
+	}
+	.filtered-details div.usertext .md {
+		padding-bottom:0;
+		margin-bottom:-5px;
+	}
+
+
+	/* ADD TO MULTI ------ */
+	.hover-bubble.multi-selector {
+		background:#353535;
+		border:1px solid #101010;
+		box-shadow:0 0 3px rgba(16,16,16,0.5);
+		margin-top:-43px!important;
+		padding:1px;
+		font-family:sans-serif;
+		color:#eee;
+	}
+	.hover-bubble.multi-selector .title {
+		padding:8px 0 0 12px;
+		background:#2d2d2d;
+	}
+	.hover-bubble.multi-selector .title strong {
+		margin:0;
+		font-size:13px;
+		color:#eee;
+		text-align:left;
+	}
+	.hover-bubble.multi-selector .title a.sr {
+		margin:0;
+		padding:3px 0 2px;
+		font-size:12px;
+		text-align:left;
+	}
+	.hover-bubble.multi-selector .multi-list {
+		margin:0;
+		padding:2px 0 5px;
+		background:#2d2d2d;
+	}
+	.hover-bubble.multi-selector .create-multi input[type="text"] {
+		background:#393939;
+		border:1px solid #444;
+		color:#eee;
+	}
+	.hover-bubble.multi-selector .create-multi input[type="text"]:hover,
+	.hover-bubble.multi-selector .create-multi input[type="text"]:active,
+	.hover-bubble.multi-selector .create-multi input[type="text"]:focus {
+		background:#3d3d3d;
+		border-color:#484848;
+		outline:none;
+	}
+	.hover-bubble.multi-selector label:hover {
+		background:transparent;
+	}
+	.hover-bubble.multi-selector label input[type="checkbox"] {
+		vertical-align:baseline;
+	}
+	.hover-bubble.multi-selector label a {
+		background:#444;
+		border:1px solid #555;
+		opacity:1;
+		color:#eee;
+	}
+	.hover-bubble.multi-selector label a:hover {
+		background:#494949;
+		border-color:#5a5a5a;
+	}
+	.hover-bubble.anchor-right.anchor-right:after,
+	.hover-bubble.anchor-left.anchor-right:after,
+	.hover-bubble.anchor-right.anchor-left:after,
+	.hover-bubble.anchor-left.anchor-left:after {
+		width:12px;
+		height:20px;
+		top:42px;
+		border:none;
+	}
+	.hover-bubble.anchor-right.anchor-right:after,
+	.hover-bubble.anchor-left.anchor-right:after {
+		right:-11px;
+		background:url(%%spritesheet%%) no-repeat -36px -413px;
+	}
+	.hover-bubble.anchor-right.anchor-left:after,
+	.hover-bubble.anchor-left.anchor-left:after {
+		left:-11px;
+		background:url(%%spritesheet%%) no-repeat -48px -413px;
+	}
+	.hover-bubble.anchor-right.anchor-right:before,
+	.hover-bubble.anchor-left.anchor-right:before,
+	.hover-bubble.anchor-right.anchor-left:before,
+	.hover-bubble.anchor-left.anchor-left:before  {
+		display:none; /*!!*/ /*fix on subreddits/explore apge */
+	}
+	.multi-details > h2,
+	.multi-details > h3 {
+	padding:10px 15px 0;
+	border-top:1px solid #181818;
+	color:#ddd;
+	font-weight:bold;
+	}
+	.multi-details > h2 {
+	border-top:1px solid #181818;
+	}
+	.multi-details > h3 {
+	margin:0;
+	background:#222;
+	border-top:1px solid #272727;
+	}
+	.multi-details .gray-buttons.settings {
+	padding:0;
+	margin-bottom:0;
+	}
+	.multi-details > .gray-buttons.settings {
+	padding:0 15px 12px;
+	}
+	.multi-details .gray-buttons.settings button {
+	color:#999;
+	font-family:sans-serif;
+	}
+	.multi-details .gray-buttons.settings button:hover {
+		color:#bbb;
+		text-decoration:none;
+	}
+	.multi-details .description .gray-buttons.settings {
+	background:#202020;
+	padding:8px 15px;
+	border-bottom:1px solid #181818;
+	}
+	.multi-details form.rename-multi .warning, 
+	.filtered-details form.rename-multi .warning {
+	font-weight:normal;
+	margin:0 0 5px;
+		color:#e74c3c;
+	}
+	.confirm-button .confirmation {
+		color:#e74c3c;
+		font-size:11px;
+	}
+	.multi-details .share-in-sr, 
+	.filtered-details .share-in-sr {
+	font-size:11px;
+	color:#999;
+	}
+	.multi-details form.copy-multi, 
+	.filtered-details form.copy-multi, 
+	.multi-details form.rename-multi, 
+	.filtered-details form.rename-multi {
+	margin:0;
+	padding:0px 15px 10px;
+	background:#202020;
+	}
+	.multi-details .copy-multi input.multi-name,
+	.multi-details .rename-multi input.multi-name,
+	.filtered-details .copy-multi input.multi-name,
+	.filtered-details .rename-multi input.multi-name {
+	border-color:#494949;
+	background:#393939;
+	color:#eee;
+	}
+	.multi-details form.copy-multi button,
+	.multi-details form.rename-multi button,
+	.filtered-details form.copy-multi button,
+	.filtered-details form.rename-multi button {
+	background:transparent;
+	border:none;
+	color:#eee;
+	box-shadow:none;
+	opacity:1;
+	font-family:sans-serif;
+	position:relative;
+	top:-1px;
+	}
+	.multi-details form.copy-multi .error.copy-error {
+	font-size:11px;
+	margin-top:3px;
+	}
+	.multi-details > .description {
+	border-top:1px solid #181818;
+	margin:0;
+	}
+	.multi-details > .description .usertext-body .md {
+	border-bottom-color:#181818;
+	}
+	.multi-details .description .usertext-edit, 
+	.filtered-details .description .usertext-edit,
+	.multi-details .description .usertext-edit textarea, 
+	.filtered-details .description .usertext-edit textarea {
+	width:270px!important;
+	margin:0;
+	}
+	.multi-details .description .usertext-edit, 
+	.filtered-details .description .usertext-edit {
+	padding: 10px 10px 0;
+	}
+	.multi-details .description .usertext-edit .bottom-area,
+	.filtered-details .description .usertext-edit .bottom-area {
+	margin-top:5px;
+	}
+	.multi-details > .description .usertext-edit > .md,
+	.filtered-details > .description .usertext-edit > .md {
+	width:276px;
+	}
+	.multi-details form.add-sr, 
+	.filtered-details form.add-sr {
+	margin: -1px 0 0;
+	padding: 0 15px 10px;
+	background: #222;
+	}
+	.multi-details form.add-sr {
+	border-bottom:1px solid #272727;
+	}
+	.multi-details form.add-sr .sr-name, 
+	.filtered-details form.add-sr .sr-name {
+	background: #393939;
+	border: 1px solid #494949;
+	color: #eee;
+	font-size: 12px;
+	}
+	.multi-details form.add-sr #sr-drop-down, 
+	.filtered-details form.add-sr #sr-drop-down {
+	background:#2d2d2d;
+	border-color:#353535;
+	}
+
+	.multi-details form.add-sr .error,
+	.filtered-details form.add-sr .error {
+		margin-top:3px;
+		font-size:11px;
+	}
+
+	.filtered-details ul.subreddits,
+	.multi-details ul.subreddits {
+	background:#222;
+	padding:5px 15px 10px;
+	border-bottom:1px solid #272727;
+	margin-left:0;
+	}
+	.multi-details ul li,
+	.filtered-details ul li {
+	font-size:12px;
+	position:relative;
+	}
+	.multi-details ul.subreddits li a,
+	.filtered-details ul.subreddits li a {
+	margin-left:12px;
+	}
+	.multi-details.readonly ul.subreddits li a,
+	.filtered-details.readonly ul.subreddits li a {
+	margin-left:0;
+	}
+	.multi-details .bottom {
+		margin-top:0;
+	}
+	.multi-details .recommend-box {
+	margin: 0;
+	padding: 0;
+	background: #222;
+	border-top: 1px solid #181818;
+	}
+	.multi-details .recommend-box .recs {
+	padding: 10px 15px;
+	border-top: 1px solid #272727;
+	}
+	.multi-details .recommend-box h1 {
+	font-size:13px;
+	}
+	.recommend-box ul.recommendations {
+	margin-bottom:8px;
+	}
+	.multi-details .recommend-box .rec-item {
+	margin: 0;
+	background: transparent;
+	padding: 0;
+	width:120px;
+	border: none;
+	}
+	.multi-details .recommend-box .rec-item a {
+	padding: 0;
+	width:auto;
+	line-height: normal;
+	margin-left:12px;
+	}
+	.multi-details.readonly .recommend-box .rec-item a {
+	margin-left:0;
+	}
+
+
+
+	.multi-details .recommend-box .rec-item button.add, 
+	.multi-details .subreddits button.remove-sr,
+	.filtered-details .recommend-box button.add,
+	.filtered-details .subreddits button.remove-sr {
+	background:url(%%spritesheet%%) no-repeat;
+	width:9px;
+	height:9px;
+	margin:0;
+	position:absolute;
+	left:0;
+	top:5px;
+	opacity:1;
+	border:0;
+	}
+	.multi-details .recommend-box .rec-item button.add, 
+	.filtered-details .subreddits button.add {
+	background-position:-24px -102px;
+	}
+	.multi-details .recommend-box .rec-item button.add:after, 
+	.filtered-details button.add:after {
+	display:none;
+	content:none;
+	}
+	.multi-details .subreddits button.remove-sr, 
+	.filtered-details .subreddits button.remove-sr {
+	background-position:-24px -113px;
+	}
+	.multi-details .add-sr button.add, 
+	.filtered-details .add-sr button.add {
+	margin-left:5px;
+	background:url(%%spritesheet%%) no-repeat -37px -106px;
+	border:0!important;
+	opacity:1;
+	}
+
+	.multi-details .recommend-box .more {
+	color:#3498db;
+	font-weight:normal;
+	font-style:italic;
+	font-size:11px;
+	}
+	.multi-details .recommend-box .endoflist {
+	padding: 10px 15px;
+	background:#222;
+	border-top:1px solid #272727;
+	}
+	.multi-details .recommend-box .endoflist h1 {
+	font-size:13px;
+	}
+	.multi-details .recommend-box .endoflist .heading {
+	color:#999;
+	}
+	.multi-details .visibility-group {
+	margin-top:8px;
+	}
+
+
+
+	/* Promoted link/ad help link */
+	.organic-listing .help {
+		margin-bottom:6px;
+		color:#3498DB;
+	}
+	#spotlight-help.hover-bubble {
+		padding:1px;
+		margin-left:1px;
+		background:#2b2b2b;
+		border:1px solid #101010;
+		box-shadow:0 0 1px rgba(16,16,16,0.5);
+		color:#ddd;
+	}
+	#spotlight-help.hover-bubble .help-section {
+		background:#252525;
+	}	
+	#spotlight-help.hover-bubble .help-section > * {
+		padding:0.5em;
+		margin:0;
+	}
+	#spotlight-help.hover-bubble .help-section > p:nth-of-type(1) {
+		padding-bottom:0;
+	}
+	.hover-bubble.anchor-top:after {
+		display:none;
+	}
+	.hover-bubble.anchor-top:before {
+		width:18px;
+		height:11px;
+		top:-10px;
+		background:url(%%spritesheet%%) no-repeat -12px -413px;
+		border:none;
+	}
+	.hover-bubble#beta-help {
+	background: #25252c;
+border: 1px solid #101014;
+padding:0;
+margin-top: 10px;
+margin-left: 14px;
+	}
+	#beta-help .help-section {
+	padding: 3px;
+border: 1px solid #2e2e32;
+color: #dddde1;
+	}
+
+	.modal-content {
+	background: #222;
+	border-radius:0;
+	border: 1px solid #2d2d2d;
+	}
+	.modal-title {
+	color:#eee;
+	font-family:sans-serif;
+	}
+	.split-panel .split-panel-section.split-panel-divider:first-child {
+	border-color:#333;
+	}
+	.login-disclaimer {
+	color:#808080;
+	}
+	.modal-content .c-btn-primary {
+	background:#393939;
+	border:1px solid #494949;
+	}
+
+
+
+
+	/* Textarea buttons/help */
+	.usertext-buttons .status {
+		font-family:sans-serif;
+		font-size:11px;
+		color:#888;
+	}
+	.usertext button {
+		margin-top:0;
+		background:#393939;
+		border:1px solid #494949;
+		border-radius:1px;
+		color:#eee;
+	}
+	.error {
+		color:#e74c3c;
+	}
+	.bottom-area .error {
+		font-family:sans-serif;
+		font-size:11px;
+		color:#e74c3c;
+	}
+	.bottom-area a.reddiquette,
+	.bottom-area .help-toggle a.option {
+		font-family:sans-serif;
+	}
+	.bottom-area a.reddiquette,
+	.bottom-area .help-toggle {
+		margin-top:2px;
+	}
+	.bottom-area a.reddiquette {
+		position:relative;
+		top:3px;
+	}
+	.bottom-area a.reddiquette:active,
+	.bottom-area a.reddiquette:focus,
+	.bottom-area .help-toggle a.option:active,
+	.bottom-area .help-toggle a.option:focus {
+		outline:none;
+	}
+	@media screen and (-webkit-min-device-pixel-ratio:0){
+		.bottom-area a.reddiquette {
+		top:0;
+	}}
+	.messages-page.compose-page .roundfield .usertext-edit .bottom-area a.reddiquette {
+		top:0;
+	}
+	.linefield .bottom-area a.reddiquette {
+		top:0;
+	}
+	.markhelp,
+	.usertext .markhelp {
+		padding:10px 0 0;
+		margin:0 0 10px;
+		border-top:none;
+		font-family:sans-serif;
+	}
+	.markhelp > p {
+		font-size:12px;
+	}
+	.markhelp table.md {
+		margin-top:10px;
+		margin-left:0;
+		font-size:12px;
+	}
+	.markhelp tbody tr,
+	.usertext .markhelp tbody tr {
+		border:none;
+	}
+	.markhelp tbody tr:nth-of-type(1) {
+		text-transform:uppercase;
+	}
+	.markhelp tbody tr:nth-of-type(1) td em {
+		font-style:normal;
+		font-weight:bold;
+	}
+	.markhelp tbody td,
+	.usertext .markhelp tbody td {
+		padding:8px;
+		border:1px solid #303036;
+		text-align:left;
+		color:#dddde1;
+	}
+	.markhelp tbody tr:nth-of-type(odd) > td {
+		background:#27272c;
+	}
+	.markhelp tbody tr:nth-of-type(even) > td {
+		background:#252529;
+	}
+
+
