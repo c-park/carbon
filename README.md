@@ -1,7 +1,7 @@
 # Carbon
 Carbon is a custom, free-to-use theme for [reddit.com](http://reddit.com). You can see a live preview of the theme at [/r/Carbon](http://reddit.com/r/carbon).
 
-`Current release: v1.0`
+`Current release: v1.1`
 
 ## About
 
