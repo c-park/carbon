@@ -3294,8 +3294,8 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	.new-comment .usertext-body {
 		margin:5px 10px 0 0;
 		padding-left:5px;
-		background:#292929;
-		border:1px solid #303030;
+		background:#29292f;
+		border:1px solid #333339;
 	}
 	.new-comment .usertext-body .md {
 		margin:5px 0;
@@ -3483,6 +3483,21 @@ body.compressed-display .trending-subreddits {
 		margin:8px 10px 5px 0;
 		font-family:verdana,sans-serif;
 	}
+	
+	.message .subject .reddit .marker-dot {
+		width:9px;
+		height:9px;
+	}
+	.message.color-bar {
+		border-top-color:#28282d!important;
+		border-right-color:#28282d!important;
+		border-bottom-color:#161618!important;
+		border-left-width:2px!important;
+}
+.menuarea~.sitetable>.color-bar.message:nth-of-type(1) {
+	border-top-color:#161618!important;
+}
+	
 	.message.message-reply .entry,
 	.message.message-reply:not(.threaded) .entry,
 	.message.message-parent .entry,
