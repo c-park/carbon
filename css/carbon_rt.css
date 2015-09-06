@@ -133,7 +133,8 @@ a,
 .res.res-nightmode .tagline a,
 .comment .usertext .md p > a:visited,
 h2 a:visited,
-.shortlink input {
+.shortlink input,
+button {
 	color:#3498db;
 	-webkit-transition:color 0.15s ease-in-out;
 	-moz-transition:color 0.15s ease-in-out;
@@ -250,6 +251,9 @@ a:hover {
 		background:#2d2d30;
 		border-bottom:1px solid #1d1d20;
 	}
+	.titlebox .md hr {
+		border-bottom-color:#161618;
+	}
 
 	/* Forms/input */
 	/* Set background and border color, remove box-shadow, set font and color */
@@ -268,7 +272,7 @@ a:hover {
 	.linefield textarea,
 	.linefield input[type="text"] {
 		background:#27272b;
-		border:1px solid #323236;
+		border:1px solid #323238;
 		box-shadow:none;
 		font-family:sans-serif;
 		color:#eeeef1;
@@ -303,6 +307,20 @@ a:hover {
 		outline:none;
 	}
 	
+	
+	
+/* Remove browser outline on focus */
+/* XXX debatable whether outline has UX use */
+a:active,
+a:focus,
+input:active,
+input:focus 
+textarea:active,
+textarea:focus 
+.option:active,
+.option:focus {
+	outline:none;
+}
 
 
 /*------------------------------------------------------------------
@@ -447,8 +465,8 @@ a:hover {
 
 /* Setting dimensions and removing margin on snoo image (custom) */
 #header-img-a #header-img {
-	width:80px;
-	height:28px;
+	width:118px;
+	height:30px;
 	margin:0;
 }
 	
@@ -456,12 +474,12 @@ a:hover {
 /* Aligned with tabmenu and set right margin to pagename */
 #header-img-a,
 #header-img.default-header {
-	width:80px;
-	height:28px;
+	width:118px;
+	height:30px;
 	display:inline-block;
 	margin:0 30px 0 0;
 	position:relative;
-	bottom:17px;
+	bottom:15px;
 	left:15px;
 	vertical-align:bottom;
 }
@@ -515,6 +533,17 @@ body.with-listing-chooser #header .pagename {
 	content:"/R/";
 	color:#bbbbc1;
 }
+
+/* If page is multireddit repace with /M/ */
+.multi-page .pagename a:before {
+	content:"/M/";
+}
+
+/* Remove /R/ from /r/mod as pagename reads "subreddits you moderate" instead of just "mod" */
+.multi-page .pagename a[href$="/r/mod"]:before {
+	content:none;
+}
+
 
 
 /*------------------------------------------------------------------
@@ -572,7 +601,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 /* Remove default border */
 #header .tabmenu li.selected a {
 	position:relative;
-	border:none;
+	border:0;
 	color:#fb8500;
 }
 	
@@ -659,6 +688,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 }
 
 /* Add psuedo darker top border */
+/* XXX can remove display:block as inherited from div */
 #header-bottom-right:after {
   content:"";
   height:1px;
@@ -702,7 +732,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	
 /* Lighter color for karma count next to username */
 #header-bottom-right .user .userkarma {
-	border:none;
+	border:0;
 	color:#dddde1;
 }
 
@@ -835,9 +865,10 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 }
 
 /* Style search input area */
+/* //Note: increased padding-right so text doesn't fall behind search icon */
 #search input[type="text"] {
 	width:298px;
-	padding:7px 15px;
+	padding:7px 35px 7px 15px;
 	background:#202023;
 	border:1px solid #28282d;
 	font-size:12px;
@@ -902,6 +933,8 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 }
 
 /* Submit buttons on hover */
+/* //Note: if moderator and either links/text not allowed then mod shield icon will show up on morelink */
+/* //Note: ...default style sets to opacity:0.5 on hover, looks odd but won't bother changing */
 .morelink:hover {
 	background:#424249;
 	border-color:#53535a;
@@ -943,13 +976,15 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 
 /* Background and border animations on hover */
 /* Used for searchbar, submit buttons, snoovatar button .. */
-/* MOVE MOVE MOVE */
+/* XXX MOVE MOVE MOVE */
+/* XXX see whatelse needs to go here (links styled as buttons etc.) */
 #search input[type="text"],
 .morelink,
 .gold-accent.snoovatar-link,
 .gold-accent.snoovatar-link a,
 .sidecontentbox .more a,
-.sidecontentbox .expand-summary {
+.sidecontentbox .expand-summary,
+button {
 	-webkit-transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
 	-moz-transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
 	-o-transition:background 0.15s ease-in-out,border 0.15s ease-in-out;
@@ -999,6 +1034,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 /* Main sub/profile title in sidebar */
 /* Set color here too incase not link (like profile page) */
 /* Using > as can have h1 within .titlebox .md */
+/* font-variant is for me/f/all h1 which has small-caps applied */  
 .titlebox > h1 {
 	padding:10px 15px;
 	margin:0;
@@ -1007,7 +1043,8 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	border-bottom:1px solid #28282d;
 	font-family:sans-serif;
 	font-size:18px;
-	color:#eeeef1;
+	font-variant:normal;
+	color:#eeeef1; /* ZZZ */
 }
 
 /* Add pseudo dark border for contrast */
@@ -1049,12 +1086,16 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 
 
 /*------------------------------------------------------------------
+/* ***** 4/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+/*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
 ------ 3.3.2 SUBSCRIBE
 -------------------------------------------------------------------*/
 	
-/* Container */
+/* Sidebar subscribe button container */
+/* Other fancy-toggle-buttons show up outside of titlebox so specifying here */
 .titlebox .fancy-toggle-button {
 	width:296px;
 	height:30px;
@@ -1064,14 +1105,15 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	border:1px solid #161618;
 	border-left:0;
 	border-right:0;
-	border-radius:0;
 	line-height:30px;
 }
 
-/* Subscribe/unsubscribe */
+/* Override "inline" display on links */
 .titlebox .fancy-toggle-button .option.active {
 	display:inline-block;
 }
+
+/* Style subscribe/unsubscribe links */
 .titlebox .fancy-toggle-button .option.add,
 .titlebox .fancy-toggle-button .option.remove {
 	height:30px;
@@ -1079,62 +1121,68 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	position:relative;
 	top:-1px;
 	background:#1f1f22;
-	border:none;
+	border:0;
 	border-radius:0;
 	font-size:11px;
-	font-weight:normal;
+	font-weight:400;
 	line-height:30px;
 	text-transform:capitalize;
-	color:#9999a1;
+	color:#9999a0;
 }
 
-/* Style subscribe */
+/* Make "Subscribe" link bold and green */
 .titlebox .fancy-toggle-button .option.add {
-	font-weight:bold;
+	font-weight:700;
 	color:#27ae60;
 }
 
-/* Remove browser outline on focus */
-.titlebox .fancy-toggle-button .option:active,
-.titlebox .fancy-toggle-button .option:focus {
-	outline:none;
-}
-
-/* Friends */
+/* Add bottom border to +Friends container (profile pages) */
+/* XXX REVISIT SELECTOR LENGTH */
 .profile-page .titlebox h1 + div {
 	border-bottom:1px solid #28282d;
 }
 
-/* Subscribers + users online */
-/* Position inline with subscribe button */
+
+/*------------------------------------------------------------------
+/* ***** 4/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+/*------------------------------------------------------------------
+-- 3. SIDEBAR
+---- 3.3 TITLEBOX
+------ 3.3.3 SUBSCRIBERS
+-------------------------------------------------------------------*/
+
+/* Number of subscribers and users online */
+/* Position .users-online inline/above subscribe button */
 .subscribers,
 .users-online {
 	height:30px;
 	padding:0 15px;
-	display:block;
 	margin-top:-31px;
 	position:absolute;
 	right:0;
 	background:#1f1f22;
 	font-size:11px;
 	line-height:30px;
-	color:#9999a1;
+	color:#9999a0;
 }
 
-/* Hide users online count */
+/* Hide number of users online count */
+/* Also removing default green circle (:before) */
 .users-online,
 .users-online:before { 
 	display:none;
 	content:none;
 }
 
-/* Have users online count appear on hover */
+/* Have users online count appear on hover over subscriber count text */
 .subscribers:hover + .users-online,
 .users-online:hover {
 	display:block;
 }
 
-/* Online icon before users online */
+/* New green circle before users online */
+/* //Note: originally had icon animate (glow) but removed to save space */ 
 .users-online:after {
 	content:"";
 	width:7px;
@@ -1145,69 +1193,54 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	left:3px;
 	background:#4bda4b;
 	border-radius:50%;
-	-webkit-animation:users 2s infinite;
-	-moz-animation:users 2s infinite;
-	-o-animation:users 2s infinite;
-	animation:users 2s infinite;
-}
-
-/* Icon fade in/out animation */
-@-webkit-keyframes users {
-		0% {background:#4bda4b;}
-	 50% {background:#369b36;}
-	100% {background:#4bda4b;}
-}
-@-moz-keyframes users {
-		0% {background:#4bda4b;}
-	 50% {background:#369b36;}
-	100% {background:#4bda4b;}
-}
-@-o-keyframes users {
-		0% {background:#4bda4b;}
-	 50% {background:#369b36;}
-	100% {background:#4bda4b;}
-}
-@keyframes users {
-		0% {background:#4bda4b;}
-	 50% {background:#369b36;}
-	100% {background:#4bda4b;}
 }
 
 
 /*------------------------------------------------------------------
+/* ***** 4/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+/*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
------- 3.3.3 TOGGLE
+------ 3.3.4 TOGGLE
 -------------------------------------------------------------------*/
 	
-/* Style toggle stylesheet, moderator/contributor status */
-.titlebox .toggle.sr_style_toggle,
+/* Style moderator status, contributor status, and use subreddit theme toggle */
+/* XXX changed .toggle to form to save characters */
+/* XXX minimum specificity checked */
 .titlebox .leavemoderator,
-.titlebox .toggle.leavecontributor-button {
+.titlebox form.leavecontributor-button,
+.titlebox form.sr_style_toggle {
 	padding:8px 15px;
 	background:#202023;
 	border-top:1px solid #28282d;
 	border-bottom:1px solid #161618;
-	font-family:sans-serif;
 	color:#777781;
 }
 
-/* Adjust bottom-padding and font-size on stylesheet toggle */
-.titlebox .toggle.sr_style_toggle {
-	padding:8px 15px 10px;
+/* Adjust bottom-padding and font-size on sub theme toggle */
+.titlebox form.sr_style_toggle {
+	padding-bottom:10px;
 	font-size:11px;
+}
+
+/* Adjust left margin on sub theme toggle and user flair toggle text (labels) */
+/* XXX moved flairtoggle out of block to save space */
+.sr_style_toggle label,
+.flairtoggle label {
+	margin-left:2px;
 }
 
 /* Replace default moderator/contributor text */
 /* Set existing text to 0 font-size */
 .titlebox .leavemoderator,
-.titlebox .toggle.leavecontributor-button {
-	font-size:0; /* TO DO: check this works in IE */
+.titlebox form.leavecontributor-button {
+	font-size:0; /* XXX check this works in IE */
 }
 
-/* Set styling for replacement pseudo text */
+/* Set styling for replacement pseudo text for moderator/contributor status */
 .titlebox .leavemoderator:before,
-.titlebox .toggle.leavecontributor-button:before {
+.titlebox form.leavecontributor-button:before {
 	width:auto;
 	height:15px;
 	display:inline-block;
@@ -1219,70 +1252,82 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	font-size:11px;
 	line-height:17px;
 	text-indent:20px;
-	color:#777781;
+	color:#777781; /* ZZZ */
 } 
 
-/* Replacement text and new icons */
+/* Replacement text and new icons for moderator/contributor status */
 .titlebox .leavemoderator:before {
 	content:"Moderator";
 	background:url(%%spritesheet%%) no-repeat 0 -127px;
 }
-.titlebox .toggle.leavecontributor-button:before {
+.titlebox form.leavecontributor-button:before {
 	content:"Approved submitter";
 	background:url(%%spritesheet%%) no-repeat 0 -147px;
 }
 	
-/* Change/leave moderator/contributor links */
+/* moderator/contributor "change" and "leave" links */
 /* Set size of all links */
 .titlebox .leavemoderator a,
-.titlebox .toggle.leavecontributor-button a {
+.titlebox form.leavecontributor-button a {
 	font-size:11px;
 }
 
 /* Positioning of top level links (change/leave) */
 .titlebox .leavemoderator > a,
-.titlebox .toggle.leavecontributor-button > a,
+.titlebox form.leavecontributor-button > a,
 .titlebox .leavecontributor-button .togglebutton {
 	display:inline-block;
 	margin-left:5px;
-	vertical-align:middle;
 }
 
-/* Adjust sub yes/no option links for contributor */
-.titlebox .toggle.leavecontributor-button .option.active.error {
+/* Adjust leave contributor confirmation text and links */
+/* XXX originally had vertical-align:text-bottom for yes/no links but no apparent effect */
+.leavecontributor-button .option.active.error {
 	display:block;
 	margin:3px 0 0 20px;
-}
-.titlebox .toggle.leavecontributor-button .option.active.error a {
-	vertical-align:text-bottom;
+	font-size:11px;
 }
 
 
+/*------------------------------------------------------------------
+/* ***** 5/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
 ------ 3.3.4 USER FLAIR
 -------------------------------------------------------------------*/
 
-/* User flair toggle area */
-.titlebox .toggle.flairtoggle {
+/* User flair toggle area (checkbox and label) */
+/* XXX changed .toggle to form to save characters */
+/* XXX can't really combine with any other selectors/style sets */
+/* XXX default top border color when not gold user (so no theme toggle) and not mod/cont... */
+/* XXX ...in this case flairtoggle is directly after subscribe button and want light top border */
+.titlebox form.flairtoggle {
 	padding:8px 15px;
 	margin:0;
 	position:relative;
 	background:#1f1f22;
 	border-top:1px solid #27272b;
 	font-size:11px;
-	color:#9999a1;
+	color:#9999a0;
 }
-.titlebox .leavemoderator ~ .toggle.flairtoggle,
-.titlebox .leavecontributor-button ~ .toggle.flairtoggle,
-.titlebox .toggle.sr_style_toggle ~ .toggle.flairtoggle {
+
+/* If the flairtoggle form follows moderator, contributor, or theme toggle then set light border at top */
+/* Border is for the previous div/form and replaces (overlays with margin-top:-1px) the default dark bottom border */
+.titlebox .leavemoderator ~ form.flairtoggle,
+.titlebox .leavecontributor-button ~ form.flairtoggle,
+.titlebox .sr_style_toggle ~ form.flairtoggle {
 	margin-top:-1px;
 	border-top-color:#28282d;
 }
-.titlebox .leavemoderator ~ .toggle.flairtoggle:before,
-.titlebox .leavecontributor-button ~ .toggle.flairtoggle:before,
-.titlebox .toggle.sr_style_toggle ~ .toggle.flairtoggle:before {
+
+/* If the flairtoggle form follows moderator, contributor, or theme toggle then set pseudo dark border at top */
+/* This is to make it look "inset" */
+/* This block and previous block act to swap around the border colors */
+.titlebox .leavemoderator ~ form.flairtoggle:before,
+.titlebox .leavecontributor-button ~ form.flairtoggle:before,
+.titlebox .sr_style_toggle ~ form.flairtoggle:before {
   content:"";
   height:1px;
   display:block;
@@ -1293,7 +1338,8 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
   background:#161618;
 }
 
-/* user flair tagline/preview */
+/* User flair preview container */
+/* Set color same as background to hide parentheses */
 .titlebox .tagline {
 	padding:4px 15px 10px;
 	margin:0;
@@ -1304,22 +1350,22 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	color:#1f1f22;
 }
 
-/* Username and edit link */
-.titlebox .tagline a.author,
-.titlebox .tagline a.flairselectbtn {
+/* User flair preview links */
+/* //Note: this also applies to links in the option pane */
+.titlebox .tagline a {
 	font-size:11px;
 	color:#3498db;
 }
 
-/* Chosen flair */
+/* User flair preview flair text size */
 .titlebox .tagline > .flair {
-	background-color:#333339;
-	border-color:#333339;
 	font-size:10px;
-	color:#ccccd1;
 }
 
 
+/*------------------------------------------------------------------
+/* ***** 5/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
@@ -1327,96 +1373,99 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 -------------------------------------------------------------------*/
 
 /* Style markdown container */
-.titlebox div.usertext .md, /* <---- WHAT IS THIS FOR?????? not multireddit md */
-.titlebox .usertext-body .md {
+/* div.usertext .md is for the me/f/all page */
+/* specifying div tag as .usertext also applied to parent form element */
+.titlebox .usertext-body .md,
+.titlebox div.usertext .md {
 	padding:5px 15px;
 	position:relative;
 	background:#202023;
 	border-top:1px solid #28282d;
 	border-bottom:1px solid #161618;
 	font-size:12px;
-	color:#dddde1;
+	color:#dddde3; /* ZZZ */
 }
 	
+/* Set a light inset pseudo bottom-border to .md */
+.titlebox .usertext-body .md:after {
+	content:"";
+	height:1px;
+	display:block;
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	background:#28282d;
+}
 	
-	.titlebox .usertext-body .md:after {
-		content:"";
-		height:1px;
-		display:block;
-		position:absolute;
-		bottom:0;
-		left:0;
-		right:0;
-		background:#28282d;
-	}
-	
-	/* */
-		.titlebox .usertext-body .md {
-	  	margin-bottom:-1px;
-	  }
+/* Set negative bottom margin to cover .bottom light top-border */
+/* This is to stop a light-dark-light border when there is an .md in titlebox */
+.titlebox .usertext-body .md {
+	margin-bottom:-1px;
+}
 	  
-/* Restyle borders on /r/all titlebox markdown (as no subscribe/toggle areas) */
+/* Set dark top-border and remove bottom-border on /r/all titlebox .md as no subscribe/toggle areas */
 .titlebox > h1 + .usertext > .md {
 	border-top:1px solid #161618;
 	border-bottom:0;
 } 
 
-/* If user flair is disabled then set top border of titlebox markdown */
-/* ??? can't see the use */
-	.titlebox > .users-online + .usertext .md {
-		border-top:1px solid #28282d;
-	} 
-	
-	
-	
-	
-	.titlebox .md h1,
-	.titlebox .md h2,
-	.titlebox .md h3,
-	.titlebox .md h4,
-	.titlebox .md h5,
-	.titlebox .md h6 {
-		margin:0.5em 0;
-		font-weight:bold;
-		color:#eee;
-	}
-	.titlebox .md h1 {
-		font-size:18px;
-	}
-	.titlebox .md h1 a {
-		color:#3498DB;
-	}
-	.titlebox .md h2 {
-		font-size:17px;
-	}
-	.titlebox .md h3 {
-		font-size:16px;
-	}
-	.titlebox .md h4 {
-		font-size:15px;
-	}
-	.titlebox .md h5 {
-		font-size:14px;
-	}
-	.titlebox .md h6 {
-		font-size:14px;
-		font-weight:normal;
-	}
-	.titlebox .md > p {
-		margin:1em 0;
-	}
-	.titlebox .md ul,
-	.titlebox .md ol {
-		margin:0.5em 0;
-		padding-left:20px;
-	}
+/* Set padding and dark top-border on /r/mod (.titlebox doesn't have .md just p) */
+.titlebox > h1 + .usertext > p {
+	padding:10px 15px;
+	border-top:1px solid #161618;
+}
+
+/* Titlebox markdown */	
+/* Set custom margins and font-sizes for headers */
+/* Set custom margins for paragraphs and lists */
+/* This doesn't affect markdown in posts */
+.titlebox .md h1,
+.titlebox .md h2,
+.titlebox .md h3,
+.titlebox .md h4,
+.titlebox .md h5,
+.titlebox .md h6 {
+	margin:0.5em 0;
+	font-weight:bold;
+	color:#eeeef1; /* ZZZ */
+}
+.titlebox .md h1 {
+	font-size:18px;
+}
+.titlebox .md h1 a {
+	color:#3498db;
+}
+.titlebox .md h2 {
+	font-size:17px;
+}
+.titlebox .md h3 {
+	font-size:16px;
+}
+.titlebox .md h4 {
+	font-size:15px;
+}
+.titlebox .md h5 {
+	font-size:14px;
+}
+.titlebox .md h6 {
+	font-size:14px;
+	font-weight:normal;
+}
+.titlebox .md > p {
+	margin:1em 0;
+}
+.titlebox .md ul,
+.titlebox .md ol {
+	padding-left:20px;
+	margin:0.5em 0;
+}
 
 
 
-
-
-
-
+/*------------------------------------------------------------------
+/* ***** 5/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
@@ -1425,10 +1474,11 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 -------------------------------------------------------------------*/
 	
 /* Link/comment karma */
+/* //Note: using > .karma as class also applied to gold time remaining text */
 .titlebox > .karma {
 	margin:8px 1px 0 15px;
 	display:inline-block;
-	color:#eeeef1;
+	color:#eeeef1; /* ZZZ */
 }
 
 /* Adjust margin on comment karma text */
@@ -1436,21 +1486,26 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	margin-top:5px;
 }
 
-/* Set margin on karma breakdown by sub link */
+/* Set margin on karma breakdown by sub table link */
 .karma-breakdown {
 	margin:10px 15px;
 }
 
-/* Karma breakdown table */
+/* Set width and margin of karma breakdown table */
 #per-sr-karma {
 	width:264px;
 	margin:10px 0 10px 16px;
 }
+
+/* Override default karma breakdown table cell color (subreddit name is th) */
 #per-sr-karma tr td {
-	color:#bbbbc1;
+	color:#aaaab1; /* ZZZ */
 }
 
 
+/*------------------------------------------------------------------
+/* ***** 5/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
@@ -1474,12 +1529,13 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	background:#424249!important;
 }
 
-/* Remove default icon */
+/* Remove default icon (old style reddit snoo face) */
 .gold-accent.snoovatar-link:before {
 	content:none;
 }
 
 /* Style snoovatar link within button */
+/* Same border-color as morelink */
 .snoovatar-link a {
 	display:block;
 	border:1px solid #49494f;
@@ -1506,6 +1562,9 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 
 
 /*------------------------------------------------------------------
+/* ***** 5/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+/*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
 ------ 3.3.7 META
@@ -1516,24 +1575,27 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	min-height:11px;
 	padding:8px 15px;
 	background:#1f1f22;
-	border-top:1px solid #27272b;
+	border-top:1px solid #27272b; /* ZZZ make sure this border color is used on all #1f1f22 bgs, should it be #28282d as applies to .md??? */
 	font-size:11px;
-	color:#9999a1;
+	color:#9999a1; /* ZZZ */
 }
 
 /* Adjust margin on profile page, add relative for pseudo border */
+/* //Note: used > .bottom as class also applied to server-seconds block */
 .profile-page .titlebox > .bottom {
 	margin-top:15px;
 	position:relative;
 }
 
-/* Remove top margin if gold expiration box */
+/* Remove top margin if gold expiration box (which has no bottom margin) */
+/* //Note: need .titlebox in selector for specificity */ 
 .titlebox .gold-expiration-info + .bottom {
 	margin-top:0;
 }
 
 /* Add darker pseudo border on profile pages */
 /* .md is always present on other pages so can add dark pseudo border to that usually */
+/* //Note: also applied to server-seconds .bottom */
 .profile-page .titlebox .bottom:before {
 	content:"";
 	height:1px;
@@ -1542,7 +1604,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	top:0;
 	left:0;
 	right:0;
-	background:#161618;
+	background:#161618; /* XXX is this duplicated? */
 }
 
 /* Remove user flair */
@@ -1551,33 +1613,37 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	font-size:10px;
 }
 
-/* Remove default text from age */
-.titlebox .bottom .age {
-	font-size:0;
+/* Remove default text from subreddit age */
+/* XXX reduced selector shouldn't be any other .age elements */
+.age {
+	font-size:0; /* XXX check this works in IE */
 }
 
-/* Add custom icon next to time/age */
-.titlebox .bottom .age time {
-	padding-left:14px;
+/* Add custom icon next to subreddit age */
+/* XXX reduced selector shouldn't be any other .age elements */
+.age time {
 	height:11px;
+	padding-left:14px;
 	background:url(%%spritesheet%%) no-repeat 0 -166px;
 	font-size:11px;
 }
 
-/* Style send message link with #mail icon */
-/* Remove original image */
-.profile-page .titlebox .bottom img {
+/* Remove default mail image from "send a private message" link (on other users page) */
+/* XXX reduced selector shouldn't be any other img in .bottom divs */
+.bottom img {
 	display:none;
 }
 
-/* Make space for icon by moving send message link */
-.profile-page .titlebox .bottom > a {
+/* Make space for icon by adding padding "send a private message" link text */
+/* XXX reduced selector as no links in .server-seconds .bottom */
+.profile-page .bottom a {
 	padding-left:19px;
 	position:relative;
 }
 
-/* Add #mail icon before send message link */
-.profile-page .titlebox .bottom > a:before {
+/* Add #mail icon to "send a private message" link */
+/* XXX reduced selector as no links in .server-seconds .bottom */
+.profile-page .bottom a:before {
 	content:"";
 	width:15px;
 	height:10px;
@@ -1585,27 +1651,32 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	position:absolute;
 	top:2px;
 	left:0;
-	background:url(%%spritesheet%%) no-repeat 0 -50px;
+	background:url(%%spritesheet%%) 0 -50px no-repeat;
 }
 
 
+/*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.3 TITLEBOX
 ------ 3.3.8 GOLD
 -------------------------------------------------------------------*/
 
-/* User gold info container */
+/* User gold info (expiration, creddits etc.) container */
+/* //Note: no bottom border as provided by .bottom */
 .gold-expiration-info {
 	padding:0;
 	margin:15px 0 0;
 	background:#212125;
-	border:none;
+	border:0;
 	border-top:1px solid #161618;
 	border-radius:0;
 }
 	
 /* Gold remaining (time) container */
+/* //Note: color applies to "of reddit gold remaining" text */
 .gold-remaining {
 	padding:10px 15px 12px;
 	margin-bottom:1px;
@@ -1613,18 +1684,13 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	color:#cd9930;
 }
 
-/* Gold remaining (time) */
+/* Adjust margin and color of gold remaining (time) */
+/* Is span so had to give inline-block to add margin */
 .gold-remaining .karma {
-	color:#f4b639;
-	display:block;
+	display:inline-block;
 	margin-bottom:3px;
+	color:#f4b639;
 }
-
-/* Remove line breaks as can cause spacing issue */
-.gold-expiration-info > div:last-of-type br,
-.gold-remaining .karma + br {
-	display:none;
-} 
 
 /* Add margin to "view gold features/benefits" link */
 .gold-remaining a {
@@ -1633,18 +1699,20 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 }
 
 /* Set top margin for "x gold creddits to give" link and "x gildings given out" (no creddit link) */
+/* //Note: creddits info should only appear on own user page */
 .gold-creddits-remaining,
 .gold-remaining + .num-gildings {
 	margin-top:-5px;
 }
 
-/* Adjust top margin/set color for "x gildings given out" (with creddit link) */
+/* Lower default top margin (from 5px) and set color for "x gildings given out" */
 .num-gildings {
 	margin-top:3px;
 	color:#cd9930;
 }
 
 /* Set the padding on the last div as fallback */
+/* //Note: this covers the creddits/num-gildings divs */
 .gold-expiration-info > div:last-of-type {
 	padding-bottom:12px;
 }
@@ -1653,7 +1721,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 .server-seconds {
 	padding:0;
 	background:#212125;
-	border:none;
+	border:0;
 	border-radius:0;
 }
 
@@ -1663,7 +1731,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	padding:13px 15px;
 }
 
-/* Remove margin from visibility settings and prep for pseudo border for standard .bottom */
+/* Remove margin on visibility settings and prep for pseudo border from standard .bottom */
 .server-seconds-public.bottom {
 	margin-top:0;
 	position:relative;
@@ -1677,7 +1745,8 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	border-top:1px solid #161618;
 }
 
-/* Add lighter pesudo border to second paragraph */
+/* Add lighter pesudo border to second paragraph (below dark border) */
+/* XXX can remove display:block as inherited */
 .server-seconds > p + p:before {
 	content:"";
 	height:1px;
@@ -1686,22 +1755,23 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	top:0;
 	left:0;
 	right:0;
-	background:#28282d;
+	background:#28282d; /* XXX duplicates??? line 1575 */
 }
 
-/* Color of server time */
+/* Color of server time (bold text) */
 .server-seconds em {
 	color:#eeeef1;
 }
 
-/* Give gold link container on profile pages */
-/* NB: using .profile-page to distinguish from giftgold in /r/all sidebar */ 
+/* "give reddit gold to /u/..." link container on profile pages */
+/* //Note: using .profile-page to distinguish from giftgold in /r/all sidebar */ 
 .profile-page .giftgold {
 	padding:0 15px;
 	margin:15px 0;
 }
 
-/* Adjust top padding/margin and set border if user has gold */ 
+/* If .giftgold follows gold expiration box adjust padding/margin, set top border, and prep for pseudo border */ 
+/* //Note: the top border is for the gold expiration container which doesn't have a bottom border */
 .gold-expiration-info + .giftgold {
 	padding-top:15px;
 	margin-top:0;
@@ -1709,7 +1779,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	border-top:1px solid #28282d;
 }
 
-/* Set darker sub border */
+/* Set darker sub border if follows gold expiration as background is darker than gold expiration */
 .gold-expiration-info + .giftgold:before {
 	content:"";
 	height:1px;
@@ -1717,7 +1787,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	top:0;
 	left:0;
 	right:0;
-	background:#161618;
+	background:#161618; /* XXX duplicated??? */
 }
 
 /* Set color of give gold link (also applies to /r/all links) */
@@ -1725,56 +1795,42 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	color:#cd9930;
 }
 
-
-					/* CAN MOVE THIS */
-					/* Gold icon on posts/comments (not on profile page give gold link or on /r/all links) */
-					/* Set margin and color of count (e.g. x2) */
-					.gilded-icon {
-						margin-left:5px;
-						color:#cd9930;
-					}
-
-					/* Set icon - CHANGE TO SOMETHING SIMILAR TO CURRENT */
-					.gilded-icon:before {
-						margin-right:3px;
-						background:url(%%gildedalt2%%) no-repeat 0 0;
-					}
-
-
 /* Gold options (on /r/all) containers */
+/* //Note: using .allminus-link and not .giftgold as also appears on profile page */
 .allminus-link,
 .gilded-link {
 	margin:0;
 	background:#1f1f22;
 	border:1px solid #101014;
-	border-top:none;
-	border-bottom:none;
+	border-top:0;
+	border-bottom:0;
 	font-family:sans-serif;
 }
 
-/* Add bottom border to last option container ("see gilded comments and submissions") */
+/* Add bottom border (dark outer) to last option container "see gilded comments and submissions" */
 .gilded-link {
 	border-bottom:1px solid #101014;
 }
 
-/* Style gold option links */ 
+/* Style gold option links */
+/* //Note: color already set for .allminus-link a (from profile .giftgold), need for .gilded-link */
 .allminus-link a,
 .gilded-link a {
 	display:block;
 	padding:6px 15px;
 	border:1px solid #27272b;
-	border-top:none;
-	border-bottom:none;
+	border-top:0;
+	border-bottom:0;
 	color:#cd9930;
 }
 
-/* Add dark border to first gold option link ("exclude your subscribed...") (the 2nd div element) */
+/* Set dark top border and padding to first gold option link ("exclude your subscribed...") (the 2nd div under the parent div.spacer) */
 .allminus-link:nth-of-type(2) a {
 	padding-top:10px;
 	border-top:1px solid #161618;
 }
 
-/* Style last option link ("see gilded comments and submissions") */
+/* Set bottom border and padding of last option link "see gilded comments and submissions" */
 .gilded-link a { 
 	padding-bottom:10px;
 	border-bottom:1px solid #27272b;
@@ -1782,37 +1838,42 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 
 
 /*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+/*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.4 TOOLS
 -------------------------------------------------------------------*/
 
-/* Style container border and font  */
+/* Content box border and font  */
 .sidecontentbox {
 	border:1px solid #101014;
 	font-family:sans-serif;
 }
 
-/* Container titles */
+/* Content box header containers */
 .sidecontentbox > .title {
 	padding:10px 15px;
 	background:#212125;
 	border:1px solid #28282d;
 }
 
-/* Style title text */
+/* Content box headers */
+/* //Note: original text-transform is uppercase */
 .sidecontentbox > .title h1 {
 	font-size:12px;
 	font-weight:bold;
 	text-transform:lowercase;
-	color:#eeeef1;
+	color:#eeeef1; /* ZZZ */
 }
 
 /* Collapse -/+ button on moderation tools box */
+/* XXX this matches default specificity */
 .sidecontentbox .collapse-button {
 	position:relative;
 	top:-1px;
 	background:#3c3c40;
-	border:none;
+	border:0;
 	border-radius:1px;
 	line-height:8px;
 	color:#bbbbc1;
@@ -1827,24 +1888,23 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 }
 
 /* Remove background and resize links */
+/* //Note: font-size applies to recently viewed link titles (default 13px) */
 .sidecontentbox .content a {
 	background-color:transparent;
 	font-size:12px;
 }
 
-/* Reduce new line-height on modded sub list */
-#side-mod-list {
-	line-height:1.4;
-}
 
-
+/*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.4 TOOLS
 ------ 3.4.1 MODERATOR
 -------------------------------------------------------------------*/
 
-/* Message the mods link */
+/* Position of "message the moderators" link */
 .sidecontentbox a.helplink {
 	margin:12px 15px 0 0;
 }
@@ -1858,10 +1918,19 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	text-align:left;
 }
 
-/* Style "about moderation team" and "...and x more" buttons */
-/* NB: the "...and x more" button is an actual button on profile pages and has .expand-summary class */
+/* Style "about moderation team" and "...and x more" buttons/link */
+/* //Note: the "...and x more" button is an actual button on profile pages and has .expand-summary class */
+/* //Note: #side-multi-list is for "public multireddits" list which needs matching specificity */
+/* //Note: added in trophy table "... more" link */
+/* //Note: added in copy/rename multi form buttons */
+/* XXX better to make this a global style */
 .sidecontentbox .more a,
-.sidecontentbox .expand-summary {
+.sidecontentbox .expand-summary,
+#side-multi-list + .expand-summary,
+.sidecontentbox .trophy-table + p a,
+.multi-details form.copy-multi button, 
+.multi-details form.rename-multi button,
+.usertext button {
 	padding:3px 6px 4px;
 	display:inline-block;
 	background:#39393f;
@@ -1871,21 +1940,37 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	color:#eeeef1;
 }
 
+/* Set specific height on sub "moderators" box "about moderation team" and "...and x more" buttons */
+/* //Note: doing this to match height of buttons on profile page */
+/* //Note: assume the arrows on the profile page buttons push the line height up */
+.sidecontentbox .more a {
+  height:17px;
+  line-height:17px;
+}
+
 /* Set lighter background/border on hover */
 .sidecontentbox .more a:hover,
-.sidecontentbox .expand-summary:hover {
+.sidecontentbox .expand-summary:hover,
+#side-multi-list + .expand-summary:hover,
+.trophy-table + p a:hover,
+.multi-details form.copy-multi button:hover, 
+.multi-details form.rename-multi button:hover,
+.usertext button:hover {
 	background:#424249;
 	border-color:#53535a;
 }
 
 /* Set top margin on profile page "...and x more" button */
-.sidecontentbox .expand-summary {
+.sidecontentbox .expand-summary,
+#side-multi-list + .expand-summary {
 	margin-top:8px;
 }
 
-/* Set max width of usernames in moderator list to stop flairs overflowing */
-.sidecontentbox a.helplink ~ ul.content > li {
+/* Set max width of usernames in sub moderator list to stop flairs overflowing */
+/* //Note: setting margin as mod flairs don't have gap due to border, .more is a li though so using :not() to preserve its margin */
+.sidecontentbox a.helplink ~ ul.content > li:not(.more) {
 	max-width:266px;
+	margin:0 0 2px;
 	overflow:hidden;
 	white-space:nowrap;
 }
@@ -1895,7 +1980,16 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	font-size:10px;
 }
 
+/* Reduce new line-height on "moderator of" sub list */
+/* XXX github change comments on new interst. imgs but can't see any examples */
+#side-mod-list {
+	line-height:1.4;
+}
 
+
+/*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.4 TOOLS
@@ -1905,16 +1999,21 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 /* Resize and adjust margin on recently viewed link arrows */
 .gadget .midcol {
 	width:25px;
-	margin:1px 4px 0 -3px;
+	margin:2px 4px 0 -3px;
 }
 
-/* Resize recently viewed comment links and "clear" link */
+/* Set font-size of recently viewed comment links and "clear" link */
 .gadget a.reddit-comment-link,
 .gadget .right a {
 	font-size:11px;
 }
 
-/* Border for account activity link container */
+/* Remove 0.5em left margin applied to recent link score */
+.gadget .score {
+	margin-left:0;
+}
+
+/* Outer border for account activity link container */
 .account-activity-box {
 	border:1px solid #101014;
 }
@@ -1927,10 +2026,14 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	border:1px solid #28282d;
 	font-family:sans-serif;
 	font-size:11px;
-	color:#dddde1;
+	color:#dddde1; /* ZZZ */
 }
 
 
+/*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/* XXX need to style trophies faq page */
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.4 TOOLS
@@ -1938,27 +2041,34 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 -------------------------------------------------------------------*/
 
 /* Trophy name color */
+/* //Note: default uses !important */
 .trophy-name {
 	color:#eeeef1!important;
 }
 
 /* Trophy desc color */
 .trophy-description {
-	color:#bbbbc1;
+	color:#bbbbc1; /* ZZZ */
 }
 
-/* Hide parentheses by matching background color */
+/* Hide parentheses around ".. more" link by matching background color */
+/* //Note: link styling has been combined with other buttons under 3.4.1 XXX */
 .trophy-table + p {
 	color:#202023;
 }
 
 
 /*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
+/*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.5 LINK META
 -------------------------------------------------------------------*/
 
-/* Link meta info container */
+/* Link meta info container (time posted, score, shortlink) */
+/* //Note: margin and relative for outer pseudo border */
+/* XXX inconsistency between borders/pseudo and normal */
 .linkinfo {
 	padding:0;
 	margin:0 1px;
@@ -1969,27 +2079,26 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	font-family:sans-serif;
 }
 
-/* This link was posted on... container */
+/* "this link was posted on..." container */
+/* XXX font-size:12px and replaced text-indent with LR padding */
+/* XXX removed font-weight will set to time */ 
 .linkinfo .date {
-	padding:15px 0 0;
+	padding:15px 15px 0;
 	margin:0;
-	font-size:12px;
-	font-weight:bold;
-	text-indent:15px;
 	color:#eeeef1;
 }
 
-/* This link was posted on... normal font-weight */
-.linkinfo .date span {
-	font-weight:400;
+/* "this link was posted on..." time font-weight */
+.linkinfo time {
+	font-weight:700;
 }
 
 /* Post score container, set color of % upvoted text */
+/* XXX replaced left margin with padding */
 .linkinfo .score {
-	padding:10px 0 5px;
-	margin-left:15px;
+	padding:10px 15px 5px;
 	font-size:11px;
-	color:#9999a1;
+	color:#9999a1; /* ZZZ */
 }
 
 /* Style the score number */
@@ -1997,8 +2106,8 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	margin-right:3px;
 	vertical-align:-2px;
 	font-size:18px;
-	font-weight:normal;
-	color:#eeeef1;
+	font-weight:400;
+	color:#eeeef1; /* ZZZ */
 }
 
 /* Remove "points" text after score */
@@ -2006,86 +2115,94 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	display:none;
 }
 
-/* Shortlink container, remove "shortlink" text (using font-size) */
+/* Shortlink container */
+/* //Note: removed "shortlink:" text with font-size, check IE XXX */
+/* //Note: top border is outer border of container */
 .linkinfo .shortlink {
 	margin-top:10px;
 	font-size:0;
 	border-top:1px solid #28282d;
 }
 
-/* Style shortlink */
+/* Style shortlink input (the link itself) */
+/* XXX check if line-height changes anything in other browsers */
 .linkinfo .shortlink input {
 	width:266px;
 	height:32px;
 	padding:0 15px;
 	margin:0;
 	background:#202023;
-	border:none;
+	border:0;
 	border-top:1px solid #161618;
 	font-size:11px;
 	line-height:31px;
-	color:#9999a1;
+	color:#9999a1; /* ZZZ */
 }
 
 /* Set lighter color on hover */
 .linkinfo .shortlink input:hover {
-	color:#eeeef1;
+	color:#eeeef1; /* ZZZ */
 }
 
 
+/*------------------------------------------------------------------
+/* ***** 6/9/15 ***** COMPLETE COMPLETE COMPLETE COMPLETE COMPLETE
+/*------------------------------------------------------------------
 /*------------------------------------------------------------------
 -- 3. SIDEBAR
 ---- 3.6 LOGIN FORM
 -------------------------------------------------------------------*/
 	
 /* Login form container */
+/* //Note: margin and relative for pseudo outer border */
+/* XXX removed z-index:1 as psuedo border is against body so not needed */
 .login-form-side {
 	padding-top:15px;
 	margin:0 1px;
 	background:#202023;
 	border:1px solid #28282d;
 	position:relative;
-	z-index:1;
 }
 	
 /* Style username and password input forms */
+/* //Note: background set in global input styles at start of stylesheet */
+/* //Note: need to set border to override default for login forms */
+/* XXX removed padding:5px so will take on padding:6px from global styles */
 .login-form-side input[type="text"],
 .login-form-side input[type="password"] {
-	width:268px;
-	padding:5px;
+	width:267px;
 	margin:0 0 10px 15px;
-	border:1px solid #323236;
-	color:#eeeef1;
+	border:1px solid #323238;
 }
 
-/* Set lighter background and border for input forms on hover/active */
+/* Set lighter background and border for username/password forms on hover/active */
 .login-form-side input[type="text"]:hover,
 .login-form-side input[type="text"]:active,
 .login-form-side input[type="text"]:focus,
 .login-form-side input[type="password"]:hover,
 .login-form-side input[type="password"]:active,
 .login-form-side input[type="password"]:focus {
-	background:#28282d;
-	border-color:#39393c;
+	background:#29292e;
+	border-color:#3c3c42;
 	outline:none;
 }
 
 /* Positioning and color of "remember me" option */
 .login-form-side #remember-me {
 	margin:0 15px 10px;
-	color:#eeeef1;
+	color:#eeeef1; /* ZZZ */
 }
 
-/* If failed login style "recover password" link */
+/* Style "recover password" link */
 .login-form-side .recover-password.attention {
 	padding:0;
-	border:none;
+	border:0;
 	border-bottom:1px solid #2c6a95;
 	border-radius:0;
-	font-weight:normal;
+	font-weight:400;
 }
 
-/* If failed login add "?" to "recover password" link */
+/* Add "?" to end of "recover password" link */
 .recover-password.attention:after {
 	content:"?";
 }
@@ -2104,16 +2221,19 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	color:#eeeef1;
 }
 
+/* Set lighter background/border for login button on hover */
+.login-form-side button.btn:hover {
+	background:#424249;
+	border-color:#53535a;
+}
+
 /* Style "wrong password" error message */
+/* XXX had color set but inherits from .error */
 .login-form-side .error {
 	margin:0 15px;
 	font-family:sans-serif;
 	font-size:11px;
-	color:#e74c3c;
 }
-
-
-
 
 
 
@@ -2257,11 +2377,11 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 
 			/* INFOBAR ------ */
 
-			.infobar {
+			.infobar:not(.reddit-infobar) {
 				padding:0;
 				margin:0;
 				display:block;
-				background:#252529;
+				background:#28282d;
 				border:1px solid #101014;
 				border-bottom:0;
 				border-radius:0;
@@ -2508,13 +2628,15 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 			/* Post too old to vote message */
 			.unvotable-message {
 				padding-left:0;
-				border:none;
+				border:0;
 				font-style:italic;
 				color:#637481;
 			}
 
 
 
+/* XXX NEED TO ADD THUMBS TO SPRITESHEET */
+/* XXX updated on 6/9/2015 */
 /*------------------------------------------------------------------
 -- 4. CONTENT
 ---- 4.3 LINKS
@@ -2526,21 +2648,28 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 				margin-right:9px;
 				position:relative;
 			}
-			.self .thumbnail,
+			/*.self .thumbnail,
 			.thumbnail.self,
 			.thumbnail.default,
 			.thumbnail.nsfw {
 				background-image:url(%%spritesheet%%)!important;
+			}*/
+			.self .thumbnail,
+			.thumbnail.self {
+				/*background-position:center -438px;*/
+				background:url(%%thumb-selfnew7final%%) no-repeat center 0;
 			}
-			.self .thumbnail {
-				background-position:center -438px;
+			.self.stickied .thumbnail {
+				background:url(%%thumb-selfnewstickfinal%%) no-repeat center 0;
 			}
 			.thumbnail.default {
-				background-position:center -488px;
+				/*background-position:center -488px;*/
+				background:url(%%thumb-defaultnew%%) no-repeat center 0;
 			}
 			.thumbnail.nsfw {
 				max-height:50px;
-				background-position:center -538px;
+				/*background-position:center -538px;*/
+				background:url(%%thumb-nsfwnew4%%) no-repeat center 0;
 			}
 			.thumbnail:before {
 				content:"";
@@ -2553,6 +2682,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 				background:rgba(30,30,35,0.2);
 			}
 			.self .thumbnail:before,
+			.thumbnail.self:before,
 			.thumbnail.default:before,
 			.thumbnail.nsfw:before {
 				content:none;
@@ -2735,7 +2865,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 		width:12px;
 		padding:0;
 		display:inline-block;
-		border:none;
+		border:0;
 		border-radius:1px;
 		font-weight:bold;
 		text-align:center;
@@ -2865,11 +2995,13 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 				.nsfw-stamp acronym {
 					font-weight:600;
 					color:#e74c3c;
+					color:#f3524c;
 				}
 				.private-stamp {
 					font-weight:bold;
 					text-transform:uppercase;
 					color:#f27935;
+					color:#5bbaf9;
 				}
 
 
@@ -3084,7 +3216,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	.commentarea .panestack-title {
 		padding:10px;
 		margin:0;
-		border:none;
+		border:0;
 		font-family:sans-serif;
 	}
 	.commentarea .panestack-title .title {
@@ -3096,7 +3228,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	.panestack-title a.title-button.gold {
 		padding:0;
 		background:transparent;
-		border:none;
+		border:0;
 		color:#cd9930;
 	}
 
@@ -3181,7 +3313,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 		margin-bottom:11px;
 	}
 	.commentarea .sitetable.nestedlisting > .comment:nth-last-of-type(2) {
-		border-bottom:none;
+		border-bottom:0;
 	}
 
 
@@ -3220,7 +3352,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 	.comment .md {
 		background:transparent;
 		border:1px solid #292929;
-		border:none;
+		border:0;
 		font-family:sans-serif;
 		color:#ddd;
 	}
@@ -3266,19 +3398,19 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 
 	/* PERMALINK ------ */
 
-
-	.single-page.comments-page .commentarea > .infobar {
+	.commentarea > .infobar {
 		padding:8px 10px;
 		margin:10px;
-		border:1px solid #303036;
-		font-size:12px;
+		border:1px solid #161618;
+		position:relative;
+		z-index:1;
 	}
 
 	.comment .usertext.border .usertext-body {
 		padding:0 7px;
 		margin:5px 0 0;
-		background:#202020;
-		border:1px solid #1b1b1b;
+		background:#252529;
+		border:1px solid #303036;
 	}
 
 	/* GOLD HIGHLIGHTING */
@@ -3287,7 +3419,7 @@ body.with-listing-chooser #header .tabmenu li:first-child.selected {
 		margin-left:10px;
 		background:transparent;
 		border-radius:0;
-		border:none;
+		border:0;
 		font-family:sans-serif;
 		color:#cd9930;
 	}
@@ -3541,7 +3673,7 @@ body.compressed-display .trending-subreddits {
 		border-left:3px solid #fb8500;
 	}
 	.message.spam > .entry {
-		border-left:none;
+		border-left:0;
 	}
 	.message .entry a.parent-link {
 		padding:0;
@@ -3627,7 +3759,7 @@ body.compressed-display .trending-subreddits {
 	/* ??? .messages-page .message .entry .parent {
 		max-width:none;
 		margin:5px 0;
-		border:none;
+		border:0;
 	}
 	.messages-page .message .entry .parent .md {
 		border-color:#292929;
@@ -3658,8 +3790,8 @@ body.compressed-display .trending-subreddits {
 		position:relative;
 		background:#202023;
 		border:1px solid #28282d;
-		border-top:none;
-		border-bottom:none;
+		border-top:0;
+		border-bottom:0;
 		border-radius:0;
 		font-family:sans-serif;
 	}
@@ -3699,7 +3831,7 @@ body.compressed-display .trending-subreddits {
 	.single-page .sitetable #noresults {
 		padding:10px 0 0;
 		background:transparent;
-		border:none;
+		border:0;
 		border-top:1px solid #28282d;
 		/*now need dark border commentarea*/
 	}
@@ -3729,7 +3861,7 @@ body.compressed-display .trending-subreddits {
 	.nextprev a {
 		padding:1px 0;
 		background:transparent;
-		border:none;
+		border:0;
 		border-radius:0;
 		font-weight:bold;
 		color:#eeeef1;
@@ -3742,7 +3874,7 @@ body.compressed-display .trending-subreddits {
 	}
 	.nextprev a:hover {
 		background:transparent;
-		border:none;
+		border:0;
 	}
 	.nextprev .separator {
 		margin:0;
@@ -3763,7 +3895,7 @@ body.compressed-display .trending-subreddits {
 	.nav-buttons .next-suggestions a {
 		padding:0;
 		background:transparent;
-		border:none;
+		border:0;
 		font-weight:bold;
 	}
 
@@ -3797,7 +3929,7 @@ body.compressed-display .trending-subreddits {
 		margin:0;
 		position:relative;
 		background:url(%%nextprev%%) no-repeat -9999px -9999px transparent;
-		border:none;
+		border:0;
 	}
 	.organic-listing .nextprev .arrow.prev:active,
 	.organic-listing .nextprev .arrow.next:active {
@@ -3823,10 +3955,10 @@ body.compressed-display .trending-subreddits {
 		transition:margin-left 0.25s ease-in-out;
 	}
 	.footer {
-		border:none;
+		border:0;
 	}
 	.footer .col {
-		border:none;
+		border:0;
 	}
 	.footer .flat-vert.title {
 		font-family:sans-serif;
@@ -3884,7 +4016,7 @@ body.compressed-display .trending-subreddits {
 		padding:0px;
 		margin:0;
 		background:transparent;
-		border:none;
+		border:0;
 	}
 	.submit-page .content > h1 {
 		display:none;
@@ -3894,7 +4026,7 @@ body.compressed-display .trending-subreddits {
 		padding:0;
 		margin:0;
 		border:1px solid #101014;
-		border-bottom:none;
+		border-bottom:0;
 	}
 	.submit-page > .content ul.tabmenu.formtab li a {
 		width:238px;
@@ -3952,13 +4084,13 @@ body.compressed-display .trending-subreddits {
 		color:#ddd;
 	}
 	.submit-page .tabmenu.formtab + .formtabs-content .infobar {
-		border-top:none;
+		border-top:0;
 	}
 	.submit-page .formtabs-content .roundfield {
 		background:#202023;
 		border:1px solid #28282d;
-		border-top:none;
-		border-bottom:none;
+		border-top:0;
+		border-bottom:0;
 		border-radius:0;
 		width:498px;
 		padding:10px;
@@ -3990,7 +4122,7 @@ body.compressed-display .trending-subreddits {
 		padding:0;
 		margin-top:0;
 		background:transparent;
-		border:none;
+		border:0;
 		font-family:sans-serif;
 		color:#3498db;
 	}
@@ -4191,7 +4323,7 @@ body.compressed-display .trending-subreddits {
 		position:relative;
 		background:#202023;
 		border:1px solid #101014;
-		border-top:none;
+		border-top:0;
 		box-shadow:none;
 		z-index:1;
 	}
@@ -4231,7 +4363,7 @@ body.compressed-display .trending-subreddits {
 	}
 	.search-page > .content > .sitetable.searchlisting {
 		border:1px solid #101014;
-		border-top:none;
+		border-top:0;
 	}
 	
 	/* Subreddits search results */
@@ -4462,13 +4594,13 @@ body.compressed-display .trending-subreddits {
 	.related-page .commentarea .link,
 	.other-discussions-page .commentarea .link {
 		padding-bottom:10px;
-		border-left:none;
-		border-right:none;
+		border-left:0;
+		border-right:0;
 		margin-bottom:0;
 	}
 	.related-page .commentarea .nextprev,
 	.other-discussions-page .commentarea .nextprev {
-		border:none;
+		border:0;
 		border-top:1px solid #272727;
 	}
 
@@ -4502,7 +4634,7 @@ body.compressed-display .trending-subreddits {
 		color:#eeeef1;
 	}
 	.wiki-page .pageactions {
-		border:none;
+		border:0;
 		margin-left:15px;
 	}
 	.wiki-page .pageactions a.wikiaction {
@@ -4665,7 +4797,7 @@ body.compressed-display .trending-subreddits {
 		margin:0;
 		display:block;
 		background:#1e1e1e;
-		border:none;
+		border:0;
 		border-top:1px solid #181818;
 	}
 	.wiki-page .wiki-page-content .discussionlink a {
@@ -4695,8 +4827,8 @@ body.compressed-display .trending-subreddits {
 		position:relative;
 		background-color:#202023;
 		border:1px solid #28282d;
-		border-top:none;
-		border-bottom:none;
+		border-top:0;
+		border-bottom:0;
 		font-family:sans-serif;
 	}
 	.fancy-settings .pretty-form > .linefield:nth-of-type(1) {
@@ -4825,7 +4957,7 @@ body.compressed-display .trending-subreddits {
 	}
 	.flair-settings ~ .tabmenu > li:nth-of-type(2) a,
 	.flair-settings ~ .tabmenu > li:nth-of-type(3) a {
-		border-left:none;
+		border-left:0;
 	}
 	.flair-settings ~ .tabpane-content {
 		padding:0;
@@ -4935,7 +5067,7 @@ body.compressed-display .trending-subreddits {
 	.explore-item.explore-rising .explore-label {
 		padding:0;
 		background:transparent;
-		border:none;
+		border:0;
 		border-radius:0;
 		font-family:sans-serif;
 		font-size:12px;
@@ -4956,7 +5088,7 @@ body.compressed-display .trending-subreddits {
 	}
 	.explore-page .explore-item .link {
 		padding:9px 15px;
-		border:none;
+		border:0;
 	}
 	.explore-item .explore-feedback-dismiss {
 		background:url(%%remove%%) no-repeat 0 0;
@@ -4977,7 +5109,7 @@ body.compressed-display .trending-subreddits {
 	}
 	.subreddits-page > .content > .infobar {
 		margin:0 0 -1px;
-		border-top:none;
+		border-top:0;
 	}
 	.subreddits-page > .content > .infobar .md {
 		font-size:13px;
@@ -4987,7 +5119,7 @@ body.compressed-display .trending-subreddits {
 		height:12px;
 		padding:1px 6px;
 		display:inline-block;
-		border:none;
+		border:0;
 		border-radius:2px;
 		font-family:verdana,sans-serif;
 		font-size:10px;
@@ -5030,7 +5162,7 @@ body.compressed-display .trending-subreddits {
 	}
 	.thing.subreddit .midcol .fancy-toggle-button .add,
 	.thing.subreddit .midcol .fancy-toggle-button .remove {
-		border:none;
+		border:0;
 		color:#181818;
 	}
 	.sitetable.linklisting .thing.subreddit .entry {
@@ -5047,7 +5179,7 @@ body.compressed-display .trending-subreddits {
 		margin-left:1px;
 		position:relative;
 		background:#202020;
-		border:none;
+		border:0;
 		border-radius:0;
 		font-family:sans-serif;
 		color:#ddd;
@@ -5111,7 +5243,7 @@ body.compressed-display .trending-subreddits {
 	.sr-interest-bar .bubble {
 		margin-left:0;
 		background:#202023;
-		border:none;
+		border:0;
 		border-radius:1px;
 		font-family:sans-serif;
 		color:#dddde1;
@@ -5122,7 +5254,7 @@ body.compressed-display .trending-subreddits {
 	.sr-interest-bar .caption .subscribe {
 		padding:0;
 		background:transparent;
-		border:none;
+		border:0;
 		border-radius:0;
 		color:#27ae60;
 	}
@@ -5143,7 +5275,7 @@ body.compressed-display .trending-subreddits {
 	.sr-interest-bar ul.results {
 		padding:5px 0px 0px;
 		margin:8px 1px 0px;
-		border:none;
+		border:0;
 	}
 	.sr-interest-bar ul.results li {
 		margin:3px 6px 3px 0;
@@ -5174,7 +5306,7 @@ body.compressed-display .trending-subreddits {
 	.combined-search-page .search-result-subreddit .search-subscribe-button .add,
 	.combined-search-page .search-result-subreddit .search-subscribe-button .remove {
 		padding:1px 4px;
-		border:none;
+		border:0;
 		color:#101014;
 	}
 	.fancy-toggle-button .add, 
@@ -5207,6 +5339,30 @@ body.compressed-display .trending-subreddits {
 	.combined-search-page .search-result-subreddit .search-subscribe-button .remove:focus {
 		box-shadow:none;
 	}
+	
+	
+	
+	
+/*------------------------------------------------------------------
+-- 15. MISCELLANEOUS
+-------------------------------------------------------------------*/
+
+		/* Gold icon on posts/comments (not on profile page give gold link or on /r/all links, they are different backgrounds) */
+		/* Set margin and color of count (e.g. x2) */
+		.gilded-icon {
+			margin-left:5px;
+			color:#cd9930;
+		}
+
+		/* Set gold/gilded icon */
+		.gilded-icon:before {
+			margin-right:3px;
+			background:url(%%gildedalt2%%) no-repeat 0 0;
+		}
+
+	
+	
+	
 
 	/* NEWSLETTER */
 	.infobar.newsletterbar {
@@ -5230,11 +5386,17 @@ body.compressed-display .trending-subreddits {
 	.linkflairlabel {
 		display:inline-block;
 		padding:0 3px;
-		background:#333339;
-		border:none;
+		background:#38383f;
+		border:1px solid #38383f;
 		border-radius:1px;
 		font-family:verdana,arial,helvetica,sans-serif;
-		color:#ccccd1;
+		text-shadow:0 0 2px #202023;
+		color:#ccccd2;
+	}
+	.linkflairlabel {
+		position:relative;
+		top:1px;
+		vertical-align:text-top;
 	}
 
 	/* FLAIR TOGGLE */
@@ -5245,7 +5407,7 @@ body.compressed-display .trending-subreddits {
 		right:300px;
 		left:auto!important;
 		background:#2D2D2D;
-		border:none;
+		border:0;
 		box-shadow:none;
 	}
 	.titlebox .tagline .flairselector.drop-choices h2 {
@@ -5262,7 +5424,7 @@ body.compressed-display .trending-subreddits {
 		width:93px!important;
 		padding-left:0;
 		margin-bottom:5px;
-		border:none;
+		border:0;
 	}
 	.titlebox .tagline .flairselector li:hover,.titlebox .tagline .flairselector li.selected {
 		background:#2D2D2D;
@@ -5295,7 +5457,7 @@ body.compressed-display .trending-subreddits {
 	.titlebox .tagline .flairselector form .customizer input[type="text"]{
 		padding:3px;
 		margin-right:5px;
-		border:none;
+		border:0;
 	}
 	.titlebox .tagline .flairselector form button {
 		margin-left:0;
@@ -5334,7 +5496,7 @@ body.compressed-display .trending-subreddits {
 		height:18px;
 		padding:0;
 		margin-bottom:4px;
-		border:none;
+		border:0;
 	}
 	.link .flairselector.drop-choices ul li a.title,.link .flairselector.drop-choices form a.title {
 		display:none;
@@ -5411,7 +5573,8 @@ body.compressed-display .trending-subreddits {
 	.sr-interest-bar + .searchpane.raisedbox:before,
 	.menuarea .drop-choices.lightdrop:before,
 	.login-form-side:before,
-	.infobar.newsletterbar:before {
+	.infobar.newsletterbar:before,
+	.commentarea > .infobar:before {
 		content:"";
 		display:block;
 		position:absolute;
@@ -5435,12 +5598,12 @@ body.compressed-display .trending-subreddits {
 	.menuarea .drop-choices.lightdrop:before,
 	.login-form-side:before,
 	.infobar.newsletterbar:before {
-		border:1px solid #101010;
+		border:1px solid #101014;
 	}
 
 	.messages-page .message .entry .md:before,
 	.wiki-page .wiki-page-content .md.wiki > .toc > ul:before {
-		border:1px solid #181818;
+		border:1px solid #161618;
 	}
 
 	.titlebox:before,
@@ -5473,15 +5636,19 @@ body.compressed-display .trending-subreddits {
 		left:-2px;
 		right:-2px;
 		bottom:-2px;
-		border-top:none;
+		border-top:0;
 	}
 
 
-	.link .usertext-body .md:before {
+	.link .usertext-body .md:before,
+	.commentarea > .infobar:before {
 	top:0;right:0;bottom:0;left:0;
 	}
 	.link .usertext-body .md:before {
 	border:1px solid #303036;
+	}
+	.commentarea > .infobar:before {
+	border:1px solid #333338;
 	}
 
 
@@ -5490,7 +5657,7 @@ body.compressed-display .trending-subreddits {
 
 	/* .searchpane.raisedbox:before, */
 	.flair-settings.fancy-settings > h1:before {
-		border-bottom:none;
+		border-bottom:0;
 	}
 
 	.fancy-settings .linefield:before {
@@ -5514,7 +5681,7 @@ body.compressed-display .trending-subreddits {
 	bottom:-2px;
 	}
 	.comments-page .commentarea:before {
-		border-top:none;
+		border-top:0;
 		top:-1px;
 	}
 	.messages-page.compose-page .content > h1:before {
@@ -5522,15 +5689,15 @@ body.compressed-display .trending-subreddits {
 		bottom:0;
 		right:-2px;
 		left:-2px;
-		border-bottom:none;
+		border-bottom:0;
 	}
 	.messages-page.compose-page .content > form .roundfield:before {
 		top:0;
 		bottom:0;
 		right:-2px;
 		left:-2px;
-		border-top:none;
-		border-bottom:none;
+		border-top:0;
+		border-bottom:0;
 	}
 	body > .debuginfo:before {
 		top:-2px;
@@ -5552,7 +5719,7 @@ body.compressed-display .trending-subreddits {
 		top:115px;
 		background:#202023;
 		border:1px solid #101014;
-		border-left:none;
+		border-left:0;
 	}
 	body.with-listing-chooser .listing-chooser .grippy {
 		background:#202023;
@@ -5611,7 +5778,7 @@ body.compressed-display .trending-subreddits {
 		padding:0;
 		margin:0;
 		background:#212125;
-		border:none;
+		border:0;
 		box-shadow:none;
 	}
 	.listing-chooser ul.global li:hover {
@@ -5644,7 +5811,7 @@ body.compressed-display .trending-subreddits {
 		padding:10px 15px;
 		border:1px solid #161618;
 		border-right:1px solid #1a1a1b;
-		border-left:none;
+		border-left:0;
 		text-align:left;
 		color:#dddde1;
 	}
@@ -5686,7 +5853,7 @@ body.compressed-display .trending-subreddits {
 	.listing-chooser ul.multis li {
 		background:#39393f;
 		border:1px solid #49494f;
-		border-right:none;
+		border-right:0;
 		border-radius:1px 0 0 1px;
 	}
 	.listing-chooser ul.multis li:hover {
@@ -5695,7 +5862,7 @@ body.compressed-display .trending-subreddits {
 
 	.listing-chooser ul.multis li.selected {
 		margin-right:-10px;
-		border-right:none;
+		border-right:0;
 		box-shadow:none;
 	}
 	.listing-chooser ul.multis li.selected:before,
@@ -5737,7 +5904,7 @@ body.compressed-display .trending-subreddits {
 		padding:0;
 		display:block;
 		background:transparent;
-		border:none;
+		border:0;
 		box-shadow:none;
 		font-family:sans-serif;
 		font-size:12px;
@@ -5842,7 +6009,7 @@ body.compressed-display .trending-subreddits {
 	.gold-only #header .tabmenu li a,
 	.gold-only #header .tabmenu li.selected a {
 	background:transparent;
-	border:none;
+	border:0;
 	color:#bbb;
 	}
 	.gold-only #header .tabmenu li a:hover {
@@ -5938,13 +6105,15 @@ body.compressed-display .trending-subreddits {
 	.side .goldvertisement a {
 		margin:5px 0 0;
 		background:transparent;
-		border:none;
+		border:0;
 		border-radius:0;
 		font-size:11px;
 		font-weight:bold;
 		color:#3498DB;
 	}
 
+
+/* This replaces alternate gold icons XXX */
 	.giftgold a:before,
 	.gilded-link a:before {
 	background:url(%%gildedalt2%%) no-repeat 0 0;
@@ -6026,19 +6195,6 @@ body.compressed-display .trending-subreddits {
 	}
 
 
-  /* /r/mod .titlebox doesn't have .md just p */
-	.titlebox > h1 + .usertext > p {
-		padding:10px 15px;
-		border-top:1px solid #181818;
-	}
-	.titlebox > h1 + .usertext + .modsr-link,
-	.filtered-details .unfilter {
-		margin:0 15px 10px;
-	}
-	.filtered-details div.usertext .md {
-		padding-bottom:0;
-		margin-bottom:-5px;
-	}
 
 
 	/* ADD TO MULTI ------ */
@@ -6107,7 +6263,7 @@ body.compressed-display .trending-subreddits {
 		width:12px;
 		height:20px;
 		top:42px;
-		border:none;
+		border:0;
 	}
 	.hover-bubble.anchor-right.anchor-right:after,
 	.hover-bubble.anchor-left.anchor-right:after {
@@ -6125,115 +6281,204 @@ body.compressed-display .trending-subreddits {
 	.hover-bubble.anchor-left.anchor-left:before  {
 		display:none; /*!!*/ /*fix on subreddits/explore apge */
 	}
-	.multi-details > h2,
-	.multi-details > h3 {
-	padding:10px 15px 0;
-	border-top:1px solid #181818;
-	color:#ddd;
-	font-weight:bold;
-	}
-	.multi-details > h2 {
-	border-top:1px solid #181818;
-	}
-	.multi-details > h3 {
+	
+	
+	
+	
+	
+/* Style "curated by /u/..." and "... subreddits in this multi" headers */
+.multi-details > h2,
+.multi-details > h3 {
+	padding:10px 15px 3px;
 	margin:0;
-	background:#222;
-	border-top:1px solid #272727;
+	background:#1f1f22;
+	border-top:1px solid #161618;
+	font-weight:700;
+	color:#eeeef1;
+}
+
+/* Set lighter background and border to "... subreddits in this multi" header */
+/* Remove default bottom margin */
+.multi-details > h3 {
+	background:#202023;
+	border-top:1px solid #28282d;
+}
+	
+	/* Set padding on multi settings (visibility, copy, rename, etc.) container */
+	/* //Note: the container of the "copy rename ..." links and also "edit description" share .settings class so specifying with > */ 
+	.multi-details > .settings {
+		padding:0 15px 12px;
 	}
-	.multi-details .gray-buttons.settings {
-	padding:0;
-	margin-bottom:0;
+	
+	/* Removing bottom margin on .setting divs */ 
+	.multi-details .settings {
+		margin:0;
+		background:#1f1f22;
 	}
-	.multi-details > .gray-buttons.settings {
-	padding:0 15px 12px;
+	
+	/* Replace margin with padding on visibility radio buttons container */
+	.multi-details .settings .visibility-group {
+		padding:8px 0;
+		margin:0;
 	}
-	.multi-details .gray-buttons.settings button {
-	color:#999;
-	font-family:sans-serif;
+	
+	/* Increase left margin of radio button labels (visibility settings) */
+	/* //Note: matched default specificity */
+	.multi-details .settings input[type="radio"] {
+		margin-right:4px;
 	}
-	.multi-details .gray-buttons.settings button:hover {
-		color:#bbb;
+	
+	/* Set color and font of .setting buttons (copy, rename, edit desc., etc.) */ 
+	.multi-details .settings button {
+		font-family:sans-serif;
+		color:#9999a0;
+	}
+	
+	/* Set hover color and remove underline for .setting buttons (and share link) */ 
+	.multi-details .settings button:hover,
+	.multi-details .share-in-sr:hover {
 		text-decoration:none;
+		color:#bbbbbe;
 	}
-	.multi-details .description .gray-buttons.settings {
-	background:#202020;
-	padding:8px 15px;
-	border-bottom:1px solid #181818;
-	}
-	.multi-details form.rename-multi .warning, 
-	.filtered-details form.rename-multi .warning {
-	font-weight:normal;
-	margin:0 0 5px;
+	
+	/* Rename warning message */
+	/* //Note: included form in selector for specificity */
+	/* //Note: default css includes .filtered-details but no rename option exist on filtered pages */
+	.multi-details form.rename-multi .warning {
+		margin:0 0 5px;
+		font-weight:400;
 		color:#e74c3c;
 	}
-	.confirm-button .confirmation {
+	
+	/* Style delete multi confirmation text and yes/no buttons */
+	/* //Note: matched default specificity */
+	.confirm-button .confirmation,
+	.confirm-button .confirmation button,
+	.confirm-button .confirmation button:hover {
+		font-size:11px;
+		font-weight:400;
 		color:#e74c3c;
+	}
+	
+	/* Reduce right margin of delete multi confirmation text */
+	/* //Note: matched default specificity */
+	.confirm-button .confirmation .prompt {
+		margin-right:4px;
+	}
+	
+	/* Style "edit description" button container */
+	.multi-details .description .settings {
+		padding:8px 15px;
+		background:#1f1f22;
+		border-bottom:1px solid #161618;
+	}
+	
+	/* Style "share" link (appears next to "edit descrption" when multi made public) */
+	/* //Note: default css includes .filtered-details but no share link exists on filtered pages */
+	.multi-details .share-in-sr {
+		font-size:11px;
+		color:#9999a0;
+	}
+	
+	/* Set padding and remove margin of copy and rename multireddit forms */ 
+	/* //Note: default css includes .filtered-details but no copy/rename options exist on filtered pages */
+	/* //Note: matched default specificity */
+	/* XXX had background but inherits can use that of titlebox */
+	.multi-details form.copy-multi, 
+	.multi-details form.rename-multi {
+		padding:0px 15px 10px;
+		margin:0;
+	}
+	
+	/* Style copy/rename multi forms */
+	/* //Note: default css includes .filtered-details but no copy/rename options exist on filtered pages */
+	/* XXX confirm color scheme (should it match default input style?, could be too dark) and maybe add hover */
+	.multi-details .copy-multi input.multi-name,
+	.multi-details .rename-multi input.multi-name {
+	  border-color:#49494f; /* ZZZ */
+	  background:#39393f;   /* ZZZ */
+	}
+	
+	/* Adjust padding, set left margin and fix opacity of */
+	/* //Note: main styling applied along with buttons to reduce duplicate css */
+	.multi-details form.copy-multi button,
+	.multi-details form.rename-multi button {
+		padding-top:2px;
+		margin-left:6px;
+		opacity:1;
+	}
+	
+	/* Set font size and margin of copy/rename error */
+	.copy-error,
+	.rename-error {
+		margin-top:3px;
 		font-size:11px;
 	}
-	.multi-details .share-in-sr, 
-	.filtered-details .share-in-sr {
-	font-size:11px;
-	color:#999;
-	}
-	.multi-details form.copy-multi, 
-	.filtered-details form.copy-multi, 
-	.multi-details form.rename-multi, 
-	.filtered-details form.rename-multi {
-	margin:0;
-	padding:0px 15px 10px;
-	background:#202020;
-	}
-	.multi-details .copy-multi input.multi-name,
-	.multi-details .rename-multi input.multi-name,
-	.filtered-details .copy-multi input.multi-name,
-	.filtered-details .rename-multi input.multi-name {
-	border-color:#494949;
-	background:#393939;
-	color:#eee;
-	}
-	.multi-details form.copy-multi button,
-	.multi-details form.rename-multi button,
-	.filtered-details form.copy-multi button,
-	.filtered-details form.rename-multi button {
-	background:transparent;
-	border:none;
-	color:#eee;
-	box-shadow:none;
-	opacity:1;
-	font-family:sans-serif;
-	position:relative;
-	top:-1px;
-	}
-	.multi-details form.copy-multi .error.copy-error {
-	font-size:11px;
-	margin-top:3px;
-	}
+	
+	/* Remove margin and set dark top border on multi .md container */
 	.multi-details > .description {
-	border-top:1px solid #181818;
-	margin:0;
+		margin:0;
+		border-top:1px solid #161618;
 	}
-	.multi-details > .description .usertext-body .md {
-	border-bottom-color:#181818;
+	
+	/* Set width/padding and remove margin on multi description edit container */
+	/* //Note: default css includes .filtered-details but no .usertext-edit div exists on filtered pages */
+	/* //Note: default css uses !important on width */
+	/* //Note: matched default specificity */
+	.multi-details .description .usertext-edit {
+		width:270px!important;
+		padding:10px 10px 0;
+		margin:0;
+		background:#1f1f22;
+		border-top:1px solid #27272d;
 	}
-	.multi-details .description .usertext-edit, 
-	.filtered-details .description .usertext-edit,
-	.multi-details .description .usertext-edit textarea, 
-	.filtered-details .description .usertext-edit textarea {
-	width:270px!important;
-	margin:0;
+	
+	/* Set width on description edit textarea container */  
+	/* XXX reduced selector as should only be this .usertext-edit present in multi sidebar */
+	.multi-details .usertext-edit .md {
+		width:276px;
 	}
-	.multi-details .description .usertext-edit, 
-	.filtered-details .description .usertext-edit {
-	padding: 10px 10px 0;
+	
+	/* Set width (default 294px) for description edit textarea */
+	/* //Note: default css includes .filtered-details but no .usertext-edit div/textarea exists on filtered pages */
+	/* //Note: matched default specificity */
+	.multi-details .description .usertext-edit textarea {
+		width:270px!important;
 	}
-	.multi-details .description .usertext-edit .bottom-area,
-	.filtered-details .description .usertext-edit .bottom-area {
-	margin-top:5px;
+	
+	/* Add top margin to description textarea options (save/cancel etc.) */
+	.multi-details .bottom-area {
+		margin-top:5px;
 	}
-	.multi-details > .description .usertext-edit > .md,
-	.filtered-details > .description .usertext-edit > .md {
-	width:276px;
+	
+	/* Style container of added subreddits list */
+	/* //Note: bottom border is to cover when no more subs can be added, if not hidden by form top margin */
+	.multi-details ul.subreddits,
+	.filtered-details ul.subreddits {
+		padding:5px 15px 10px;
+		margin:0;
+		background:#202023;
+		border-bottom:1px solid #28282d;
 	}
+	
+	/* Set font size and add relative position (for add/remove icons) to subreddits in list */
+	.multi-details ul li,
+	.filtered-details ul li {
+		position:relative;
+		font-size:12px;
+	}
+	
+	
+	.multi-details ul.subreddits li a,
+	.filtered-details ul.subreddits li a {
+		margin-left:12px;
+	}
+	
+	.multi-details.readonly ul.subreddits li a,
+	.filtered-details.readonly ul.subreddits li a {
+		margin-left:0;
+	}
+
 	.multi-details form.add-sr, 
 	.filtered-details form.add-sr {
 	margin: -1px 0 0;
@@ -6262,28 +6507,9 @@ body.compressed-display .trending-subreddits {
 		font-size:11px;
 	}
 
-	.filtered-details ul.subreddits,
-	.multi-details ul.subreddits {
-	background:#222;
-	padding:5px 15px 10px;
-	border-bottom:1px solid #272727;
-	margin-left:0;
-	}
-	.multi-details ul li,
-	.filtered-details ul li {
-	font-size:12px;
-	position:relative;
-	}
-	.multi-details ul.subreddits li a,
-	.filtered-details ul.subreddits li a {
-	margin-left:12px;
-	}
-	.multi-details.readonly ul.subreddits li a,
-	.filtered-details.readonly ul.subreddits li a {
-	margin-left:0;
-	}
 	.multi-details .bottom {
 		margin-top:0;
+		border-top:1px solid #161618;
 	}
 	.multi-details .recommend-box {
 	margin: 0;
@@ -6372,10 +6598,16 @@ body.compressed-display .trending-subreddits {
 	.multi-details .recommend-box .endoflist .heading {
 	color:#999;
 	}
-	.multi-details .visibility-group {
-	margin-top:8px;
-	}
 
+	
+	.titlebox > h1 + .usertext + .modsr-link,
+	.filtered-details .unfilter {
+		margin:0 15px 10px;
+	}
+	.filtered-details div.usertext .md {
+		padding-bottom:0;
+		margin-bottom:-5px;
+	}
 
 
 	/* Promoted link/ad help link */
@@ -6409,7 +6641,7 @@ body.compressed-display .trending-subreddits {
 		height:11px;
 		top:-10px;
 		background:url(%%spritesheet%%) no-repeat -12px -413px;
-		border:none;
+		border:0;
 	}
 	.hover-bubble#beta-help {
 	background: #25252c;
@@ -6424,6 +6656,7 @@ border: 1px solid #2e2e32;
 color: #dddde1;
 	}
 
+/* Login pop up */
 	.modal-content {
 	background: #222;
 	border-radius:0;
@@ -6453,12 +6686,9 @@ color: #dddde1;
 		font-size:11px;
 		color:#888;
 	}
+	/* //Note: this also styles save/cancel buttons for multi .titlebox .description */
 	.usertext button {
 		margin-top:0;
-		background:#393939;
-		border:1px solid #494949;
-		border-radius:1px;
-		color:#eee;
 	}
 	.error {
 		color:#e74c3c;
@@ -6500,7 +6730,7 @@ color: #dddde1;
 	.usertext .markhelp {
 		padding:10px 0 0;
 		margin:0 0 10px;
-		border-top:none;
+		border-top:0;
 		font-family:sans-serif;
 	}
 	.markhelp > p {
@@ -6509,11 +6739,12 @@ color: #dddde1;
 	.markhelp table.md {
 		margin-top:10px;
 		margin-left:0;
+		margin-bottom:20px;
 		font-size:12px;
 	}
 	.markhelp tbody tr,
 	.usertext .markhelp tbody tr {
-		border:none;
+		border:0;
 	}
 	.markhelp tbody tr:nth-of-type(1) {
 		text-transform:uppercase;
